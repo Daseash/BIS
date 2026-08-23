@@ -138,12 +138,21 @@ export function Navbar() {
     setMenuOpen(false);
   }, [pathname]);
 
+  const isHome = pathname === "/";
+
   return (
     <header
-      className={cn("site-header", scrolled && "scrolled")}
+      className={cn(
+        "site-header transition-all duration-700 ease-in-out",
+        scrolled && "scrolled",
+        !isHome ? "header-inner" : "header-home"
+      )}
     >
       {/* ── Tier 1: Top utility bar ──────────────────────────────── */}
-      <div className="top-bar flex w-full items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className={cn(
+        "top-bar flex w-full items-center justify-between px-4 transition-all duration-700 ease-in-out sm:px-6 lg:px-8",
+        !isHome ? "py-1 text-xs" : "py-1.5 text-xs sm:text-sm"
+      )}>
         <div className="flex items-center gap-3">
           <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
             <FacebookIcon />
@@ -176,22 +185,37 @@ export function Navbar() {
       </div>
 
       {/* ── Tier 2: Logo + Title ─────────────────────────────────── */}
-      <div className="flex w-full items-center justify-between px-4 py-3 sm:px-6 sm:py-4 lg:px-8">
-        <Link href="/" className="flex items-center gap-3 sm:gap-4" onClick={() => setMenuOpen(false)}>
+      <div className={cn(
+        "flex w-full items-center justify-between px-4 transition-all duration-700 ease-in-out sm:px-6 lg:px-8",
+        !isHome ? "py-1.5 sm:py-2.5" : "py-3 sm:py-4"
+      )}>
+        <Link href="/" className="flex items-center gap-2.5 transition-all duration-700 ease-in-out sm:gap-3.5" onClick={() => setMenuOpen(false)}>
           <Image
             src="/logos/iit-indore-emblem.png"
             alt="IIT Indore emblem"
             width={88}
             height={66}
-            className="h-13 w-auto shrink-0 sm:h-16 lg:h-20"
+            className={cn(
+              "w-auto shrink-0 transition-all duration-700 ease-in-out",
+              !isHome ? "h-10 sm:h-12 lg:h-13" : "h-13 sm:h-16 lg:h-20"
+            )}
             priority
           />
-          <div className="h-12 w-px bg-white/30" />
-          <span className="flex min-w-0 flex-col leading-tight">
-            <span className="text-base font-bold tracking-wide text-white sm:text-xl lg:text-2xl">
+          <div className={cn(
+            "w-px bg-white/30 transition-all duration-700 ease-in-out",
+            !isHome ? "h-8 sm:h-9" : "h-12"
+          )} />
+          <span className="flex min-w-0 flex-col leading-tight transition-all duration-700 ease-in-out">
+            <span className={cn(
+              "font-bold tracking-wide text-white transition-all duration-700 ease-in-out",
+              !isHome ? "text-sm sm:text-base lg:text-lg" : "text-base sm:text-xl lg:text-2xl"
+            )}>
               Malwa Chemical Conclave 2026
             </span>
-            <span className="text-xs font-medium text-white/75 sm:text-sm lg:text-base">
+            <span className={cn(
+              "font-medium text-white/75 transition-all duration-700 ease-in-out",
+              !isHome ? "text-[10px] sm:text-xs" : "text-xs sm:text-sm lg:text-base"
+            )}>
               Dept. of Chemical Engineering, IIT Indore
             </span>
           </span>
@@ -199,7 +223,7 @@ export function Navbar() {
 
         {/* ── Tier 3: Pill navigation (desktop) ──────────────────── */}
         <nav className="hidden items-center gap-3 lg:flex">
-          <div className="pill-nav">
+          <div className={cn("pill-nav transition-all duration-700 ease-in-out", !isHome && "pill-nav-compact")}>
             {NAV_LINKS.map((link) => {
               const active = pathname === link.href;
               return (
@@ -207,6 +231,7 @@ export function Navbar() {
                   key={link.href}
                   href={link.href}
                   data-active={active}
+                  className="transition-all duration-700 ease-in-out"
                 >
                   {link.label}
                 </Link>
