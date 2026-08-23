@@ -23,13 +23,7 @@ const PATRON_AND_CHAIR = [
   },
 ];
 
-const ADVISORS_AND_COORDINATORS = [
-  {
-    role: "Advisor",
-    name: "Prof. Manish Kumar Goyal",
-    note: "Professor, IIT Indore",
-    image: "/organizers/manish-goyal.png",
-  },
+const COORDINATORS_AND_LEADERS = [
   {
     role: "Faculty Coordinator",
     name: "Dr. Preetika Karnal",
@@ -119,21 +113,21 @@ export default function OrganizersPage() {
           ))}
         </div>
 
-        {/* ── 2. Advisors & Coordinators (Smaller, 4 Columns) ──── */}
+        {/* ── 2. Coordinators & Student Leader (3 Columns) ──── */}
         <div className="mt-16">
           <span className="inline-block rounded bg-navy-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-navy-900">
             Committee Oversight
           </span>
           <h2 className="mt-2 text-xl sm:text-2xl font-bold tracking-tight text-navy-950">
-            Advisors &amp; Faculty Coordinators
+            Faculty Coordinators &amp; Student Leader
           </h2>
           <p className="mt-1 text-sm text-gray-600">
-            Academic planning, event stewardship, and student leadership.
+            Academic planning, event stewardship, and student coordination.
           </p>
         </div>
 
-        <div className="mt-8 grid gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-4">
-          {ADVISORS_AND_COORDINATORS.map((person, i) => (
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto">
+          {COORDINATORS_AND_LEADERS.map((person, i) => (
             <Reveal key={person.name} delay={i * 0.04}>
               <MemberCard
                 name={person.name}
