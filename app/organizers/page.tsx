@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "Organizing committee and BIS Student Chapter members of Malwa Chemical Conclave 2026.",
 };
 
-const LEADERSHIP = [
+const PATRON_AND_CHAIR = [
   {
     role: "Patron",
     name: "Prof. Suhas S. Joshi",
@@ -19,8 +19,11 @@ const LEADERSHIP = [
     role: "Chairperson",
     name: "Prof. Eswara Prasad Korimalli",
     note: "HoD, Chemical Engineering, IIT Indore",
-    image: "/organizers/eswara-prasad.png",
+    image: "/organizers/eswara-prasad.jpeg",
   },
+];
+
+const ADVISORS_AND_COORDINATORS = [
   {
     role: "Advisor",
     name: "Prof. Manish Kumar Goyal",
@@ -43,7 +46,7 @@ const LEADERSHIP = [
     role: "Student Leader",
     name: "Mr. Kavyansh Raj Singh",
     note: "IIT Indore",
-    image: "/organizers/kavyansh-raj-singh.jpg",
+    image: "/organizers/kavyansh.png",
   },
 ];
 
@@ -89,20 +92,48 @@ export default function OrganizersPage() {
       />
 
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+        {/* ── 1. Patron & Chairperson (Big, 2 Columns) ────────── */}
         <div>
           <span className="inline-block rounded bg-navy-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-navy-900">
             Institutional Leadership
           </span>
           <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-navy-950">
-            Patron, Advisors &amp; Coordinators
+            Patron &amp; Chairperson
           </h2>
           <p className="mt-1 text-sm text-gray-600">
-            Guidance and oversight from the academic leadership of IIT Indore.
+            Executive leadership and institutional direction from IIT Indore.
           </p>
         </div>
 
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {LEADERSHIP.map((person, i) => (
+        <div className="mt-8 mx-auto grid max-w-2xl gap-8 sm:grid-cols-2">
+          {PATRON_AND_CHAIR.map((person, i) => (
+            <Reveal key={person.name} delay={i * 0.05}>
+              <MemberCard
+                name={person.name}
+                role={person.role}
+                note={person.note}
+                image={person.image}
+                className="shadow-md hover:shadow-xl border-navy/20"
+              />
+            </Reveal>
+          ))}
+        </div>
+
+        {/* ── 2. Advisors & Coordinators (Smaller, 4 Columns) ──── */}
+        <div className="mt-16">
+          <span className="inline-block rounded bg-navy-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-navy-900">
+            Committee Oversight
+          </span>
+          <h2 className="mt-2 text-xl sm:text-2xl font-bold tracking-tight text-navy-950">
+            Advisors &amp; Faculty Coordinators
+          </h2>
+          <p className="mt-1 text-sm text-gray-600">
+            Academic planning, event stewardship, and student leadership.
+          </p>
+        </div>
+
+        <div className="mt-8 grid gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-4">
+          {ADVISORS_AND_COORDINATORS.map((person, i) => (
             <Reveal key={person.name} delay={i * 0.04}>
               <MemberCard
                 name={person.name}
@@ -114,6 +145,7 @@ export default function OrganizersPage() {
           ))}
         </div>
 
+        {/* ── 3. BIS Student Chapter Core Group ─────────────────── */}
         <div className="mt-20">
           <span className="inline-block rounded bg-gold-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-gold-900">
             Student Leadership
@@ -126,7 +158,7 @@ export default function OrganizersPage() {
           </p>
         </div>
 
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid gap-6 grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
           {BIS_CHAPTER_MEMBERS.map((person, i) => (
             <Reveal key={person.name} delay={i * 0.04}>
               <MemberCard
