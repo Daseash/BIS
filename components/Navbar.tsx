@@ -173,12 +173,12 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* ── Tier 2: Logo + Title (Line 1) ────────────────────────── */}
+      {/* ── Tier 2: Logo + Title (and Pill Nav on inner pages) ─────── */}
       <div className={cn(
         "flex w-full items-center justify-between px-4 transition-all duration-700 ease-in-out sm:px-6 lg:px-8",
         !isHome ? "py-1.5 sm:py-2.5" : "py-2 sm:py-3.5"
       )}>
-        <Link href="/" className="flex items-center gap-2.5 transition-all duration-700 ease-in-out sm:gap-3.5" onClick={() => setMenuOpen(false)}>
+        <Link href="/" className="flex items-center gap-2.5 transition-all duration-700 ease-in-out sm:gap-3.5 shrink-0" onClick={() => setMenuOpen(false)}>
           <Image
             src="/logos/iit-indore-emblem.png"
             alt="IIT Indore emblem"
@@ -210,16 +210,36 @@ export function Navbar() {
           </span>
         </Link>
 
-        {/* Right side info on desktop + mobile menu hamburger */}
+        {/* Right side: Register button on Home page; Pill Nav in same line on Inner pages */}
         <div className="flex items-center gap-3">
-          <div className="hidden lg:flex items-center gap-3">
-            <Link
-              href="/registration"
-              className="rounded-full bg-gold px-4 py-1.5 text-xs font-bold text-navy-950 transition-all hover:bg-gold-300 shadow-sm"
-            >
-              Register Now
-            </Link>
-          </div>
+          {isHome ? (
+            <div className="hidden lg:flex items-center gap-3">
+              <Link
+                href="/registration"
+                className="rounded-full bg-gold px-4 py-1.5 text-xs font-bold text-navy-950 transition-all hover:bg-gold-300 shadow-sm"
+              >
+                Register Now
+              </Link>
+            </div>
+          ) : (
+            <nav className="hidden lg:flex items-center">
+              <div className="pill-nav pill-nav-compact transition-all duration-700 ease-in-out">
+                {NAV_LINKS.map((link) => {
+                  const active = pathname === link.href;
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      data-active={active}
+                      className="transition-all duration-700 ease-in-out"
+                    >
+                      {link.label}
+                    </Link>
+                  );
+                })}
+              </div>
+            </nav>
+          )}
 
           {/* Mobile hamburger */}
           <button
@@ -233,29 +253,28 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* ── Tier 3: Pill navigation tabs (Line 2) ─────────────────── */}
-      <div className={cn(
-        "hidden lg:flex w-full items-center justify-end px-4 transition-all duration-700 ease-in-out sm:px-6 lg:px-8",
-        !isHome ? "pb-2 pt-0.5" : "pb-3.5 pt-1"
-      )}>
-        <nav className="flex items-center justify-end">
-          <div className={cn("pill-nav transition-all duration-700 ease-in-out", !isHome && "pill-nav-compact")}>
-            {NAV_LINKS.map((link) => {
-              const active = pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  data-active={active}
-                  className="transition-all duration-700 ease-in-out"
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
-          </div>
-        </nav>
-      </div>
+      {/* ── Tier 3: Pill navigation tabs (Only on Home page - 2nd Line) ─ */}
+      {isHome && (
+        <div className="hidden lg:flex w-full items-center justify-end px-4 pb-3.5 pt-1 transition-all duration-700 ease-in-out sm:px-6 lg:px-8">
+          <nav className="flex items-center justify-end">
+            <div className="pill-nav transition-all duration-700 ease-in-out">
+              {NAV_LINKS.map((link) => {
+                const active = pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    data-active={active}
+                    className="transition-all duration-700 ease-in-out"
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
+            </div>
+          </nav>
+        </div>
+      )}
 
       {/* ── Mega menu (desktop dropdown + mobile full-screen) ────── */}
       <AnimatePresence>
