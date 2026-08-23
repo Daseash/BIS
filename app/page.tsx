@@ -285,12 +285,12 @@ export default function HomePage() {
 
           <div className="grid gap-6 lg:grid-cols-12 lg:items-stretch">
             {/* Column 1: Venue Details */}
-            <div className="institutional-card p-6 flex flex-col justify-between lg:col-span-4">
+            <div className="institutional-card p-6 sm:p-8 flex flex-col justify-between lg:col-span-5">
               <div>
                 <span className="inline-block rounded bg-navy-50 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-navy-900">
                   Campus Venue
                 </span>
-                <h3 className="mt-3 text-lg font-bold text-navy-950">
+                <h3 className="mt-3 text-xl font-bold text-navy-950">
                   Academic Complex &amp; Lecture Halls
                 </h3>
                 <p className="mt-2 text-sm text-gray-600 leading-relaxed">
@@ -311,18 +311,21 @@ export default function HomePage() {
               </Link>
             </div>
 
-            {/* Column 2: Campus Photo */}
-            <div className="group relative overflow-hidden rounded-lg border border-[#E5E7EB] bg-white shadow-sm lg:col-span-4 min-h-[280px] h-full flex">
-              <img
-                src="/campus-image-3.jpg"
-                alt="IIT Indore campus"
-                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-            </div>
+            {/* Column 2: Vertical Stack (Image 3 on top, Map below it) */}
+            <div className="flex flex-col gap-6 lg:col-span-7">
+              {/* Image 3 */}
+              <div className="group relative overflow-hidden rounded-lg border border-[#E5E7EB] bg-white shadow-sm h-64 sm:h-72 w-full">
+                <img
+                  src="/campus-image-3.jpg"
+                  alt="IIT Indore campus"
+                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+              </div>
 
-            {/* Column 3: Live Map */}
-            <div className="rounded-lg border border-[#E5E7EB] overflow-hidden p-2 bg-white shadow-sm lg:col-span-4">
-              <CampusMap className="h-full min-h-[260px] border-0 shadow-none" />
+              {/* Live Map below it */}
+              <div className="rounded-lg border border-[#E5E7EB] overflow-hidden p-2 bg-white shadow-sm h-64 sm:h-72 w-full">
+                <CampusMap className="h-full w-full border-0 shadow-none min-h-[220px]" />
+              </div>
             </div>
           </div>
         </div>
