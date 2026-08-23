@@ -152,9 +152,9 @@ export default function SponsorsPage() {
                 {/* Logo container */}
                 <div className="lg:col-span-5 flex items-center justify-center p-6 bg-gradient-to-br from-[#F8F9FA] to-navy-50/50 rounded-xl border border-gray-100">
                   <img
-                    src="/logos/bis-logo.svg"
+                    src="/logos/BIS.png"
                     alt="Bureau of Indian Standards logo"
-                    className="max-h-24 w-auto object-contain"
+                    className="max-h-28 w-auto object-contain"
                   />
                 </div>
 
