@@ -10,7 +10,9 @@ interface RegistrationBody {
   phone?: string;
   category?: string;
   organization?: string;
+  designation?: string;
   message?: string;
+  totalAmount?: number;
 }
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -23,7 +25,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON body." }, { status: 400 });
   }
 
-  const { name, email, phone, category, organization, message } = body;
+  const { name, email, phone, category, organization, designation, message, totalAmount } = body;
 
   if (!name?.trim() || !email?.trim() || !phone?.trim() || !category?.trim()) {
     return NextResponse.json(
@@ -50,6 +52,8 @@ export async function POST(request: NextRequest) {
       phone: phone.trim(),
       category: category.trim(),
       organization: organization?.trim() ?? "",
+      designation: designation?.trim() ?? "",
+      totalAmount: totalAmount ?? 0,
       message: message?.trim() ?? "",
       submittedAt: new Date(),
     });
