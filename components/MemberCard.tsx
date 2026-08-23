@@ -2,14 +2,11 @@ import { User } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { PlaceholderBlock } from "@/components/PlaceholderBlock";
 
-// Mirrors iiti.ac.in's own .member-info-card: rounded-20px, soft drop
-// shadow, circular photo, translateY lift on hover.
 export function MemberCard({
   name,
   role,
   note,
   image,
-  glass = false,
   className,
 }: {
   name: string;
@@ -22,25 +19,40 @@ export function MemberCard({
   return (
     <div
       className={cn(
-        "group flex items-center gap-5 rounded-[20px] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-gold/60 hover:shadow-lg",
-        glass
-          ? "border border-white/60 bg-white/60 shadow-[0_8px_30px_rgba(0,74,173,0.1)] backdrop-blur-md hover:bg-white/85"
-          : "border border-navy-100 bg-white shadow-[1.95px_1.95px_2.6px_rgba(0,0,0,0.1)] hover:bg-navy-50/50",
+        "institutional-card group flex items-center gap-5 rounded-lg border border-[#E5E7EB] bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-navy-500/40 hover:shadow-md",
         className
       )}
     >
-      <div className="h-20 w-20 shrink-0 overflow-hidden rounded-full border border-navy-100/50 shadow-sm transition-transform duration-300 group-hover:scale-105">
+      <div className="h-18 w-18 shrink-0 overflow-hidden rounded-full border-2 border-[#E5E7EB] shadow-inner transition-transform duration-200 group-hover:border-navy-500/40">
         {image ? (
-          <img src={image} alt={name} className="h-full w-full object-cover object-top" />
+          <img
+            src={image}
+            alt={name}
+            className="h-full w-full object-cover object-top"
+          />
         ) : (
-          <PlaceholderBlock icon={User} label="" aspect="aspect-square" className="h-20 w-20 rounded-full p-0" />
+          <PlaceholderBlock
+            icon={User}
+            label=""
+            aspect="aspect-square"
+            className="h-18 w-18 rounded-full p-0"
+          />
         )}
       </div>
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-wide text-navy transition-colors duration-200 group-hover:text-gold-700">{role}</p>
-        <p className="font-semibold text-navy-900 transition-colors duration-200 group-hover:text-navy">{name}</p>
-        {note && <p className="text-sm text-gray-500 transition-colors duration-200 group-hover:text-gray-800">{note}</p>}
+      <div className="min-w-0 flex-1">
+        <span className="inline-block rounded bg-navy-50 px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-navy-900">
+          {role}
+        </span>
+        <p className="mt-1.5 text-base font-bold text-navy-950 transition-colors group-hover:text-navy">
+          {name}
+        </p>
+        {note && (
+          <p className="mt-0.5 text-xs text-gray-600 leading-snug">
+            {note}
+          </p>
+        )}
       </div>
     </div>
   );
 }
+

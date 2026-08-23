@@ -1,56 +1,85 @@
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
-import { GlassSection, GlassCard } from "@/components/GlassSection";
 import { CampusMap } from "@/components/CampusMap";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone, UserCheck, Clock } from "lucide-react";
 
 export default function ContactPage() {
   return (
     <>
-      <PageHero title="Contact Us" subtitle="Reach out to the organizing team." />
+      <PageHero
+        title="Contact Us"
+        subtitle="Get in touch with the Malwa Chemical Conclave 2026 organizing committee and BIS Student Chapter secretariat."
+      />
 
-      <GlassSection className="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-8">
-        <div className="grid gap-8 lg:grid-cols-2">
+      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="grid gap-8 lg:grid-cols-2 lg:items-start">
           <Reveal>
             <div className="space-y-5">
-              <GlassCard className="p-5">
-                <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-navy">
-                  <MapPin size={14} /> Address
+              <div className="institutional-card p-6 border-l-4 border-l-navy">
+                <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-navy-900">
+                  <MapPin size={16} /> Department Address
                 </p>
-                <p className="mt-2 text-sm text-gray-700">
-                  Department of Chemical Engineering, IIT Indore, Simrol,
-                  453552, Indore&ndash;Khandwa Road, Indore, Madhya Pradesh
+                <h3 className="mt-2 text-lg font-bold text-navy-950">
+                  Department of Chemical Engineering
+                </h3>
+                <p className="mt-1 text-sm text-gray-700 leading-relaxed">
+                  Indian Institute of Technology Indore, Simrol, Khandwa Road, Indore, Madhya Pradesh &ndash; 453552, India.
                 </p>
-              </GlassCard>
-              <GlassCard className="p-5">
-                <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-navy">
-                  <Mail size={14} /> Email
+              </div>
+
+              <div className="institutional-card p-6 border-l-4 border-l-gold">
+                <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gold-900">
+                  <Mail size={16} /> Electronic Correspondence
                 </p>
+                <h3 className="mt-2 text-lg font-bold text-navy-950">
+                  Conclave Secretariat Email
+                </h3>
                 <a
                   href="mailto:chemenggoffice@iiti.ac.in"
-                  className="mt-2 inline-block text-sm text-gray-700 hover:text-navy"
+                  className="hover-underline mt-1.5 inline-block text-sm font-semibold text-navy"
                 >
                   chemenggoffice@iiti.ac.in
                 </a>
-              </GlassCard>
-              <GlassCard className="p-5">
-                <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-navy">
-                  <Phone size={14} /> Phone
+                <p className="mt-1 text-xs text-gray-500">
+                  For sponsorship, speaker inquiries, registration support, and press inquiries.
                 </p>
-                <p className="mt-2 text-sm text-gray-700">
-                  Student coordinator contact number to be added.
+              </div>
+
+              <div className="institutional-card p-6 border-l-4 border-l-gray-400">
+                <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-700">
+                  <Phone size={16} /> Telephone &amp; Helpdesk
                 </p>
-              </GlassCard>
+                <h3 className="mt-2 text-lg font-bold text-navy-950">
+                  IIT Indore Main Line
+                </h3>
+                <p className="mt-1 text-sm text-gray-700">
+                  +91 731 2438 700
+                </p>
+                <p className="mt-1 text-xs text-gray-500 flex items-center gap-1">
+                  <Clock size={12} /> Office hours: Mon &ndash; Fri, 09:00 AM &ndash; 05:30 PM IST
+                </p>
+              </div>
             </div>
           </Reveal>
 
           <Reveal delay={0.05}>
-            <GlassCard className="p-2">
-              <CampusMap className="aspect-[4/3]" />
-            </GlassCard>
+            <div className="institutional-card p-6 flex flex-col justify-between h-full">
+              <div>
+                <span className="inline-block rounded bg-navy-50 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-navy-900 mb-2">
+                  Campus Location Map
+                </span>
+                <h3 className="text-lg font-bold text-navy-950 mb-4">
+                  IIT Indore Simrol Campus
+                </h3>
+                <div className="rounded-lg overflow-hidden border border-[#E5E7EB]">
+                  <CampusMap className="aspect-[4/3] w-full border-0" />
+                </div>
+              </div>
+            </div>
           </Reveal>
         </div>
-      </GlassSection>
+      </div>
     </>
   );
 }
+

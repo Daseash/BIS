@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-outfit), var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
+  /* Official Institutional Palette (IIT Indore Academic Standard) */
   --color-navy-950: #001B3D;
   --color-navy-900: #002F6C;
   --color-navy-800: #003D8F;
@@ -15,6 +16,7 @@
   --color-navy-100: #E4EDFB;
   --color-navy-50: #F4F8FE;
 
+  /* Academic Gold (Refined Accent) */
   --color-gold: #C59B27;
   --color-gold-DEFAULT: #C59B27;
   --color-gold-50: #FBF5E6;
@@ -23,17 +25,33 @@
   --color-gold-700: #93741D;
   --color-gold-900: #5C4812;
 
-  --color-offwhite: #F7F9FC;
+  --color-offwhite: #F8F9FA;
+  --color-surface: #FFFFFF;
 }
 
 body {
-  background-color: #ffffff;
-  color: #001B3D;
+  background-color: #F8F9FA;
+  color: #1F2937;
 }
 
 ::selection {
-  background-color: var(--color-gold);
-  color: #fff;
+  background-color: var(--color-navy-900);
+  color: #FFFFFF;
+}
+
+/* ── Clean Institutional Card Style ────────────────────────────── */
+.institutional-card {
+  background-color: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.institutional-card:hover {
+  border-color: #004AAD;
+  box-shadow: 0 4px 12px 0 rgba(0, 47, 108, 0.08);
+  transform: translateY(-2px);
 }
 
 /* ── Announcement marquee ──────────────────────────────────────── */
@@ -50,7 +68,7 @@ body {
   .animate-marquee { animation: none; }
 }
 
-/* ── Hover underline (gold on hover) ───────────────────────────── */
+/* ── Hover underline ───────────────────────────────────────────── */
 .hover-underline {
   position: relative;
 }
@@ -58,7 +76,7 @@ body {
   content: "";
   position: absolute;
   left: 0;
-  bottom: -4px;
+  bottom: -3px;
   height: 2px;
   width: 100%;
   background-color: var(--color-gold);

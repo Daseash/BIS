@@ -1,6 +1,5 @@
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
-import { GlassSection } from "@/components/GlassSection";
 import { MemberCard } from "@/components/MemberCard";
 
 const LEADERSHIP = [
@@ -13,25 +12,25 @@ const LEADERSHIP = [
   {
     role: "Chairperson",
     name: "Prof. Eswara Prasad Korimalli",
-    note: "HoD, Chemical Engineering",
+    note: "HoD, Chemical Engineering, IIT Indore",
     image: "/organizers/eswara-prasad.png",
   },
   {
     role: "Advisor",
     name: "Prof. Manish Kumar Goyal",
-    note: "IIT Indore",
+    note: "Professor, IIT Indore",
     image: "/organizers/manish-goyal.png",
   },
   {
     role: "Faculty Coordinator",
     name: "Dr. Preetika Karnal",
-    note: "IIT Indore",
+    note: "Assistant Professor, IIT Indore",
     image: "/organizers/preetika-karnal.jpg",
   },
   {
     role: "Co-Faculty Coordinator",
     name: "Dr. Ranjeet Kumar",
-    note: "IIT Indore",
+    note: "Assistant Professor, IIT Indore",
     image: "/organizers/ranjeet-kumar.jpg",
   },
   {
@@ -79,20 +78,27 @@ export default function OrganizersPage() {
   return (
     <>
       <PageHero
-        title="Organizers"
-        subtitle="The team behind Malwa Chemical Conclave 2026."
+        title="Organizing Committee"
+        subtitle="Distinguished leadership, faculty coordinators, and student chapter committee behind Malwa Chemical Conclave 2026."
       />
 
-      <GlassSection className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
-        <Reveal>
-          <h2 className="text-xl font-semibold text-navy-900">Organizing Committee</h2>
-        </Reveal>
+      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+        <div>
+          <span className="inline-block rounded bg-navy-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-navy-900">
+            Institutional Leadership
+          </span>
+          <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-navy-950">
+            Patron, Advisors &amp; Coordinators
+          </h2>
+          <p className="mt-1 text-sm text-gray-600">
+            Guidance and oversight from the academic leadership of IIT Indore.
+          </p>
+        </div>
 
-        <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {LEADERSHIP.map((person, i) => (
-            <Reveal key={person.name} delay={i * 0.05}>
+            <Reveal key={person.name} delay={i * 0.04}>
               <MemberCard
-                glass
                 name={person.name}
                 role={person.role}
                 note={person.note}
@@ -102,20 +108,22 @@ export default function OrganizersPage() {
           ))}
         </div>
 
-        <Reveal delay={0.1}>
-          <h2 className="mt-14 text-xl font-semibold text-navy-900">
+        <div className="mt-20">
+          <span className="inline-block rounded bg-gold-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-gold-900">
+            Student Leadership
+          </span>
+          <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-navy-950">
             BIS Student Chapter Core Group
           </h2>
           <p className="mt-1 text-sm text-gray-600">
-            Department of Chemical Engineering, IIT Indore in association with the Bureau of Indian Standards.
+            Student chapter members managing operations, guest relations, technical submissions, and event logistics.
           </p>
-        </Reveal>
+        </div>
 
-        <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {BIS_CHAPTER_MEMBERS.map((person, i) => (
-            <Reveal key={person.name} delay={i * 0.05}>
+            <Reveal key={person.name} delay={i * 0.04}>
               <MemberCard
-                glass
                 name={person.name}
                 role={person.role}
                 note={person.note}
@@ -124,7 +132,8 @@ export default function OrganizersPage() {
             </Reveal>
           ))}
         </div>
-      </GlassSection>
+      </div>
     </>
   );
 }
+

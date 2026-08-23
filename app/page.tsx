@@ -8,9 +8,12 @@ import {
   Wrench,
   Newspaper,
   Trophy,
+  MapPin,
+  Calendar,
+  Building,
+  CheckCircle,
 } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
-import { GlassSection, GlassCard } from "@/components/GlassSection";
 import { CampusMap } from "@/components/CampusMap";
 import { Button } from "@/components/Button";
 import { AnnouncementTicker } from "@/components/AnnouncementTicker";
@@ -27,39 +30,46 @@ const VERTICALS = [
   {
     icon: Mic,
     title: "Industry Talks",
-    description: "Sessions from leading chemical and process industry speakers.",
+    category: "Keynotes",
+    description: "Plenary addresses from leading chemical and process industry pioneers.",
   },
   {
     icon: Handshake,
     title: "Industry Matchmaking",
-    description: "20-minute faculty–company meetings plus expert counselling sessions.",
+    category: "Networking",
+    description: "20-minute dedicated faculty–company meetings plus expert technical counselling sessions.",
   },
   {
     icon: Lightbulb,
     title: "Student Innovation Expo",
-    description: "Prototypes, posters, startup ideas, patents, and process simulations.",
+    category: "Exhibition",
+    description: "Prototypes, research posters, startup ideas, patents, and process simulations.",
   },
   {
     icon: MessagesSquare,
     title: "Interactive BIS Panel",
+    category: "Policy",
     description:
-      "Panel discussion with the Bureau of Indian Standards on regulation and quality assurance.",
+      "Policy discussions with the Bureau of Indian Standards on standardisation and quality assurance.",
   },
   {
     icon: Wrench,
     title: "Hands-on Workshops",
-    description: "Practical sessions on tools used across chemical process engineering.",
+    category: "Workshops",
+    description: "Practical masterclasses on modern tools used across chemical process engineering.",
   },
   {
     icon: Newspaper,
     title: "Annual Outlook",
+    category: "Publication",
     description:
-      "The Malwa Chemical Outlook — industry trends, faculty research & student projects.",
+      "The Malwa Chemical Outlook — industry benchmarks, research trends, and sustainable tech.",
   },
   {
     icon: Trophy,
     title: "Awards Programme",
-    description: "Recognitions across sustainable manufacturing, innovation, and posters.",
+    category: "Recognition",
+    description: "Recognitions across sustainable manufacturing, innovation, and paper presentations.",
   },
 ];
 
@@ -81,72 +91,103 @@ export default function HomePage() {
         <AnnouncementTicker />
       </div>
 
-      {/* ── IMPACT: Statement heading + count-up stats ────────────── */}
-      <GlassSection className="px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <div className="mx-auto max-w-7xl">
-          <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
-            <Reveal>
-              <h2 className="text-3xl font-light leading-tight tracking-tight text-navy-900 sm:text-4xl lg:text-5xl">
-                Bringing academia,
-                <br />
-                industry, and regulators
-                <br />
-                onto one stage.
+      {/* ── IMPACT & STATEMENT ────────────────────────────────────── */}
+      <section className="border-b border-[#E5E7EB] bg-white py-16 sm:py-20 lg:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
+            <div className="lg:col-span-6">
+              <span className="inline-block rounded bg-navy-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-navy-900">
+                IIT Indore &bull; October 12&ndash;13, 2026
+              </span>
+              <h2 className="mt-4 text-3xl font-bold tracking-tight text-navy-950 sm:text-4xl lg:text-5xl leading-tight">
+                Bringing academia, industry, and regulators onto one stage.
               </h2>
-              <Link
-                href="/about"
-                className="hover-underline mt-6 inline-flex items-center gap-1 text-base font-semibold text-navy"
-              >
-                About the Conclave <ArrowRight size={16} />
-              </Link>
-            </Reveal>
+              <p className="mt-4 text-base leading-relaxed text-gray-600 sm:text-lg">
+                Hosted by the Department of Chemical Engineering at IIT Indore in association with the Bureau of Indian Standards, the Malwa Chemical Conclave connects researchers, manufacturers, and policy leaders.
+              </p>
+              <div className="mt-6 flex flex-wrap items-center gap-4">
+                <Link
+                  href="/about"
+                  className="hover-underline inline-flex items-center gap-1.5 text-base font-semibold text-navy"
+                >
+                  About the Conclave <ArrowRight size={16} />
+                </Link>
+                <span className="text-gray-300">|</span>
+                <Link
+                  href="/schedule"
+                  className="hover-underline inline-flex items-center gap-1.5 text-base font-semibold text-navy"
+                >
+                  View Schedule <ArrowRight size={16} />
+                </Link>
+              </div>
+            </div>
 
-            <Reveal delay={0.1}>
-              <div className="grid grid-cols-2 gap-4">
+            <div className="lg:col-span-6">
+              <div className="grid grid-cols-2 gap-4 sm:gap-6">
                 {STATS.map((s) => (
-                  <GlassCard key={s.label} className="p-5">
-                    <CountUpStat value={s.value} suffix={s.suffix} label={s.label} />
-                  </GlassCard>
+                  <div
+                    key={s.label}
+                    className="institutional-card p-6 border-l-4 border-l-navy"
+                  >
+                    <div className="text-3xl sm:text-4xl font-extrabold text-navy-900">
+                      <CountUpStat value={s.value} suffix={s.suffix} label="" />
+                    </div>
+                    <p className="mt-2 text-xs sm:text-sm font-semibold uppercase tracking-wider text-gray-600">
+                      {s.label}
+                    </p>
+                  </div>
                 ))}
               </div>
-            </Reveal>
+            </div>
           </div>
         </div>
-      </GlassSection>
+      </section>
 
-      {/* ── VERTICALS: Glass cards ────────────────────────────────── */}
-      <section className="relative isolate overflow-hidden border-t border-white/20 bg-navy-950/90 py-16 lg:py-24">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -top-20 left-1/4 -z-10 h-72 w-72 rounded-full bg-gold/10 blur-3xl"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute bottom-0 right-1/4 -z-10 h-80 w-80 rounded-full bg-navy-400/10 blur-3xl"
-        />
+      {/* ── SEVEN VERTICALS (Clean Academic Cards) ────────────────── */}
+      <section className="py-16 sm:py-20 lg:py-24 bg-[#F8F9FA]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <Reveal>
-            <h2 className="max-w-2xl text-3xl font-light leading-tight tracking-tight text-white sm:text-4xl">
-              Seven verticals that shape a working conclave.
+          <div className="max-w-3xl mb-12">
+            <span className="inline-block rounded bg-gold-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-gold-900">
+              Conclave Structure
+            </span>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-navy-950 sm:text-4xl">
+              Seven Integrated Verticals
             </h2>
-            <p className="mt-3 max-w-2xl text-base text-white/60 sm:text-lg">
-              Across a workshop day and a main conclave day.
+            <p className="mt-2 text-base text-gray-600">
+              Structured across a dedicated workshop day and a flagship conclave day to ensure maximum practical takeaway and institutional dialogue.
             </p>
-          </Reveal>
+          </div>
 
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {VERTICALS.map((vertical, i) => {
               const Icon = vertical.icon;
               return (
-                <Reveal key={vertical.title} delay={i * 0.04}>
-                  <div className="group h-full rounded-md border border-white/15 bg-white/8 p-6 backdrop-blur-md transition-colors hover:border-gold/40 hover:bg-white/12">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gold/90 text-white">
-                      <Icon size={20} />
+                <Reveal key={vertical.title} delay={i * 0.03}>
+                  <div className="institutional-card h-full p-6 flex flex-col justify-between group">
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-navy-900 text-white transition-colors group-hover:bg-navy">
+                          <Icon size={22} />
+                        </div>
+                        <span className="rounded bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-700">
+                          {vertical.category}
+                        </span>
+                      </div>
+                      <h3 className="text-lg font-bold text-navy-950 group-hover:text-navy transition-colors">
+                        {vertical.title}
+                      </h3>
+                      <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                        {vertical.description}
+                      </p>
                     </div>
-                    <p className="mt-4 text-base font-semibold text-white">{vertical.title}</p>
-                    <p className="mt-1.5 text-sm leading-relaxed text-white/60">
-                      {vertical.description}
-                    </p>
+                    <div className="mt-6 pt-3 border-t border-gray-100">
+                      <Link
+                        href="/schedule"
+                        className="inline-flex items-center text-xs font-semibold text-navy hover:text-gold-900 transition-colors"
+                      >
+                        Track Details <ArrowRight size={13} className="ml-1" />
+                      </Link>
+                    </div>
                   </div>
                 </Reveal>
               );
@@ -155,81 +196,130 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── AT A GLANCE: Glass cards ──────────────────────────────── */}
-      <GlassSection className="px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <div className="mx-auto max-w-7xl">
-          <Reveal>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              <GlassCard className="p-6">
-                <p className="text-xs font-bold uppercase tracking-wide text-gold">Venue</p>
-                <p className="mt-2 text-lg font-semibold text-navy-900">
-                  Indian Institute of Technology Indore
-                </p>
-              </GlassCard>
-              <GlassCard className="p-6">
-                <p className="text-xs font-bold uppercase tracking-wide text-gold">Date</p>
-                <p className="mt-2 text-lg font-semibold text-navy-900">October 12&ndash;13, 2026</p>
-              </GlassCard>
-              <GlassCard className="p-6">
-                <p className="text-xs font-bold uppercase tracking-wide text-gold">
-                  An initiative of
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-gray-700">
-                  The BIS Student Chapter, Department of Chemical Engineering, IIT Indore, in
-                  association with the Bureau of Indian Standards.
-                </p>
-              </GlassCard>
+      {/* ── AT A GLANCE ───────────────────────────────────────────── */}
+      <section className="border-t border-[#E5E7EB] bg-white py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="institutional-card p-6">
+              <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gold-900">
+                <MapPin size={15} /> Venue
+              </p>
+              <p className="mt-2 text-lg font-bold text-navy-950">
+                Indian Institute of Technology Indore
+              </p>
+              <p className="mt-1 text-xs text-gray-500">
+                Simrol, Khandwa Road, Madhya Pradesh 453552
+              </p>
             </div>
-          </Reveal>
-        </div>
-      </GlassSection>
 
-      {/* ── FIND US ───────────────────────────────────────────────── */}
-      <GlassSection className="px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <div className="mx-auto max-w-7xl">
-          <Reveal>
-            <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
+            <div className="institutional-card p-6">
+              <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gold-900">
+                <Calendar size={15} /> Dates
+              </p>
+              <p className="mt-2 text-lg font-bold text-navy-950">
+                October 12&ndash;13, 2026
+              </p>
+              <p className="mt-1 text-xs text-gray-500">
+                Day 1: Workshops &bull; Day 2: Main Conclave
+              </p>
+            </div>
+
+            <div className="institutional-card p-6">
+              <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gold-900">
+                <Building size={15} /> Organizing Body
+              </p>
+              <p className="mt-2 text-sm font-semibold text-navy-950 leading-relaxed">
+                BIS Student Chapter, Department of Chemical Engineering, IIT Indore, in association with the Bureau of Indian Standards.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FIND US & LOCATION ────────────────────────────────────── */}
+      <section className="border-t border-[#E5E7EB] bg-[#F8F9FA] py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-10">
+            <span className="inline-block rounded bg-navy-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-navy-900">
+              Campus &amp; Location
+            </span>
+            <h2 className="mt-2 text-3xl font-bold tracking-tight text-navy-950 sm:text-4xl">
+              Find Us at IIT Indore
+            </h2>
+            <p className="mt-2 max-w-2xl text-base text-gray-600">
+              Department of Chemical Engineering, Indian Institute of Technology Indore, Simrol, Indore&ndash;Khandwa Road, Madhya Pradesh 453552.
+            </p>
+          </div>
+
+          <div className="grid gap-6 lg:grid-cols-12 lg:items-stretch">
+            {/* Column 1: Venue Details */}
+            <div className="institutional-card p-6 flex flex-col justify-between lg:col-span-4">
               <div>
-                <h2 className="text-3xl font-light tracking-tight text-navy-900 sm:text-4xl">
-                  Find Us
-                </h2>
-                <p className="mt-3 text-base text-gray-600 sm:text-lg">
-                  Indian Institute of Technology Indore, Simrol, 453552, Indore&ndash;Khandwa
-                  Road, Indore, Madhya Pradesh.
+                <span className="inline-block rounded bg-navy-50 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-navy-900">
+                  Campus Venue
+                </span>
+                <h3 className="mt-3 text-lg font-bold text-navy-950">
+                  Academic Complex &amp; Lecture Halls
+                </h3>
+                <p className="mt-2 text-sm text-gray-600 leading-relaxed">
+                  Keynote sessions, interactive panel discussions, and student research exhibitions will be held across the central academic complexes.
                 </p>
-                <Link
-                  href="/accommodation-venue"
-                  className="hover-underline mt-5 inline-flex items-center gap-1 text-base font-semibold text-navy"
-                >
-                  Accommodation &amp; Venue details <ArrowRight size={16} />
-                </Link>
-              </div>
-              <GlassCard className="p-2">
-                <CampusMap />
-              </GlassCard>
-            </div>
-          </Reveal>
-        </div>
-      </GlassSection>
 
-      {/* ── CTA ───────────────────────────────────────────────────── */}
-      <section className="relative isolate overflow-hidden border-t border-white/20 bg-navy-950/90 py-16">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute top-0 left-1/2 -z-10 h-64 w-64 -translate-x-1/2 rounded-full bg-gold/10 blur-3xl"
-        />
-        <div className="mx-auto flex max-w-7xl flex-col items-center gap-4 px-4 text-center sm:px-6 lg:px-8">
-          <p className="text-xs font-bold uppercase tracking-widest text-gold">
-            Save the Date
-          </p>
-          <h2 className="text-3xl font-light text-white sm:text-4xl">
-            Registrations opening soon
+                <div className="mt-6 space-y-3 border-t border-gray-100 pt-4 text-xs sm:text-sm text-gray-600">
+                  <p><strong className="text-navy-950">Indore Junction:</strong> 24 km</p>
+                  <p><strong className="text-navy-950">Devi Ahilyabai Airport:</strong> 35 km</p>
+                </div>
+              </div>
+
+              <Link
+                href="/accommodation-venue"
+                className="hover-underline mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-navy"
+              >
+                Accommodation &amp; Travel Guide <ArrowRight size={15} />
+              </Link>
+            </div>
+
+            {/* Column 2: Sunset Campus Photo */}
+            <div className="group relative overflow-hidden rounded-lg border border-[#E5E7EB] bg-white shadow-sm lg:col-span-4 min-h-[280px]">
+              <img
+                src="/campus-sunset.jpg"
+                alt="IIT Indore campus building during sunset"
+                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#001B3D]/90 via-[#001B3D]/40 to-transparent p-4 text-white">
+                <p className="text-xs font-bold uppercase tracking-wider text-gold-300">IIT Indore Campus</p>
+                <p className="text-sm font-medium text-white">Central Academic Complex</p>
+              </div>
+            </div>
+
+            {/* Column 3: Live Map */}
+            <div className="rounded-lg border border-[#E5E7EB] overflow-hidden p-2 bg-white shadow-sm lg:col-span-4">
+              <CampusMap className="h-full min-h-[260px] border-0 shadow-none" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── REGISTRATION CTA ──────────────────────────────────────── */}
+      <section className="border-t-2 border-gold bg-[#001B3D] text-white py-16 sm:py-20">
+        <div className="mx-auto flex max-w-4xl flex-col items-center gap-4 px-4 text-center sm:px-6 lg:px-8">
+          <span className="inline-block rounded-full bg-white/10 px-3.5 py-1 text-xs font-bold uppercase tracking-widest text-gold-300">
+            Registrations Opening Soon
+          </span>
+          <h2 className="text-3xl font-bold text-white sm:text-4xl">
+            Be Part of Malwa Chemical Conclave 2026
           </h2>
-          <Button href="/registration" className="mt-2">
-            Get Notified &amp; Register
-          </Button>
+          <p className="max-w-2xl text-base text-white/80 leading-relaxed">
+            Reserve your place for keynote sessions, hands-on masterclasses, industry networking, and technical exhibitions.
+          </p>
+          <div className="mt-4">
+            <Button href="/registration">
+              Get Notified &amp; Register Now
+            </Button>
+          </div>
         </div>
       </section>
     </>
   );
 }
+

@@ -1,26 +1,25 @@
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
-import { GlassSection, GlassCard } from "@/components/GlassSection";
-import { MapPinned, ClipboardCheck, TrendingUp } from "lucide-react";
+import { MapPinned, ClipboardCheck, TrendingUp, Target, Award, Users } from "lucide-react";
 
 const HIGHLIGHTS = [
   {
     icon: MapPinned,
     title: "Regional Relevance",
     description:
-      "Chemical Engineering practice applied directly to the Malwa industrial ecosystem.",
+      "Directly connecting chemical engineering research to the flourishing industrial landscape of the Malwa region.",
   },
   {
     icon: ClipboardCheck,
-    title: "BIS Standards",
+    title: "BIS Standardisation",
     description:
-      "Insight into standardisation and quality-assurance for national compliance.",
+      "Practical insight into national quality benchmarks, regulatory adherence, and safety standard compliance.",
   },
   {
     icon: TrendingUp,
-    title: "Collective Impact",
+    title: "The Malwa Consortium",
     description:
-      "Formally establishing the Malwa Consortium for responsible regional development.",
+      "Formally creating a sustainable academia–industry consortium for long-term technical synergy and development.",
   },
 ];
 
@@ -29,63 +28,77 @@ export default function AboutPage() {
     <>
       <PageHero
         title="About the Conclave"
-        subtitle="A platform bringing academicians, industry, and regulators onto a single stage."
+        subtitle="A premier academic and industrial symposium fostering sustainable process innovation and standardisation in Central India."
       />
 
-      <GlassSection className="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
+        {/* Mission Statement */}
         <Reveal>
-          <GlassCard className="p-8">
-            <p className="leading-relaxed text-gray-700">
-              The Malwa Chemical Conclave is a platform bringing academicians,
-              industry, and regulators onto a single stage to advance Chemical
-              Engineering practice and Industrial Standardisation. The 2026
-              edition also formally establishes the{" "}
-              <strong className="text-navy-900">Malwa Consortium</strong> — a
-              collaborative structure for responsible regional development.
+          <div className="institutional-card p-8 sm:p-10 border-l-4 border-l-navy">
+            <span className="inline-block rounded bg-navy-50 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-navy-900 mb-3">
+              Vision &amp; Objective
+            </span>
+            <h2 className="text-2xl font-bold text-navy-950 sm:text-3xl mb-4">
+              Bridging Research, Manufacturing, and National Standards
+            </h2>
+            <p className="text-base leading-relaxed text-gray-700 sm:text-lg">
+              The <strong className="text-navy-950 font-bold">Malwa Chemical Conclave</strong> is an initiative organized by the Department of Chemical Engineering at IIT Indore in association with the Bureau of Indian Standards (BIS). The conclave serves as a premier technical platform bringing together global scholars, industry executives, policymakers, and innovative students.
             </p>
-          </GlassCard>
+          </div>
         </Reveal>
 
+        {/* Milestone Progression */}
         <Reveal delay={0.05}>
-          <GlassCard className="mt-6 flex flex-col items-center justify-between gap-3 px-6 py-5 sm:flex-row">
-            <span className="text-sm font-semibold uppercase tracking-wide text-navy-900">
-              2025 Pilot
-            </span>
-            <span className="text-gray-600">4 Industry Talks (2025)</span>
-            <span aria-hidden className="hidden text-navy sm:block">
-              &rarr;
-            </span>
-            <span className="text-sm font-semibold uppercase tracking-wide text-navy-900">
-              2026 Flagship
-            </span>
-            <span className="text-gray-600">7 Integrated Verticals (2026)</span>
-          </GlassCard>
+          <div className="mt-8 institutional-card p-6 sm:p-8 bg-gradient-to-r from-navy-50/70 to-white">
+            <h3 className="text-sm font-bold uppercase tracking-wider text-navy-900 mb-4">
+              Conclave Evolution
+            </h3>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+              <div className="flex-1 rounded-md border border-[#E5E7EB] bg-white p-4 shadow-2xs">
+                <span className="text-xs font-bold uppercase tracking-wider text-gray-500">2025 Pilot Edition</span>
+                <p className="mt-1 text-base font-bold text-navy-900">4 Plenary Industry Talks</p>
+                <p className="text-xs text-gray-600 mt-1">Foundation of the BIS Student Chapter collaborative series.</p>
+              </div>
+              <div className="hidden sm:flex items-center text-navy font-bold text-xl px-2">
+                &rarr;
+              </div>
+              <div className="flex-1 rounded-md border-2 border-navy bg-white p-4 shadow-sm">
+                <span className="text-xs font-bold uppercase tracking-wider text-gold-900">2026 Flagship Conclave</span>
+                <p className="mt-1 text-base font-bold text-navy-950">7 Integrated Strategic Verticals</p>
+                <p className="text-xs text-gray-600 mt-1">Workshops, Matchmaking, Student Expo, and BIS Policy Panel.</p>
+              </div>
+            </div>
+          </div>
         </Reveal>
 
-        <div className="mt-10 grid gap-5 sm:grid-cols-3">
-          {HIGHLIGHTS.map((item, i) => {
-            const Icon = item.icon;
-            return (
-              <Reveal key={item.title} delay={i * 0.05}>
-                <GlassCard className="h-full p-5">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-navy-900/90 text-white">
-                    <Icon size={20} />
+        {/* Strategic Pillars */}
+        <div className="mt-12">
+          <div className="mb-6">
+            <h3 className="text-xl font-bold text-navy-950">Core Pillars of MCC 2026</h3>
+            <p className="text-sm text-gray-600 mt-1">Key drivers that guide each track and technical deliberation.</p>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-3">
+            {HIGHLIGHTS.map((item, i) => {
+              const Icon = item.icon;
+              return (
+                <Reveal key={item.title} delay={i * 0.05}>
+                  <div className="institutional-card h-full p-6 flex flex-col justify-between">
+                    <div>
+                      <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-navy-900 text-white mb-4">
+                        <Icon size={24} />
+                      </div>
+                      <h4 className="text-lg font-bold text-navy-950">{item.title}</h4>
+                      <p className="mt-2 text-sm leading-relaxed text-gray-600">{item.description}</p>
+                    </div>
                   </div>
-                  <p className="mt-4 font-semibold text-navy-900">{item.title}</p>
-                  <p className="mt-1 text-sm text-gray-600">{item.description}</p>
-                </GlassCard>
-              </Reveal>
-            );
-          })}
+                </Reveal>
+              );
+            })}
+          </div>
         </div>
-
-        <Reveal delay={0.1}>
-          <GlassCard className="mt-10 p-6 text-sm text-navy-500">
-            More about the conclave&apos;s mission, past editions, and detailed
-            objectives to be added here.
-          </GlassCard>
-        </Reveal>
-      </GlassSection>
+      </div>
     </>
   );
 }
+
