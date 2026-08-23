@@ -192,29 +192,29 @@ export default function HomePage() {
                       </h3>
                     </div>
 
-                    {/* ── Slide-in Overlay: Reveals on Hover with Slow Smooth Transition ──────── */}
-                    <div className="absolute inset-0 flex flex-col justify-between bg-gradient-to-t from-[#001B3D] via-[#001B3D]/95 to-[#002F6C] p-6 text-white transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] transform translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 group-focus:translate-y-0 group-focus:opacity-100">
+                    {/* ── Slide-in Overlay: White Background with Navy Details on Hover ──────── */}
+                    <div className="absolute inset-0 flex flex-col justify-between bg-white p-6 transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] transform translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 group-focus:translate-y-0 group-focus:opacity-100 z-10">
                       <div>
-                        <div className="flex items-center justify-between border-b border-white/20 pb-2 mb-3">
-                          <span className="rounded bg-gold px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-navy-950">
+                        <div className="flex items-center justify-between border-b border-gray-100 pb-2 mb-2.5">
+                          <span className="rounded bg-navy-50 px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-navy-900">
                             {vertical.category}
                           </span>
-                          <span className="text-xs font-mono font-bold text-gold-300">
+                          <span className="text-xs font-mono font-bold text-navy">
                             Track {trackNumber}
                           </span>
                         </div>
-                        <h4 className="text-lg font-bold text-white leading-snug">
+                        <h4 className="text-base sm:text-lg font-bold text-navy-950 leading-snug">
                           {vertical.title}
                         </h4>
-                        <p className="mt-2 text-xs sm:text-sm leading-relaxed text-white/85">
+                        <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-gray-600">
                           {vertical.description}
                         </p>
                       </div>
 
-                      <div className="pt-2 border-t border-white/10">
+                      <div className="pt-2 border-t border-gray-100">
                         <Link
                           href="/schedule"
-                          className="inline-flex items-center text-xs font-bold text-gold-300 hover:text-white transition-colors"
+                          className="inline-flex items-center text-xs font-bold text-navy hover:text-navy-900 transition-colors"
                         >
                           Explore Track Schedule <ArrowRight size={13} className="ml-1" />
                         </Link>
