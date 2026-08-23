@@ -29,6 +29,33 @@ const ANTICIPATED_PARTNERS = [
   "GAIL India",
 ];
 
+const PREVIOUS_SPEAKERS = [
+  {
+    name: "Meghdeep Agrawal",
+    role: "Vice President",
+    organization: "Safeflex",
+    image: "/speakers/meghdeep-agrawal.jpeg",
+  },
+  {
+    name: "Kapil Jat",
+    role: "Senior General Manager",
+    organization: "Moira Sariya",
+    image: "/speakers/kapil-jat.jpeg",
+  },
+  {
+    name: "Arpit Jain",
+    role: "Director",
+    organization: "Fenton Chemicals",
+    image: "/speakers/arpit-jain.webp",
+  },
+  {
+    name: "Shubhanjali Umrao",
+    role: "Deputy Director",
+    organization: "Bureau of Indian Standards",
+    image: "/speakers/shubhanjali-umrao.jpeg",
+  },
+];
+
 export default function SpeakersPage() {
   return (
     <>
@@ -60,6 +87,19 @@ export default function SpeakersPage() {
           </div>
         </Reveal>
 
+        {/* 2026 Speaker Slots */}
+        <div className="mb-8">
+          <span className="inline-block rounded bg-navy-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-navy-900">
+            Conclave 2026
+          </span>
+          <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-navy-950">
+            Confirmed &amp; Upcoming Keynotes
+          </h2>
+          <p className="mt-1 text-sm text-gray-600">
+            Plenary addresses and technical sessions across industry innovation and standardisation.
+          </p>
+        </div>
+
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {SPEAKER_SLOTS.map((speaker, i) => (
             <Reveal key={i} delay={i * 0.04}>
@@ -70,6 +110,46 @@ export default function SpeakersPage() {
               />
             </Reveal>
           ))}
+        </div>
+
+        {/* ── Previous Speakers Section (Round Images) ─────────────── */}
+        <div className="mt-20 pt-12 border-t border-[#E5E7EB]">
+          <div className="text-center sm:text-left mb-10">
+            <span className="inline-block rounded bg-gold-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-gold-900">
+              Distinguished Legacy
+            </span>
+            <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-navy-950">
+              Previous Speakers
+            </h2>
+            <p className="mt-1 text-sm text-gray-600">
+              Eminent industry pioneers and regulatory dignitaries who have addressed past editions of the conclave.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {PREVIOUS_SPEAKERS.map((speaker, i) => (
+              <Reveal key={speaker.name} delay={i * 0.05}>
+                <div className="institutional-card p-6 flex flex-col items-center text-center bg-white h-full group hover:border-navy transition-all duration-300">
+                  <div className="relative h-28 w-28 sm:h-32 sm:w-32 rounded-full overflow-hidden border-2 border-gold/40 p-1 bg-gradient-to-br from-gold/20 to-navy/10 shadow-sm group-hover:scale-105 group-hover:border-navy transition-all duration-300 shrink-0">
+                    <img
+                      src={speaker.image}
+                      alt={speaker.name}
+                      className="h-full w-full rounded-full object-cover object-top"
+                    />
+                  </div>
+                  <h3 className="mt-4 text-base sm:text-lg font-bold text-navy-950 tracking-tight group-hover:text-navy transition-colors">
+                    {speaker.name}
+                  </h3>
+                  <p className="mt-1 text-xs sm:text-sm font-semibold text-gold-900">
+                    {speaker.role}
+                  </p>
+                  <p className="mt-0.5 text-xs text-gray-500">
+                    {speaker.organization}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </div>
     </>
