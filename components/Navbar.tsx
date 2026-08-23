@@ -58,7 +58,7 @@ const MEGA_TABS = [
       {
         heading: "Department",
         links: [
-          { label: "Chemical Engineering, IIT Indore", href: "https://www.iiti.ac.in/academics" },
+          { label: "Chemical Engineering, IIT Indore", href: "https://chemical.iiti.ac.in/" },
           { label: "IIT Indore Home", href: "https://www.iiti.ac.in/" },
         ],
       },

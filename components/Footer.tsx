@@ -27,7 +27,7 @@ const QUICK_LINKS = [
 
 const DEPT_LINKS = [
   { label: "IIT Indore Home", href: "https://www.iiti.ac.in/", external: true },
-  { label: "Dept. of Chemical Engineering", href: "https://www.iiti.ac.in/academics", external: true },
+  { label: "Dept. of Chemical Engineering", href: "https://chemical.iiti.ac.in/", external: true },
   { label: "Bureau of Indian Standards", href: "https://www.bis.gov.in/", external: true },
 ];
 
@@ -41,16 +41,17 @@ export function Footer() {
             <Image
               src="/logos/iit-indore-emblem.png"
               alt="IIT Indore emblem"
-              width={40}
-              height={30}
-              className="h-8 w-auto brightness-0 invert"
+              width={60}
+              height={45}
+              className="h-10 w-auto"
             />
+            <div className="h-8 w-px bg-white/20" />
             <Image
               src="/logos/chemical-engineering-logo.png"
               alt="IIT Indore Chemical Engineering logo"
-              width={32}
-              height={32}
-              className="h-8 w-8 brightness-0 invert"
+              width={40}
+              height={40}
+              className="h-9 w-9 object-contain"
             />
           </div>
           <p className="mt-4 text-sm font-semibold text-gold">
