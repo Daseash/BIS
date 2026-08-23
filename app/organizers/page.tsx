@@ -1,6 +1,6 @@
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
-import { GlassSection, GlassCard } from "@/components/GlassSection";
+import { GlassSection } from "@/components/GlassSection";
 import { MemberCard } from "@/components/MemberCard";
 
 const LEADERSHIP = [
@@ -75,33 +75,6 @@ const BIS_CHAPTER_MEMBERS = [
   },
 ];
 
-const TEAMS = [
-  {
-    name: "Publicity and Marketing",
-    lead: "Mr. Shlok Parikh",
-    description: "Posters, banners & newspaper ads · social media · newsletter & brochure",
-    image: "/organizers/shlok-parikh.jpg",
-  },
-  {
-    name: "Outreach",
-    lead: "Mr. Abhishek Nigam",
-    description: "Speaker & workshop outreach · industry and academia liaison",
-    image: "/organizers/abhishek-nigam.jpg",
-  },
-  {
-    name: "Web Development",
-    lead: "Mr. Nikhilesh Marko",
-    description: "Event website & registration portal · live updates & schedule",
-    image: "/organizers/nikhilesh-marko.png",
-  },
-  {
-    name: "Operations & Logistics",
-    lead: "Ms. Mitali Dave",
-    description: "Registrations · on-ground coordination",
-    image: "/organizers/mitali-dave.png",
-  },
-];
-
 export default function OrganizersPage() {
   return (
     <>
@@ -148,31 +121,6 @@ export default function OrganizersPage() {
                 note={person.note}
                 image={person.image}
               />
-            </Reveal>
-          ))}
-        </div>
-
-        <Reveal delay={0.1}>
-          <h2 className="mt-14 text-xl font-semibold text-navy-900">Event Working Teams</h2>
-        </Reveal>
-
-        <div className="mt-6 grid gap-5 sm:grid-cols-2">
-          {TEAMS.map((team, i) => (
-            <Reveal key={team.name} delay={i * 0.05}>
-              <GlassCard className="flex h-full items-center gap-5 p-5">
-                <div className="h-16 w-16 shrink-0 overflow-hidden rounded-full border border-navy-100/50 shadow-sm transition-transform duration-300 group-hover:scale-105">
-                  <img
-                    src={team.image}
-                    alt={team.lead}
-                    className="h-full w-full object-cover object-top"
-                  />
-                </div>
-                <div>
-                  <p className="font-semibold text-navy-900">{team.name}</p>
-                  <p className="mt-1 text-sm text-gray-600">{team.description}</p>
-                  <p className="mt-2 text-sm font-medium text-navy">Led by {team.lead}</p>
-                </div>
-              </GlassCard>
             </Reveal>
           ))}
         </div>
