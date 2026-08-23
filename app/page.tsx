@@ -311,11 +311,11 @@ export default function HomePage() {
               </Link>
             </div>
 
-            {/* Column 2: Sunset Campus Photo */}
+            {/* Column 2: Campus Photo */}
             <div className="group relative overflow-hidden rounded-lg border border-[#E5E7EB] bg-white shadow-sm lg:col-span-4 min-h-[280px] h-full flex">
               <img
-                src="/campus-sunset.jpg"
-                alt="IIT Indore campus building during sunset"
+                src="/campus-image-3.jpg"
+                alt="IIT Indore campus"
                 className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
             </div>

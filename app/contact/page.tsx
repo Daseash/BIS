@@ -78,11 +78,11 @@ export default function ContactPage() {
                   IIT Indore Simrol Campus
                 </h3>
                 <div className="grid gap-4 sm:grid-cols-2 items-stretch">
-                  {/* Sunset photo */}
+                  {/* Campus photo */}
                   <div className="group relative overflow-hidden rounded-lg border border-[#E5E7EB] bg-white shadow-sm min-h-[240px]">
                     <img
-                      src="/campus-sunset.jpg"
-                      alt="IIT Indore campus building during sunset"
+                      src="/campus-image-3.jpg"
+                      alt="IIT Indore campus"
                       className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
