@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
-import { PlaceholderBlock } from "@/components/PlaceholderBlock";
-import { Building2, Check, Mail } from "lucide-react";
+import { Check, ExternalLink } from "lucide-react";
 import { Button } from "@/components/Button";
 
 export const metadata: Metadata = {
@@ -75,8 +74,6 @@ const TIERS = [
   },
 ];
 
-const SPONSOR_LOGO_SLOTS = Array.from({ length: 6 });
-
 export default function SponsorsPage() {
   return (
     <>
@@ -137,22 +134,60 @@ export default function SponsorsPage() {
 
         {/* Confirmed Partners Section */}
         <div className="mt-20">
-          <div className="mb-6">
-            <h3 className="text-2xl font-bold text-navy-950">Our Industry Partners</h3>
+          <div className="mb-8">
+            <span className="inline-block rounded bg-gold-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-gold-900">
+              Institutional Partner &amp; Sponsor
+            </span>
+            <h3 className="mt-2 text-2xl sm:text-3xl font-bold text-navy-950">
+              Our Principal Associate
+            </h3>
             <p className="text-sm text-gray-600 mt-1">
-              Confirmed sponsor logos and corporate partners will be featured below.
+              National regulatory body and key institutional partner collaborating for the conclave.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-            {SPONSOR_LOGO_SLOTS.map((_, i) => (
-              <Reveal key={i} delay={i * 0.02}>
-                <div className="institutional-card p-4 bg-white flex items-center justify-center">
-                  <PlaceholderBlock icon={Building2} label="Sponsor Logo" aspect="aspect-video" />
+          <Reveal>
+            <div className="institutional-card p-6 sm:p-10 bg-white border border-[#E5E7EB] shadow-sm hover:border-navy hover:shadow-md transition-all duration-300">
+              <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
+                {/* Logo container */}
+                <div className="lg:col-span-5 flex items-center justify-center p-6 bg-gradient-to-br from-[#F8F9FA] to-navy-50/50 rounded-xl border border-gray-100">
+                  <img
+                    src="/logos/bis-logo.svg"
+                    alt="Bureau of Indian Standards logo"
+                    className="max-h-24 w-auto object-contain"
+                  />
                 </div>
-              </Reveal>
-            ))}
-          </div>
+
+                {/* Content */}
+                <div className="lg:col-span-7 space-y-3">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="rounded bg-navy-900 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-white">
+                      Principal Partner
+                    </span>
+                    <span className="text-xs font-semibold text-gold-900 bg-gold-50 px-2.5 py-0.5 rounded">
+                      National Standards Body
+                    </span>
+                  </div>
+                  <h4 className="text-xl sm:text-2xl font-bold text-navy-950">
+                    Bureau of Indian Standards (BIS)
+                  </h4>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    The Bureau of Indian Standards is the National Standards Body of India, operating under the Ministry of Consumer Affairs, Food &amp; Public Distribution. BIS collaborates closely with the Department of Chemical Engineering at IIT Indore to foster standardisation awareness, quality assurance, student chapters, and research-led regulatory policies across chemical engineering verticals.
+                  </p>
+                  <div className="pt-2">
+                    <a
+                      href="https://www.bis.gov.in/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-navy hover:text-navy-900 transition-colors uppercase tracking-wider"
+                    >
+                      Visit Official Portal <ExternalLink size={14} />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </div>
     </>
