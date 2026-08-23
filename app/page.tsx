@@ -143,7 +143,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── SEVEN VERTICALS (Clean Academic Cards) ────────────────── */}
+      {/* ── 7 VERTICALS (Clean Hover Slide-In Cards) ─────────────── */}
       <section className="py-16 sm:py-20 lg:py-24 bg-[#F8F9FA]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
@@ -151,7 +151,7 @@ export default function HomePage() {
               Conclave Structure
             </span>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-navy-950 sm:text-4xl">
-              Seven Integrated Verticals
+              7 Integrated Verticals
             </h2>
             <p className="mt-2 text-base text-gray-600">
               Structured across a dedicated workshop day and a flagship conclave day to ensure maximum practical takeaway and institutional dialogue.
@@ -161,32 +161,64 @@ export default function HomePage() {
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {VERTICALS.map((vertical, i) => {
               const Icon = vertical.icon;
+              const trackNumber = `0${i + 1}`;
               return (
                 <Reveal key={vertical.title} delay={i * 0.03}>
-                  <div className="institutional-card h-full p-6 flex flex-col justify-between group">
-                    <div>
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-navy-900 text-white transition-colors group-hover:bg-navy">
-                          <Icon size={22} />
-                        </div>
-                        <span className="rounded bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-700">
+                  <div
+                    tabIndex={0}
+                    className="group relative h-[210px] overflow-hidden rounded-lg border border-[#E5E7EB] bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-lg hover:border-navy focus:outline-none flex flex-col justify-between cursor-pointer"
+                  >
+                    {/* ── Default View: Icon + Category + Title ──── */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-navy-900 text-white transition-colors group-hover:bg-navy shadow-sm">
+                        <Icon size={24} />
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-mono font-bold text-gray-400">
+                          {trackNumber}
+                        </span>
+                        <span className="rounded bg-gray-100 px-2.5 py-0.5 text-xs font-semibold text-gray-700">
                           {vertical.category}
                         </span>
                       </div>
-                      <h3 className="text-lg font-bold text-navy-950 group-hover:text-navy transition-colors">
+                    </div>
+
+                    <div>
+                      <span className="text-xs font-semibold uppercase tracking-wider text-navy-900 block mb-1">
+                        Vertical {trackNumber}
+                      </span>
+                      <h3 className="text-xl font-bold text-navy-950 tracking-tight leading-snug transition-colors group-hover:text-navy">
                         {vertical.title}
                       </h3>
-                      <p className="mt-2 text-sm leading-relaxed text-gray-600">
-                        {vertical.description}
-                      </p>
                     </div>
-                    <div className="mt-6 pt-3 border-t border-gray-100">
-                      <Link
-                        href="/schedule"
-                        className="inline-flex items-center text-xs font-semibold text-navy hover:text-gold-900 transition-colors"
-                      >
-                        Track Details <ArrowRight size={13} className="ml-1" />
-                      </Link>
+
+                    {/* ── Slide-in Overlay: Reveals on Hover ──────── */}
+                    <div className="absolute inset-0 flex flex-col justify-between bg-gradient-to-t from-[#001B3D] via-[#001B3D]/95 to-[#002F6C] p-6 text-white transition-all duration-400 ease-out transform translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 group-focus:translate-y-0 group-focus:opacity-100">
+                      <div>
+                        <div className="flex items-center justify-between border-b border-white/20 pb-2 mb-3">
+                          <span className="rounded bg-gold px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-navy-950">
+                            {vertical.category}
+                          </span>
+                          <span className="text-xs font-mono font-bold text-gold-300">
+                            Track {trackNumber}
+                          </span>
+                        </div>
+                        <h4 className="text-lg font-bold text-white leading-snug">
+                          {vertical.title}
+                        </h4>
+                        <p className="mt-2 text-xs sm:text-sm leading-relaxed text-white/85">
+                          {vertical.description}
+                        </p>
+                      </div>
+
+                      <div className="pt-2 border-t border-white/10">
+                        <Link
+                          href="/schedule"
+                          className="inline-flex items-center text-xs font-bold text-gold-300 hover:text-white transition-colors"
+                        >
+                          Explore Track Schedule <ArrowRight size={13} className="ml-1" />
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </Reveal>
