@@ -19,40 +19,40 @@ export function MemberCard({
   return (
     <div
       className={cn(
-        "institutional-card group flex items-center gap-5 rounded-lg border border-[#E5E7EB] bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-navy-500/40 hover:shadow-md",
+        "institutional-card group flex flex-col overflow-hidden rounded-lg border border-[#E5E7EB] bg-white shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-navy-500/40 hover:shadow-md",
         className
       )}
     >
-      <div className="h-18 w-18 shrink-0 overflow-hidden rounded-full border-2 border-[#E5E7EB] shadow-inner transition-transform duration-200 group-hover:border-navy-500/40">
+      <div className="relative aspect-square w-full overflow-hidden bg-gray-100 border-b border-[#E5E7EB]">
         {image ? (
           <img
             src={image}
             alt={name}
-            className="h-full w-full object-cover object-top"
+            className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
           />
         ) : (
-          <PlaceholderBlock
-            icon={User}
-            label=""
-            aspect="aspect-square"
-            className="h-18 w-18 rounded-full p-0"
-          />
+          <div className="flex h-full w-full items-center justify-center bg-gray-50 text-gray-400">
+            <User size={56} strokeWidth={1.5} />
+          </div>
         )}
       </div>
-      <div className="min-w-0 flex-1">
-        <span className="inline-block rounded bg-navy-50 px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-navy-900">
-          {role}
-        </span>
-        <p className="mt-1.5 text-base font-bold text-navy-950 transition-colors group-hover:text-navy">
-          {name}
-        </p>
-        {note && (
-          <p className="mt-0.5 text-xs text-gray-600 leading-snug">
-            {note}
-          </p>
-        )}
+      <div className="flex flex-1 flex-col justify-between p-5">
+        <div>
+          <span className="inline-block rounded bg-navy-50 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-navy-900">
+            {role}
+          </span>
+          <h3 className="mt-2 text-base sm:text-lg font-bold text-navy-950 transition-colors group-hover:text-navy">
+            {name}
+          </h3>
+          {note && (
+            <p className="mt-1 text-xs sm:text-sm text-gray-600 leading-snug">
+              {note}
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );
 }
+
 
