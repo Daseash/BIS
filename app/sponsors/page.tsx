@@ -1,8 +1,14 @@
+import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { PlaceholderBlock } from "@/components/PlaceholderBlock";
 import { Building2, Check, Mail } from "lucide-react";
 import { Button } from "@/components/Button";
+
+export const metadata: Metadata = {
+  title: "Sponsors & Partners",
+  description: "Sponsorship tiers and partnerships for Malwa Chemical Conclave 2026 at IIT Indore.",
+};
 
 const TIERS = [
   {

@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { MemberCard } from "@/components/MemberCard";
+
+export const metadata: Metadata = {
+  title: "Organizing Committee",
+  description: "Organizing committee and BIS Student Chapter members of Malwa Chemical Conclave 2026.",
+};
 
 const LEADERSHIP = [
   {

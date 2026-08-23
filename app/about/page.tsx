@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { MapPinned, ClipboardCheck, TrendingUp, Target, Award, Users } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "About",
+  description: "About Malwa Chemical Conclave 2026 at IIT Indore.",
+};
 
 const HIGHLIGHTS = [
   {

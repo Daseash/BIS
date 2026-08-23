@@ -1,7 +1,13 @@
+import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { CampusMap } from "@/components/CampusMap";
 import { Building, MapPin, Plane, Train, Car, Hotel } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Accommodation & Venue",
+  description: "Campus location, transport directions, and accommodation guidance for IIT Indore.",
+};
 
 export default function AccommodationVenuePage() {
   return (

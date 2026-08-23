@@ -1,7 +1,13 @@
+import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { CampusMap } from "@/components/CampusMap";
 import { Mail, MapPin, Phone, UserCheck, Clock } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Contact Us",
+  description: "Contact the organizing committee and secretariat of Malwa Chemical Conclave 2026 at IIT Indore.",
+};
 
 export default function ContactPage() {
   return (

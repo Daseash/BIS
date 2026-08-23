@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { Calendar, Clock, Wrench, Presentation, Users, Sparkles } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Schedule",
+  description: "Two-day comprehensive programme schedule for Malwa Chemical Conclave 2026.",
+};
 
 const DAYS = [
   {

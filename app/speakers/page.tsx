@@ -1,7 +1,13 @@
+import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { MemberCard } from "@/components/MemberCard";
 import { Building2 } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Invited Speakers",
+  description: "Distinguished invited speakers and keynote delegates for Malwa Chemical Conclave 2026.",
+};
 
 const SPEAKER_SLOTS = [
   { role: "Plenary Keynote", name: "Speaker Invitation in Progress", note: "Leading Global Chemical Enterprise" },
