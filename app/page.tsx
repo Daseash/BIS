@@ -283,48 +283,48 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-12 lg:items-stretch">
-            {/* Column 1: Venue Details */}
-            <div className="institutional-card p-6 sm:p-8 flex flex-col justify-between lg:col-span-5">
-              <div>
-                <span className="inline-block rounded bg-navy-50 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-navy-900">
-                  Campus Venue
-                </span>
-                <h3 className="mt-3 text-xl font-bold text-navy-950">
-                  Academic Complex &amp; Lecture Halls
-                </h3>
-                <p className="mt-2 text-sm text-gray-600 leading-relaxed">
-                  Keynote sessions, interactive panel discussions, and student research exhibitions will be held across the central academic complexes.
-                </p>
-
-                <div className="mt-6 space-y-3 border-t border-gray-100 pt-4 text-xs sm:text-sm text-gray-600">
-                  <p><strong className="text-navy-950">Indore Junction:</strong> 24 km</p>
-                  <p><strong className="text-navy-950">Devi Ahilyabai Airport:</strong> 35 km</p>
-                </div>
-              </div>
-
-              <Link
-                href="/accommodation-venue"
-                className="hover-underline mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-navy"
-              >
-                Accommodation &amp; Travel Guide <ArrowRight size={15} />
-              </Link>
+          <div className="space-y-6">
+            {/* Horizontal Wide Image 3 */}
+            <div className="group relative overflow-hidden rounded-xl border border-[#E5E7EB] bg-white shadow-sm h-64 sm:h-80 lg:h-96 w-full">
+              <img
+                src="/campus-image-3.jpg"
+                alt="IIT Indore campus"
+                className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+              />
             </div>
 
-            {/* Column 2: Vertical Stack (Image 3 on top, Map below it) */}
-            <div className="flex flex-col gap-6 lg:col-span-7">
-              {/* Image 3 */}
-              <div className="group relative overflow-hidden rounded-lg border border-[#E5E7EB] bg-white shadow-sm h-64 sm:h-72 w-full">
-                <img
-                  src="/campus-image-3.jpg"
-                  alt="IIT Indore campus"
-                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                />
+            {/* Below Image 3: Details & Map */}
+            <div className="grid gap-6 lg:grid-cols-12 lg:items-stretch">
+              {/* Venue Details */}
+              <div className="institutional-card p-6 sm:p-8 flex flex-col justify-between lg:col-span-4 bg-white">
+                <div>
+                  <span className="inline-block rounded bg-navy-50 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-navy-900">
+                    Campus Venue
+                  </span>
+                  <h3 className="mt-3 text-xl font-bold text-navy-950">
+                    Academic Complex &amp; Lecture Halls
+                  </h3>
+                  <p className="mt-2 text-sm text-gray-600 leading-relaxed">
+                    Keynote sessions, interactive panel discussions, and student research exhibitions will be held across the central academic complexes.
+                  </p>
+
+                  <div className="mt-6 space-y-3 border-t border-gray-100 pt-4 text-xs sm:text-sm text-gray-600">
+                    <p><strong className="text-navy-950">Indore Junction:</strong> 24 km</p>
+                    <p><strong className="text-navy-950">Devi Ahilyabai Airport:</strong> 35 km</p>
+                  </div>
+                </div>
+
+                <Link
+                  href="/accommodation-venue"
+                  className="hover-underline mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-navy"
+                >
+                  Accommodation &amp; Travel Guide <ArrowRight size={15} />
+                </Link>
               </div>
 
-              {/* Live Map below it */}
-              <div className="rounded-lg border border-[#E5E7EB] overflow-hidden p-2 bg-white shadow-sm h-64 sm:h-72 w-full">
-                <CampusMap className="h-full w-full border-0 shadow-none min-h-[220px]" />
+              {/* Live Map Below Image 3 */}
+              <div className="rounded-xl border border-[#E5E7EB] overflow-hidden p-2 bg-white shadow-sm lg:col-span-8 min-h-[300px]">
+                <CampusMap className="h-full w-full border-0 shadow-none min-h-[280px]" />
               </div>
             </div>
           </div>
