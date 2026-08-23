@@ -192,8 +192,8 @@ export default function HomePage() {
                       </h3>
                     </div>
 
-                    {/* ── Slide-in Overlay: Reveals on Hover ──────── */}
-                    <div className="absolute inset-0 flex flex-col justify-between bg-gradient-to-t from-[#001B3D] via-[#001B3D]/95 to-[#002F6C] p-6 text-white transition-all duration-400 ease-out transform translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 group-focus:translate-y-0 group-focus:opacity-100">
+                    {/* ── Slide-in Overlay: Reveals on Hover with Slow Smooth Transition ──────── */}
+                    <div className="absolute inset-0 flex flex-col justify-between bg-gradient-to-t from-[#001B3D] via-[#001B3D]/95 to-[#002F6C] p-6 text-white transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] transform translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 group-focus:translate-y-0 group-focus:opacity-100">
                       <div>
                         <div className="flex items-center justify-between border-b border-white/20 pb-2 mb-3">
                           <span className="rounded bg-gold px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-navy-950">
