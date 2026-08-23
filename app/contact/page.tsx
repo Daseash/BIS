@@ -72,13 +72,24 @@ export default function ContactPage() {
             <div className="institutional-card p-6 flex flex-col justify-between h-full">
               <div>
                 <span className="inline-block rounded bg-navy-50 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-navy-900 mb-2">
-                  Campus Location Map
+                  Campus Location &amp; Venue
                 </span>
                 <h3 className="text-lg font-bold text-navy-950 mb-4">
                   IIT Indore Simrol Campus
                 </h3>
-                <div className="rounded-lg overflow-hidden border border-[#E5E7EB]">
-                  <CampusMap className="aspect-[4/3] w-full border-0" />
+                <div className="grid gap-4 sm:grid-cols-2 items-stretch">
+                  {/* Sunset photo */}
+                  <div className="group relative overflow-hidden rounded-lg border border-[#E5E7EB] bg-white shadow-sm min-h-[240px]">
+                    <img
+                      src="/campus-sunset.jpg"
+                      alt="IIT Indore campus building during sunset"
+                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+                  {/* Live Map */}
+                  <div className="rounded-lg overflow-hidden border border-[#E5E7EB]">
+                    <CampusMap className="h-full min-h-[240px] w-full border-0" />
+                  </div>
                 </div>
               </div>
             </div>
