@@ -280,16 +280,12 @@ export default function HomePage() {
             </div>
 
             {/* Column 2: Sunset Campus Photo */}
-            <div className="group relative overflow-hidden rounded-lg border border-[#E5E7EB] bg-white shadow-sm lg:col-span-4 min-h-[280px]">
+            <div className="group relative overflow-hidden rounded-lg border border-[#E5E7EB] bg-white shadow-sm lg:col-span-4 min-h-[280px] h-full flex">
               <img
                 src="/campus-sunset.jpg"
                 alt="IIT Indore campus building during sunset"
                 className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#001B3D]/90 via-[#001B3D]/40 to-transparent p-4 text-white">
-                <p className="text-xs font-bold uppercase tracking-wider text-gold-300">IIT Indore Campus</p>
-                <p className="text-sm font-medium text-white">Central Academic Complex</p>
-              </div>
             </div>
 
             {/* Column 3: Live Map */}
