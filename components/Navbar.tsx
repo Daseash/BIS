@@ -213,9 +213,6 @@ export function Navbar() {
         {/* Right side info on desktop + mobile menu hamburger */}
         <div className="flex items-center gap-3">
           <div className="hidden lg:flex items-center gap-3">
-            <span className="rounded-full bg-white/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-gold-300 border border-white/15">
-              Oct 12–13, 2026 • IIT Indore
-            </span>
             <Link
               href="/registration"
               className="rounded-full bg-gold px-4 py-1.5 text-xs font-bold text-navy-950 transition-all hover:bg-gold-300 shadow-sm"
