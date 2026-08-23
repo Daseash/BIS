@@ -1,0 +1,443 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+
+  --color-navy-950: #001B3D;
+  --color-navy-900: #002F6C;
+  --color-navy-800: #003D8F;
+  --color-navy-700: #00429C;
+  --color-navy: #004AAD;
+  --color-navy-DEFAULT: #004AAD;
+  --color-navy-600: #1462C4;
+  --color-navy-500: #2E77D6;
+  --color-navy-200: #B9D2F2;
+  --color-navy-100: #E4EDFB;
+  --color-navy-50: #F4F8FE;
+
+  --color-gold: #C59B27;
+  --color-gold-DEFAULT: #C59B27;
+  --color-gold-50: #FBF5E6;
+  --color-gold-100: #F5E8C2;
+  --color-gold-300: #DBBD5F;
+  --color-gold-700: #93741D;
+  --color-gold-900: #5C4812;
+
+  --color-offwhite: #F7F9FC;
+}
+
+body {
+  background-color: #ffffff;
+  color: #001B3D;
+}
+
+::selection {
+  background-color: var(--color-gold);
+  color: #fff;
+}
+
+/* ── Announcement marquee ──────────────────────────────────────── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee { animation: none; }
+}
+
+/* ── Hover underline (gold on hover) ───────────────────────────── */
+.hover-underline {
+  position: relative;
+}
+.hover-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 2px;
+  width: 100%;
+  background-color: var(--color-gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 200ms ease;
+}
+.hover-underline:hover::after,
+.hover-underline[data-active="true"]::after {
+  transform: scaleX(1);
+}
+
+/* ── Header: transparent → solid on scroll ─────────────────────── */
+.site-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1050;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, position 0.3s ease;
+}
+
+.site-header.scrolled {
+  position: fixed;
+  background: rgba(0, 43, 73, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ── Pill navigation ───────────────────────────────────────────── */
+.pill-nav {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 32px;
+  padding: 5px 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.site-header.scrolled .pill-nav {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.pill-nav a {
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 0.975rem;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.pill-nav a:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.pill-nav a[data-active="true"] {
+  background: var(--color-gold);
+  color: #fff;
+  font-weight: 600;
+}
+
+.site-header.scrolled .pill-nav a {
+  color: #1a1a2e;
+}
+
+.site-header.scrolled .pill-nav a:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.site-header.scrolled .pill-nav a[data-active="true"] {
+  background: var(--color-navy);
+  color: #fff;
+}
+
+/* ── Mega menu (hamburger dropdown) ────────────────────────────── */
+.mega-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: var(--color-navy-950);
+  color: #fff;
+  z-index: 1100;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mega-menu.open {
+  display: flex;
+}
+
+.mega-menu-panel {
+  flex: 1;
+  padding: 2rem;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.mega-menu-tabs {
+  width: 220px;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mega-menu-tabs button,
+.mega-menu-tabs a {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  text-decoration: none;
+}
+
+.mega-menu-tabs button:hover,
+.mega-menu-tabs a:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.mega-menu-tabs button.active {
+  background: var(--color-gold);
+  color: #fff;
+  font-weight: 600;
+}
+
+.mega-col h3 {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-gold);
+  margin-bottom: 0.75rem;
+}
+
+.mega-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.25rem;
+}
+
+.mega-col li a {
+  display: block;
+  padding: 5px 0;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.mega-col li a:hover {
+  color: #fff;
+}
+
+/* ── Top utility bar ───────────────────────────────────────────── */
+.top-bar {
+  display: flex;
+  align-items: center;
+  padding: 6px 0;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.85);
+  background-color: #000000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.site-header.scrolled .top-bar {
+  display: none;
+}
+
+.top-bar a {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.top-bar a:hover {
+  color: #fff;
+}
+
+.top-bar .divider {
+  width: 1px;
+  height: 14px;
+  background: rgba(255, 255, 255, 0.25);
+  margin: 0 8px;
+}
+
+/* ── Language toggle (from IITI) ───────────────────────────────── */
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 2px;
+}
+
+.lang-btn {
+  padding: 3px 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  user-select: none;
+}
+
+.lang-btn.active {
+  background: var(--color-gold);
+  color: #fff;
+}
+
+.lang-btn:not(.active):hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.site-header.scrolled .lang-toggle {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.site-header.scrolled .lang-btn:not(.active) {
+  color: #1a1a2e;
+}
+
+/* ── Hero section (IITI-style full viewport) ────────────────────── */
+.hero-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: #000;
+  overflow: hidden;
+}
+
+.hero-media {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  z-index: 1;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.106);
+  z-index: 2;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+}
+
+.hero-glass-card {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 16px;
+  padding: clamp(24px, 4vw, 48px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.hero-scroll-arrow {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  opacity: 0.8;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.hero-scroll-arrow:hover {
+  transform: translateX(-50%) translateY(8px);
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+  .hero-wrapper {
+    height: 45vh;
+  }
+  .hero-scroll-arrow {
+    display: none;
+  }
+}
+
+/* ── Responsive mega menu ──────────────────────────────────────── */
+@media (max-width: 991px) {
+  .mega-menu {
+    flex-direction: column;
+  }
+  .mega-menu-tabs {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 1rem;
+    gap: 4px;
+  }
+  .mega-menu-tabs button,
+  .mega-menu-tabs a {
+    width: auto;
+    padding: 8px 14px;
+    border-radius: 16px;
+  }
+  .mega-menu-tabs button.active {
+    border-radius: 16px;
+  }
+}
+
+/* ── Hover effects for text written in boxes/cards ──────────────── */
+.group {
+  cursor: pointer;
+}
+
+.group p,
+.group span,
+.group h1,
+.group h2,
+.group h3,
+.group h4,
+.group li,
+.group div {
+  transition: color 200ms ease, transform 200ms ease, opacity 200ms ease;
+}
+
+.group:hover .text-navy-900 {
+  color: var(--color-navy);
+}
+
+.group:hover .text-gray-700,
+.group:hover .text-gray-600,
+.group:hover .text-gray-500 {
+  color: var(--color-navy-950);
+}
+
+.group:hover .text-gold {
+  color: var(--color-gold-700);
+}
+
+.group:hover .text-white\/60 {
+  color: rgba(255, 255, 255, 0.95);
+}
+

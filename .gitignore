@@ -1,0 +1,17 @@
+node_modules
+.next
+out
+.env
+.env.local
+*.local
+npm-debug.log*
+.DS_Store
+organizers/
+logos/
+# contains a live API token (Stitch MCP) — local tooling config only,
+# never part of the deployed website
+.mcp.json
+tsconfig.tsbuildinfo
+.vscode/
+.agents/
+.claude/
