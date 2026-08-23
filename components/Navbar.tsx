@@ -210,18 +210,9 @@ export function Navbar() {
           </span>
         </Link>
 
-        {/* Right side: Register button on Home page; Pill Nav in same line on Inner pages */}
+        {/* Right side: Pill Nav in same line on Inner pages */}
         <div className="flex items-center gap-3">
-          {isHome ? (
-            <div className="hidden lg:flex items-center gap-3">
-              <Link
-                href="/registration"
-                className="rounded-full bg-gold px-4 py-1.5 text-xs font-bold text-navy-950 transition-all hover:bg-gold-300 shadow-sm"
-              >
-                Register Now
-              </Link>
-            </div>
-          ) : (
+          {!isHome && (
             <nav className="hidden lg:flex items-center">
               <div className="pill-nav pill-nav-compact transition-all duration-700 ease-in-out">
                 {NAV_LINKS.map((link) => {
