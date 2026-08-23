@@ -9,11 +9,6 @@ import { Menu, X, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/cn";
 
 /* ── Social SVG icons (matching IITI exactly) ──────────────────── */
-const FacebookIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-    <path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12c0-5.523-4.477-10-10-10z" />
-  </svg>
-);
 
 const TwitterIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
@@ -154,9 +149,6 @@ export function Navbar() {
         !isHome ? "py-1 text-xs" : "py-1.5 text-xs sm:text-sm"
       )}>
         <div className="flex items-center gap-3">
-          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-            <FacebookIcon />
-          </a>
           <a href="https://x.com/" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
             <TwitterIcon />
           </a>
@@ -169,8 +161,6 @@ export function Navbar() {
 
           <span className="divider" />
 
-          <a href="/contact" className="hidden sm:inline">Emergency Contacts</a>
-          <span className="divider hidden sm:inline" />
           <a href="https://www.iiti.ac.in/" target="_blank" rel="noopener noreferrer" className="hidden sm:inline">
             IIT Indore
           </a>
@@ -179,15 +169,14 @@ export function Navbar() {
         <div className="flex items-center gap-3">
           <div className="lang-toggle">
             <span className="lang-btn active">en</span>
-            <span className="lang-btn">hi</span>
           </div>
         </div>
       </div>
 
-      {/* ── Tier 2: Logo + Title ─────────────────────────────────── */}
+      {/* ── Tier 2: Logo + Title (Line 1) ────────────────────────── */}
       <div className={cn(
         "flex w-full items-center justify-between px-4 transition-all duration-700 ease-in-out sm:px-6 lg:px-8",
-        !isHome ? "py-1.5 sm:py-2.5" : "py-3 sm:py-4"
+        !isHome ? "py-1.5 sm:py-2.5" : "py-2 sm:py-3.5"
       )}>
         <Link href="/" className="flex items-center gap-2.5 transition-all duration-700 ease-in-out sm:gap-3.5" onClick={() => setMenuOpen(false)}>
           <Image
@@ -197,23 +186,23 @@ export function Navbar() {
             height={66}
             className={cn(
               "w-auto shrink-0 transition-all duration-700 ease-in-out",
-              !isHome ? "h-10 sm:h-12 lg:h-13" : "h-13 sm:h-16 lg:h-20"
+              !isHome ? "h-10 sm:h-12 lg:h-13" : "h-12 sm:h-15 lg:h-18"
             )}
             priority
           />
           <div className={cn(
             "w-px bg-white/30 transition-all duration-700 ease-in-out",
-            !isHome ? "h-8 sm:h-9" : "h-12"
+            !isHome ? "h-8 sm:h-9" : "h-10 sm:h-12"
           )} />
           <span className="flex min-w-0 flex-col leading-tight transition-all duration-700 ease-in-out">
             <span className={cn(
-              "font-bold tracking-wide text-white transition-all duration-700 ease-in-out",
+              "font-bold tracking-wide text-white transition-all duration-700 ease-in-out whitespace-nowrap",
               !isHome ? "text-sm sm:text-base lg:text-lg" : "text-base sm:text-xl lg:text-2xl"
             )}>
               Malwa Chemical Conclave 2026
             </span>
             <span className={cn(
-              "font-medium text-white/75 transition-all duration-700 ease-in-out",
+              "font-medium text-white/75 transition-all duration-700 ease-in-out whitespace-nowrap",
               !isHome ? "text-[10px] sm:text-xs" : "text-xs sm:text-sm lg:text-base"
             )}>
               Dept. of Chemical Engineering, IIT Indore
@@ -221,8 +210,38 @@ export function Navbar() {
           </span>
         </Link>
 
-        {/* ── Tier 3: Pill navigation (desktop) ──────────────────── */}
-        <nav className="hidden items-center gap-3 lg:flex">
+        {/* Right side info on desktop + mobile menu hamburger */}
+        <div className="flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-3">
+            <span className="rounded-full bg-white/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-gold-300 border border-white/15">
+              Oct 12–13, 2026 • IIT Indore
+            </span>
+            <Link
+              href="/registration"
+              className="rounded-full bg-gold px-4 py-1.5 text-xs font-bold text-navy-950 transition-all hover:bg-gold-300 shadow-sm"
+            >
+              Register Now
+            </Link>
+          </div>
+
+          {/* Mobile hamburger */}
+          <button
+            type="button"
+            aria-label="Toggle navigation menu"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-sm text-white lg:hidden"
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+      </div>
+
+      {/* ── Tier 3: Pill navigation tabs (Line 2) ─────────────────── */}
+      <div className={cn(
+        "hidden lg:flex w-full items-center justify-center px-4 transition-all duration-700 ease-in-out sm:px-6 lg:px-8",
+        !isHome ? "pb-2 pt-0.5" : "pb-3.5 pt-1"
+      )}>
+        <nav className="flex items-center justify-center">
           <div className={cn("pill-nav transition-all duration-700 ease-in-out", !isHome && "pill-nav-compact")}>
             {NAV_LINKS.map((link) => {
               const active = pathname === link.href;
@@ -239,16 +258,6 @@ export function Navbar() {
             })}
           </div>
         </nav>
-
-        {/* Mobile hamburger */}
-        <button
-          type="button"
-          aria-label="Toggle navigation menu"
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-sm text-white lg:hidden"
-          onClick={() => setMenuOpen((v) => !v)}
-        >
-          {menuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
       </div>
 
       {/* ── Mega menu (desktop dropdown + mobile full-screen) ────── */}

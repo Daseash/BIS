@@ -2,6 +2,19 @@ import Link from "next/link";
 import Image from "next/image";
 import { Mail, MapPin, Phone, ExternalLink } from "lucide-react";
 
+const LinkedInIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="14"
+    height="14"
+    fill="currentColor"
+    viewBox="0 0 24 24"
+    className="text-[#0A66C2] shrink-0"
+  >
+    <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+  </svg>
+);
+
 const QUICK_LINKS = [
   { label: "About", href: "/about" },
   { label: "Schedule", href: "/schedule" },
@@ -135,9 +148,20 @@ export function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-white/10 px-4 py-4 text-center text-xs text-white/40 sm:px-6 lg:px-8">
-        &copy; 2026 Department of Chemical Engineering, IIT Indore. All rights
-        reserved.
+      <div className="border-t border-white/10 px-4 py-4 text-center text-xs text-white/40 sm:px-6 lg:px-8 flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+        <span>&copy; 2026 Department of Chemical Engineering, IIT Indore.</span>
+        <span className="hidden sm:inline">&bull;</span>
+        <a
+          href="https://www.linkedin.com/in/eashwar-das-428002397/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-white/70 hover:text-gold transition-colors font-medium"
+        >
+          <span>Eashwar Chandra Das</span>
+          <LinkedInIcon />
+        </a>
+        <span>&bull;</span>
+        <span>All rights reserved.</span>
       </div>
     </footer>
   );

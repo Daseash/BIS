@@ -130,8 +130,8 @@ body {
 }
 
 .site-header.scrolled .pill-nav {
-  background: rgba(0, 0, 0, 0.06);
-  border-color: rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .pill-nav a {
@@ -162,15 +162,16 @@ body {
 }
 
 .site-header.scrolled .pill-nav a {
-  color: #1a1a2e;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .site-header.scrolled .pill-nav a:hover {
-  background: rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
 }
 
 .site-header.scrolled .pill-nav a[data-active="true"] {
-  background: var(--color-navy);
+  background: var(--color-gold);
   color: #fff;
 }
 
