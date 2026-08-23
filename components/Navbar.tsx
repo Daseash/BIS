@@ -235,10 +235,10 @@ export function Navbar() {
 
       {/* ── Tier 3: Pill navigation tabs (Line 2) ─────────────────── */}
       <div className={cn(
-        "hidden lg:flex w-full items-center justify-center px-4 transition-all duration-700 ease-in-out sm:px-6 lg:px-8",
+        "hidden lg:flex w-full items-center justify-end px-4 transition-all duration-700 ease-in-out sm:px-6 lg:px-8",
         !isHome ? "pb-2 pt-0.5" : "pb-3.5 pt-1"
       )}>
-        <nav className="flex items-center justify-center">
+        <nav className="flex items-center justify-end">
           <div className={cn("pill-nav transition-all duration-700 ease-in-out", !isHome && "pill-nav-compact")}>
             {NAV_LINKS.map((link) => {
               const active = pathname === link.href;
