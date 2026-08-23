@@ -13,3 +13,6 @@ tsconfig.tsbuildinfo
 .vscode/
 .agents/
 .claude/
+.env.example
+CLAUDE.md
+design.md
