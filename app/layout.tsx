@@ -14,6 +14,11 @@ export const metadata: Metadata = {
   title: "Malwa Chemical Conclave 2026 | Dept. of Chemical Engineering, IIT Indore",
   description:
     "Malwa Chemical Conclave 2026 — Engineering a Responsible Future. Hosted by the Department of Chemical Engineering, IIT Indore, in association with the Bureau of Indian Standards.",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
