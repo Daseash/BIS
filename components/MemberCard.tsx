@@ -28,7 +28,9 @@ export function MemberCard({
           <img
             src={image}
             alt={name}
-            className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
+            loading="eager"
+            decoding="async"
+            className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-105 [image-rendering:-webkit-optimize-contrast] transform-gpu"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-gray-50 text-gray-400">
