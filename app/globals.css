@@ -112,13 +112,13 @@ body {
 .pill-nav {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   background: rgba(255, 255, 255, 0.14);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.28);
-  border-radius: 32px;
-  padding: 5px 8px;
+  border-radius: 28px;
+  padding: 4px 6px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
   transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -135,10 +135,10 @@ body {
 }
 
 .pill-nav a {
-  padding: 8px 18px;
-  border-radius: 20px;
-  font-size: 0.975rem;
-  font-weight: 600;
+  padding: 6px 13px;
+  border-radius: 18px;
+  font-size: 0.85rem;
+  font-weight: 500;
   color: #fff;
   text-decoration: none;
   transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
