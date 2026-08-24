@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
+import { AboutHeroVideo } from "@/components/AboutHeroVideo";
 import { MapPinned, ClipboardCheck, TrendingUp } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -38,19 +39,8 @@ export default function AboutPage() {
         subtitle="A premier academic and industrial symposium fostering sustainable process innovation and standardisation in Central India."
       />
 
-      {/* ── 2. Full-Bleed Continuous Video Banner (Below Header, Muted, No Pause Button) ── */}
-      <section className="relative w-full overflow-hidden bg-navy-950 border-b border-[#002F6C] shadow-md">
-        <video
-          src="/video.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          disablePictureInPicture
-          className="w-full h-auto max-h-[85vh] min-h-[320px] object-cover pointer-events-none transform-gpu will-change-transform"
-        />
-      </section>
+      {/* ── 2. Full-Viewport Right-to-Left Reveal Background Video ─ */}
+      <AboutHeroVideo />
 
       {/* ── 3. Conclave Details & Sections ─────────────────────── */}
       <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
