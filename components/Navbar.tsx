@@ -314,49 +314,112 @@ export function Navbar() {
         )}
       </LayoutGroup>
 
-      {/* ── Mega menu (desktop dropdown + mobile full-screen) ────── */}
+      {/* ── Mobile Navigation Drawer (Full-Screen / Slide-Down) ── */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="mega-menu open overflow-hidden"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="lg:hidden border-t border-white/10 bg-navy-950/98 backdrop-blur-xl overflow-hidden shadow-2xl"
           >
-            <div className="mega-menu-panel mx-auto max-w-7xl">
-              <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                {MEGA_TABS.find((t) => t.id === activeTab)?.columns.map((col) => (
-                  <div key={col.heading} className="mega-col">
-                    <h3>{col.heading}</h3>
-                    <ul>
-                      {col.links.map((link) => (
-                        <li key={link.label}>
-                          <a href={link.href}>{link.label}</a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
+            <div className="mx-auto max-w-lg px-5 py-6 space-y-5">
+              {/* Primary Navigation Links */}
+              <div className="space-y-1">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-gold/80 block px-3 mb-2">
+                  Navigation Menu
+                </span>
+                <nav className="grid gap-1">
+                  {NAV_LINKS.map((link) => {
+                    const active = pathname === link.href;
+                    return (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        onClick={() => setMenuOpen(false)}
+                        className={cn(
+                          "flex items-center justify-between px-3.5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200",
+                          active
+                            ? "bg-gold text-white shadow-xs font-bold"
+                            : "text-white/85 hover:bg-white/10 hover:text-white"
+                        )}
+                      >
+                        <span>{link.label}</span>
+                        <ChevronRight size={16} className={active ? "text-white" : "text-white/40"} />
+                      </Link>
+                    );
+                  })}
+                </nav>
               </div>
-            </div>
 
-            <div className="mega-menu-tabs">
-              {MEGA_TABS.map((tab) => (
-                <button
-                  key={tab.id}
-                  className={cn(activeTab === tab.id && "active")}
-                  onClick={() => setActiveTab(tab.id)}
+              {/* Quick Action: Register Button */}
+              <div className="pt-2">
+                <Link
+                  href="/registration"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-gold py-3 text-sm font-bold text-white shadow-md hover:bg-gold-700 transition-colors uppercase tracking-wider"
                 >
-                  {tab.label}
-                </button>
-              ))}
-              <Link href="/schedule" onClick={() => setMenuOpen(false)}>
-                Full Schedule
-              </Link>
-              <Link href="/registration" onClick={() => setMenuOpen(false)}>
-                Register
-              </Link>
+                  <span>Register as Delegate</span>
+                  <ChevronRight size={16} />
+                </Link>
+              </div>
+
+              {/* Department & External Institutional Links */}
+              <div className="pt-3 border-t border-white/10 space-y-2">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-white/50 block px-3">
+                  Institutional Portals
+                </span>
+                <div className="grid grid-cols-2 gap-2 text-xs font-medium">
+                  <a
+                    href="https://www.iiti.ac.in/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-md bg-white/5 p-2.5 text-center text-white/80 hover:bg-white/10 hover:text-gold transition-colors"
+                  >
+                    IIT Indore Official
+                  </a>
+                  <a
+                    href="https://chemical.iiti.ac.in"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-md bg-white/5 p-2.5 text-center text-white/80 hover:bg-white/10 hover:text-gold transition-colors"
+                  >
+                    Chemical Engg Dept
+                  </a>
+                </div>
+              </div>
+
+              {/* Social Media Footer in Drawer */}
+              <div className="pt-2 flex items-center justify-center gap-6 text-white/70">
+                <a
+                  href="https://www.linkedin.com/company/bis-chem-iiti/?viewAsMember=true"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                  className="hover:text-gold transition-colors p-1"
+                >
+                  <LinkedInIcon />
+                </a>
+                <a
+                  href="https://www.instagram.com/bis_chem_iiti/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="hover:text-gold transition-colors p-1"
+                >
+                  <InstagramIcon />
+                </a>
+                <a
+                  href="https://x.com/IITIOfficial?lang=en"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Twitter"
+                  className="hover:text-gold transition-colors p-1"
+                >
+                  <TwitterIcon />
+                </a>
+              </div>
             </div>
           </motion.div>
         )}
