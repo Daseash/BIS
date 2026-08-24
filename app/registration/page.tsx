@@ -675,21 +675,21 @@ export default function RegistrationPage() {
           {/* ── RIGHT COLUMN: Live Invoice Breakdown & Calculated Sum (5 cols) ── */}
           <div className="lg:col-span-5 sticky top-28 space-y-6">
             <Reveal delay={0.1}>
-              <div className="rounded-xl border border-[#D1D5DB] bg-white shadow-xl overflow-hidden">
-                {/* Header Band */}
-                <div className="bg-gradient-to-r from-navy-950 via-navy-900 to-navy-950 p-5 text-white border-b-2 border-gold">
+              <div className="rounded-xl border border-[#E5E7EB] bg-white shadow-sm overflow-hidden">
+                {/* Header Band - Clean White Background Theme */}
+                <div className="bg-white p-5 text-navy-950 border-b border-[#E5E7EB]">
                   <div className="flex items-center justify-between">
-                    <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-gold">
-                      <Receipt size={15} /> Live Assessment
+                    <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-gold-900 bg-gold-50 px-2.5 py-0.5 rounded border border-gold-200">
+                      <Receipt size={14} className="text-gold-900" /> Live Assessment
                     </span>
-                    <span className="rounded bg-white/10 px-2 py-0.5 text-[10px] font-mono font-bold text-white/80 border border-white/15">
+                    <span className="rounded bg-gray-100 px-2 py-0.5 text-[10px] font-mono font-bold text-gray-700 border border-gray-200">
                       MCC-2026-REG
                     </span>
                   </div>
-                  <h3 className="mt-2 text-xl font-bold text-white tracking-tight">
+                  <h3 className="mt-2 text-xl font-bold text-navy-950 tracking-tight">
                     Registration Summary
                   </h3>
-                  <p className="mt-0.5 text-xs text-white/70">
+                  <p className="mt-0.5 text-xs text-gray-500">
                     Indian Institute of Technology Indore
                   </p>
                 </div>
