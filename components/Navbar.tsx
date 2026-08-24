@@ -28,7 +28,7 @@ const TwitterIcon = () => (
   </svg>
 );
 
-/* ── Navigation links ──────────────────────────────────────────── */
+/* ── Visible Navigation links (Contact removed from top bar) ────── */
 const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
@@ -38,6 +38,11 @@ const NAV_LINKS = [
   { label: "Organizers", href: "/organizers" },
   { label: "Venue", href: "/accommodation-venue" },
   { label: "Registration", href: "/registration" },
+];
+
+/* ── All Navigation Links for Pop-out Drawer ────────────────────── */
+const DRAWER_NAV_LINKS = [
+  ...NAV_LINKS,
   { label: "Contact", href: "/contact" },
 ];
 
@@ -181,7 +186,7 @@ export function Navbar() {
             </span>
           </Link>
 
-          {/* Right side: Desktop Pill Nav + Popout 3-Line Menu Button */}
+          {/* Right side: Desktop Pill Nav (without Contact) + 3-Line Menu Trigger */}
           <div className="flex items-center gap-3">
             <nav className="hidden xl:flex items-center">
               <div className="pill-nav pill-nav-compact transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]">
@@ -201,12 +206,12 @@ export function Navbar() {
               </div>
             </nav>
 
-            {/* 3-Line Pop-out Menu Trigger (Prominent on all devices) */}
+            {/* 3-Line Pop-out Menu Trigger */}
             <button
               type="button"
               aria-label="Toggle navigation and contact menu"
               className={cn(
-                "flex items-center justify-center rounded-lg border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all duration-300 hover:bg-gold hover:border-gold hover:text-white cursor-pointer shadow-sm",
+                "flex items-center justify-center rounded-lg border border-white/25 bg-white/10 text-white backdrop-blur-xl transition-all duration-300 hover:bg-gold hover:border-gold hover:text-white cursor-pointer shadow-md",
                 isHome ? "h-11 w-11" : "h-9 w-9"
               )}
               onClick={() => setMenuOpen((v) => !v)}
@@ -217,29 +222,33 @@ export function Navbar() {
         </div>
       </LayoutGroup>
 
-      {/* ── Slide-Down Pop-Out Drawer with Full Navigation & Contact Section ── */}
+      {/* ── Pop-Out Glassmorphism Drawer (Full Navigation & Contact Section) ── */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="border-t border-white/10 bg-navy-950/98 backdrop-blur-2xl overflow-hidden shadow-2xl"
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="border-t border-white/20 bg-navy-950/80 backdrop-blur-2xl overflow-hidden shadow-2xl"
+            style={{
+              backdropFilter: "blur(24px)",
+              WebkitBackdropFilter: "blur(24px)",
+            }}
           >
             <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
               <div className="grid gap-8 lg:grid-cols-12">
                 {/* Column 1: Primary Navigation Links (7 cols) */}
                 <div className="lg:col-span-7 space-y-4">
-                  <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                    <span className="text-xs font-bold uppercase tracking-widest text-gold">
+                  <div className="flex items-center justify-between border-b border-white/15 pb-2">
+                    <span className="text-xs font-bold uppercase tracking-widest text-gold drop-shadow-xs">
                       Conference Navigation
                     </span>
-                    <span className="text-[11px] text-white/50">October 11–12, 2026</span>
+                    <span className="text-[11px] text-white/60 font-medium">October 11–12, 2026</span>
                   </div>
 
-                  <nav className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                    {NAV_LINKS.map((link) => {
+                  <nav className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                    {DRAWER_NAV_LINKS.map((link) => {
                       const active = pathname === link.href;
                       return (
                         <Link
@@ -247,10 +256,10 @@ export function Navbar() {
                           href={link.href}
                           onClick={() => setMenuOpen(false)}
                           className={cn(
-                            "flex items-center justify-between px-3.5 py-3 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-200 border",
+                            "flex items-center justify-between px-3.5 py-3 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-200 border backdrop-blur-md",
                             active
-                              ? "bg-gold text-white border-gold shadow-xs font-bold"
-                              : "bg-white/5 text-white/85 border-white/5 hover:bg-white/10 hover:border-white/20 hover:text-white"
+                              ? "bg-gold text-white border-gold shadow-md font-bold"
+                              : "bg-white/10 text-white/90 border-white/15 hover:bg-white/20 hover:border-white/30 hover:text-white"
                           )}
                         >
                           <span>{link.label}</span>
@@ -265,7 +274,7 @@ export function Navbar() {
                     <Link
                       href="/registration"
                       onClick={() => setMenuOpen(false)}
-                      className="flex w-full items-center justify-center gap-2 rounded-lg bg-gold py-3.5 text-sm font-bold text-white shadow-lg hover:bg-gold-700 transition-colors uppercase tracking-wider"
+                      className="flex w-full items-center justify-center gap-2 rounded-lg bg-gold py-3.5 text-sm font-bold text-white shadow-xl hover:bg-gold-700 transition-all duration-300 uppercase tracking-wider hover:scale-[1.01]"
                     >
                       <UserCheck size={18} />
                       <span>Register for Malwa Chemical Conclave 2026</span>
@@ -273,16 +282,16 @@ export function Navbar() {
                   </div>
                 </div>
 
-                {/* Column 2: Contact & Secretariat Section (5 cols) */}
-                <div className="lg:col-span-5 space-y-4 rounded-xl border border-white/10 bg-white/5 p-5">
-                  <div className="border-b border-white/10 pb-2 flex items-center justify-between">
-                    <span className="text-xs font-bold uppercase tracking-widest text-gold">
+                {/* Column 2: Glassmorphic Contact & Secretariat Section (5 cols) */}
+                <div className="lg:col-span-5 space-y-4 rounded-xl border border-white/20 bg-white/10 backdrop-blur-xl p-5 shadow-lg">
+                  <div className="border-b border-white/15 pb-2 flex items-center justify-between">
+                    <span className="text-xs font-bold uppercase tracking-widest text-gold drop-shadow-xs">
                       Secretariat &amp; Contact
                     </span>
-                    <span className="text-[10px] text-white/60">IIT Indore</span>
+                    <span className="text-[10px] text-white/70 font-semibold">IIT Indore</span>
                   </div>
 
-                  <div className="space-y-3.5 text-xs text-white/80">
+                  <div className="space-y-3.5 text-xs text-white/90">
                     <div className="flex items-start gap-2.5">
                       <MapPin size={16} className="mt-0.5 shrink-0 text-gold" />
                       <span>
@@ -307,8 +316,8 @@ export function Navbar() {
                   </div>
 
                   {/* External Portal Links */}
-                  <div className="pt-3 border-t border-white/10">
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-white/50 block mb-2">
+                  <div className="pt-3 border-t border-white/15">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-white/60 block mb-2">
                       External Portals
                     </span>
                     <div className="grid grid-cols-2 gap-2 text-xs">
@@ -316,7 +325,7 @@ export function Navbar() {
                         href="https://www.iiti.ac.in/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-1 rounded bg-white/5 p-2 text-center text-white/80 hover:bg-white/10 hover:text-gold transition-colors"
+                        className="flex items-center justify-center gap-1 rounded-lg bg-white/10 border border-white/15 p-2 text-center text-white/90 hover:bg-white/20 hover:text-gold transition-colors"
                       >
                         <span>IIT Indore Portal</span>
                         <ExternalLink size={12} />
@@ -325,7 +334,7 @@ export function Navbar() {
                         href="https://chemical.iiti.ac.in"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-1 rounded bg-white/5 p-2 text-center text-white/80 hover:bg-white/10 hover:text-gold transition-colors"
+                        className="flex items-center justify-center gap-1 rounded-lg bg-white/10 border border-white/15 p-2 text-center text-white/90 hover:bg-white/20 hover:text-gold transition-colors"
                       >
                         <span>Chemical Engg Dept</span>
                         <ExternalLink size={12} />
@@ -334,8 +343,8 @@ export function Navbar() {
                   </div>
 
                   {/* Social Links */}
-                  <div className="pt-2 flex items-center justify-between border-t border-white/10 text-white/70">
-                    <span className="text-[10px] uppercase font-bold text-white/50">Follow Us</span>
+                  <div className="pt-2 flex items-center justify-between border-t border-white/15 text-white/80">
+                    <span className="text-[10px] uppercase font-bold text-white/60">Follow Us</span>
                     <div className="flex items-center gap-4">
                       <a
                         href="https://www.linkedin.com/company/bis-chem-iiti/?viewAsMember=true"
