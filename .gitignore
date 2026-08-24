@@ -16,5 +16,4 @@ tsconfig.tsbuildinfo
 .env.example
 CLAUDE.md
 design.md
-photos/
-video/
+
