@@ -17,7 +17,6 @@ import {
   FileCheck,
   Calendar,
   Hotel,
-  Sparkles,
   Info,
 } from "lucide-react";
 import { PageHero } from "@/components/PageHero";
@@ -159,9 +158,7 @@ export default function RegistrationPage() {
   // Handle Category Change
   const handleCategorySelect = (category: CategoryTier) => {
     setSelectedCategory(category);
-    // Reset or keep default duration to 2 days
     setSelectedDurationId("2days");
-    // Reset accommodation selections
     setIsAccommodationChecked(false);
     setSelectedAccommodationId("none");
   };
@@ -192,7 +189,7 @@ export default function RegistrationPage() {
     accommodationLabel = "IIT Indore Campus Resident";
   }
 
-  // Calculate Total Sum of Amount
+  // Calculate Total Sum
   const basePassFee = activeDuration.amount;
   const totalAmount = basePassFee + accommodationFee;
 
@@ -254,7 +251,7 @@ export default function RegistrationPage() {
         {/* Top summary strip */}
         <div className="mb-10 flex flex-wrap items-center justify-between gap-4 border-b border-[#E5E7EB] pb-6">
           <div>
-            <span className="inline-block rounded bg-navy-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-navy-900">
+            <span className="inline-block rounded bg-gray-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-gray-800">
               IIT Indore &bull; October 11&ndash;12, 2026
             </span>
             <h2 className="mt-2 text-2xl font-bold tracking-tight text-navy-950 sm:text-3xl">
@@ -298,7 +295,7 @@ export default function RegistrationPage() {
                       <span className="text-xs text-gray-500 font-medium">Step 1 of 3</span>
                     </div>
 
-                    {/* 4 Category Cards (No fixed price upfront) */}
+                    {/* 4 Category Cards (Pure White Background) */}
                     <div className="grid gap-3 sm:grid-cols-2">
                       {CATEGORIES.map((cat) => {
                         const isSelected = selectedCategory.id === cat.id;
@@ -307,10 +304,10 @@ export default function RegistrationPage() {
                             key={cat.id}
                             onClick={() => handleCategorySelect(cat)}
                             className={cn(
-                              "cursor-pointer rounded-xl border p-4 transition-all duration-300 text-left flex flex-col justify-between",
+                              "cursor-pointer rounded-xl border p-4 transition-all duration-300 text-left flex flex-col justify-between bg-white",
                               isSelected
-                                ? "border-navy bg-navy-50/70 shadow-sm ring-1 ring-navy"
-                                : "border-gray-200 bg-white hover:border-navy hover:shadow-xs"
+                                ? "border-navy shadow-sm ring-1 ring-navy"
+                                : "border-gray-200 hover:border-navy hover:shadow-xs"
                             )}
                           >
                             <div>
@@ -326,7 +323,7 @@ export default function RegistrationPage() {
                                   {cat.badge}
                                 </span>
                                 <span className="text-xs font-semibold text-navy">
-                                  {isSelected ? "Active" : "Select"}
+                                  {isSelected ? "Selected" : "Select"}
                                 </span>
                               </div>
                               <h4 className="text-sm font-bold text-navy-950 leading-snug">
@@ -339,7 +336,7 @@ export default function RegistrationPage() {
 
                             <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-semibold">
                               <span className="text-gray-500 font-normal">
-                                {isSelected ? "Category Chosen" : "Click to view options"}
+                                {isSelected ? "Category Selected" : "Click to select"}
                               </span>
                               <div
                                 className={cn(
@@ -357,12 +354,12 @@ export default function RegistrationPage() {
                       })}
                     </div>
 
-                    {/* ── Dynamic Sub-options for Selected Category ── */}
-                    <div className="mt-6 rounded-xl border border-navy/20 bg-gradient-to-b from-navy-50/40 to-white p-5 space-y-5">
-                      <div className="flex items-center justify-between border-b border-navy-100 pb-2.5">
-                        <span className="text-xs font-bold uppercase tracking-wider text-navy-900 flex items-center gap-1.5">
+                    {/* ── Dynamic Sub-options Box (Pure White Background) ── */}
+                    <div className="mt-6 rounded-xl border border-[#E5E7EB] bg-white p-5 space-y-5 shadow-2xs">
+                      <div className="flex items-center justify-between border-b border-gray-100 pb-2.5">
+                        <span className="text-xs font-bold uppercase tracking-wider text-navy-950 flex items-center gap-1.5">
                           <Calendar size={14} className="text-navy" />
-                          Participation Duration for: <span className="text-navy-950 font-extrabold">{selectedCategory.name}</span>
+                          Participation Duration: <span className="text-navy font-extrabold">{selectedCategory.name}</span>
                         </span>
                       </div>
 
@@ -375,17 +372,17 @@ export default function RegistrationPage() {
                               key={duration.id}
                               onClick={() => setSelectedDurationId(duration.id)}
                               className={cn(
-                                "cursor-pointer rounded-lg border p-4 transition-all duration-200 text-left flex flex-col justify-between",
+                                "cursor-pointer rounded-lg border p-4 transition-all duration-200 text-left flex flex-col justify-between bg-white",
                                 isDurationSelected
-                                  ? "border-navy bg-white shadow-sm ring-2 ring-navy/20"
-                                  : "border-gray-200 bg-white/80 hover:border-gray-300"
+                                  ? "border-navy shadow-sm ring-1 ring-navy"
+                                  : "border-gray-200 hover:border-gray-300"
                               )}
                             >
                               <div className="flex items-center justify-between mb-1.5">
                                 <h5 className="text-sm font-bold text-navy-950">
                                   {duration.label}
                                 </h5>
-                                <span className="font-mono text-base font-extrabold text-navy-900 bg-navy-50 px-2 py-0.5 rounded">
+                                <span className="font-mono text-base font-extrabold text-navy-950">
                                   ₹{duration.amount}
                                 </span>
                               </div>
@@ -414,14 +411,14 @@ export default function RegistrationPage() {
 
                       {/* ── Dynamic Accommodation Section for Selected Category ── */}
                       {selectedCategory.accommodationType === "checkbox" && selectedCategory.accommodationOptions?.[0] && (
-                        <div className="pt-4 border-t border-navy-100">
+                        <div className="pt-4 border-t border-gray-100">
                           <label
                             onClick={() => setIsAccommodationChecked(!isAccommodationChecked)}
                             className={cn(
-                              "cursor-pointer rounded-lg border p-4 transition-all duration-200 flex items-start justify-between gap-4",
+                              "cursor-pointer rounded-lg border p-4 transition-all duration-200 flex items-start justify-between gap-4 bg-white",
                               isAccommodationChecked
-                                ? "border-navy bg-white shadow-sm ring-2 ring-navy/20"
-                                : "border-gray-200 bg-white/80 hover:border-gray-300"
+                                ? "border-navy shadow-sm ring-1 ring-navy"
+                                : "border-gray-200 hover:border-gray-300"
                             )}
                           >
                             <div className="flex items-start gap-3">
@@ -441,7 +438,7 @@ export default function RegistrationPage() {
                                 </p>
                               </div>
                             </div>
-                            <span className="font-mono text-sm font-extrabold text-navy-900 shrink-0 bg-gold/15 px-2.5 py-1 rounded border border-gold/30">
+                            <span className="font-mono text-sm font-extrabold text-navy-950 shrink-0">
                               +₹{selectedCategory.accommodationOptions[0].amount}
                             </span>
                           </label>
@@ -450,8 +447,8 @@ export default function RegistrationPage() {
 
                       {/* Industry Accommodation Options */}
                       {selectedCategory.accommodationType === "options" && selectedCategory.accommodationOptions && (
-                        <div className="pt-4 border-t border-navy-100 space-y-3">
-                          <span className="text-xs font-bold uppercase tracking-wider text-navy-900 flex items-center gap-1.5">
+                        <div className="pt-4 border-t border-gray-100 space-y-3">
+                          <span className="text-xs font-bold uppercase tracking-wider text-navy-950 flex items-center gap-1.5">
                             <Hotel size={14} className="text-navy" />
                             Accommodation Preference
                           </span>
@@ -463,10 +460,10 @@ export default function RegistrationPage() {
                                   key={opt.id}
                                   onClick={() => setSelectedAccommodationId(opt.id)}
                                   className={cn(
-                                    "cursor-pointer rounded-lg border p-3.5 transition-all duration-200 flex items-start justify-between gap-3",
+                                    "cursor-pointer rounded-lg border p-3.5 transition-all duration-200 flex items-start justify-between gap-3 bg-white",
                                     isOptSelected
-                                      ? "border-navy bg-white shadow-sm ring-2 ring-navy/20"
-                                      : "border-gray-200 bg-white/80 hover:border-gray-300"
+                                      ? "border-navy shadow-sm ring-1 ring-navy"
+                                      : "border-gray-200 hover:border-gray-300"
                                   )}
                                 >
                                   <div className="flex items-start gap-2.5">
@@ -486,13 +483,13 @@ export default function RegistrationPage() {
                                         {opt.sublabel}
                                       </p>
                                       {opt.note && (
-                                        <p className="mt-1 text-[11px] text-amber-700 italic">
+                                        <p className="mt-1 text-[11px] text-gray-600 italic">
                                           {opt.note}
                                         </p>
                                       )}
                                     </div>
                                   </div>
-                                  <span className="font-mono text-xs sm:text-sm font-extrabold text-navy-900 shrink-0 bg-navy-50 px-2 py-0.5 rounded">
+                                  <span className="font-mono text-xs sm:text-sm font-extrabold text-navy-950 shrink-0">
                                     {opt.amount > 0 ? `+₹${opt.amount}` : "₹0"}
                                   </span>
                                 </div>
@@ -504,7 +501,7 @@ export default function RegistrationPage() {
 
                       {/* IIT Indore note */}
                       {selectedCategory.accommodationType === "none" && (
-                        <div className="pt-2 text-xs text-gray-500 flex items-center gap-2 bg-white/80 p-2.5 rounded-lg border border-gray-200">
+                        <div className="pt-2 text-xs text-gray-500 flex items-center gap-2 bg-gray-50 p-2.5 rounded-lg border border-gray-200">
                           <Info size={14} className="text-navy shrink-0" />
                           <span>Campus resident pass — on-campus housing not applicable.</span>
                         </div>
@@ -699,10 +696,10 @@ export default function RegistrationPage() {
 
                 {/* Body with Dynamic Calculations */}
                 <div className="p-6 space-y-5 bg-white">
-                  {/* Selected Tier Banner */}
-                  <div className="rounded-lg bg-navy-50 p-4 border border-navy-100 flex items-start justify-between">
+                  {/* Selected Tier Banner (Clean White Background) */}
+                  <div className="rounded-lg bg-white p-4 border border-[#E5E7EB] flex items-start justify-between">
                     <div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-navy-900 block mb-0.5">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-gray-500 block mb-0.5">
                         Selected Participant Tier
                       </span>
                       <h4 className="text-sm font-bold text-navy-950">
@@ -712,7 +709,7 @@ export default function RegistrationPage() {
                         {activeDuration.label}
                       </p>
                     </div>
-                    <span className="font-mono text-base font-extrabold text-navy">
+                    <span className="font-mono text-base font-extrabold text-navy-950">
                       ₹{basePassFee.toLocaleString("en-IN")}
                     </span>
                   </div>
@@ -771,18 +768,18 @@ export default function RegistrationPage() {
                     </div>
                   </div>
 
-                  {/* Grand Total Amount Sum */}
-                  <div className="rounded-lg bg-navy-950 p-4 text-white flex items-center justify-between border-2 border-gold shadow-md">
+                  {/* Grand Total Amount Sum (Clean Card) */}
+                  <div className="rounded-lg bg-white p-4 text-navy-950 flex items-center justify-between border-2 border-navy shadow-xs">
                     <div>
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-gold-300 block">
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-navy-900 block">
                         Total Sum Payable
                       </span>
-                      <span className="text-xs text-white/70">
+                      <span className="text-xs text-gray-500">
                         Pass Fee + Accommodation
                       </span>
                     </div>
                     <div className="text-right">
-                      <span className="font-mono text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                      <span className="font-mono text-2xl sm:text-3xl font-extrabold text-navy-950 tracking-tight">
                         ₹{totalAmount.toLocaleString("en-IN")}
                       </span>
                     </div>
