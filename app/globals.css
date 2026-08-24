@@ -96,14 +96,14 @@ body {
   left: 0;
   width: 100%;
   z-index: 1050;
-  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.85s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .site-header.scrolled {
   position: fixed;
-  background: rgba(0, 43, 73, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(0, 43, 73, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -120,7 +120,7 @@ body {
   border-radius: 28px;
   padding: 4px 6px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.85s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .pill-nav-compact {
@@ -141,7 +141,7 @@ body {
   font-weight: 500;
   color: #fff;
   text-decoration: none;
-  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .pill-nav-compact a {

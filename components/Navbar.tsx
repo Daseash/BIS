@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useCallback } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, LayoutGroup } from "framer-motion";
 import { Menu, X, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/cn";
 
@@ -143,113 +143,158 @@ export function Navbar() {
         !isHome ? "header-inner" : "header-home"
       )}
     >
-      {/* ── Tier 1: Top utility bar ──────────────────────────────── */}
-      <div className={cn(
-        "top-bar flex w-full items-center justify-between px-4 transition-all duration-700 ease-in-out sm:px-6 lg:px-8",
-        !isHome ? "py-1 text-xs" : "py-1.5 text-xs sm:text-sm"
-      )}>
-        <div className="flex items-center gap-3">
-          <a
-            href="https://www.linkedin.com/company/bis-chem-iiti/?viewAsMember=true"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-            className="hover:text-gold transition-colors"
-          >
-            <LinkedInIcon />
-          </a>
-          <a
-            href="https://www.instagram.com/bis_chem_iiti/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Instagram"
-            className="hover:text-gold transition-colors"
-          >
-            <InstagramIcon />
-          </a>
-          <a
-            href="https://x.com/IITIOfficial?lang=en"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Twitter"
-            className="hover:text-gold transition-colors"
-          >
-            <TwitterIcon />
-          </a>
+      <LayoutGroup id="header-nav-group">
+        {/* ── Tier 1: Top utility bar ──────────────────────────────── */}
+        <div className={cn(
+          "top-bar flex w-full items-center justify-between px-4 transition-all duration-700 ease-in-out sm:px-6 lg:px-8",
+          !isHome ? "py-1 text-xs" : "py-1.5 text-xs sm:text-sm"
+        )}>
+          <div className="flex items-center gap-3">
+            <a
+              href="https://www.linkedin.com/company/bis-chem-iiti/?viewAsMember=true"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="hover:text-gold transition-colors"
+            >
+              <LinkedInIcon />
+            </a>
+            <a
+              href="https://www.instagram.com/bis_chem_iiti/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="hover:text-gold transition-colors"
+            >
+              <InstagramIcon />
+            </a>
+            <a
+              href="https://x.com/IITIOfficial?lang=en"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter"
+              className="hover:text-gold transition-colors"
+            >
+              <TwitterIcon />
+            </a>
 
-          <span className="divider" />
+            <span className="divider" />
 
-          <a
-            href="https://www.iiti.ac.in/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden sm:inline hover:text-gold transition-colors"
-          >
-            IIT Indore
-          </a>
+            <a
+              href="https://www.iiti.ac.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:inline hover:text-gold transition-colors"
+            >
+              IIT Indore
+            </a>
 
-          <span className="divider hidden sm:inline" />
+            <span className="divider hidden sm:inline" />
 
-          <a
-            href="https://chemical.iiti.ac.in"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden sm:inline hover:text-gold transition-colors"
-          >
-            Chemical Engineering
-          </a>
-        </div>
+            <a
+              href="https://chemical.iiti.ac.in"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:inline hover:text-gold transition-colors"
+            >
+              Chemical Engineering
+            </a>
+          </div>
 
-        <div className="flex items-center gap-3">
-          <div className="lang-toggle">
-            <span className="lang-btn active">en</span>
+          <div className="flex items-center gap-3">
+            <div className="lang-toggle">
+              <span className="lang-btn active">en</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* ── Tier 2: Logo + Title (and Pill Nav on inner pages) ─────── */}
-      <div className={cn(
-        "flex w-full items-center justify-between px-4 transition-all duration-700 ease-in-out sm:px-6 lg:px-8",
-        !isHome ? "py-1.5 sm:py-2.5" : "py-2 sm:py-3.5"
-      )}>
-        <Link href="/" className="flex items-center gap-2.5 transition-all duration-700 ease-in-out sm:gap-3.5 shrink-0" onClick={() => setMenuOpen(false)}>
-          <Image
-            src="/logos/iit-indore-logo.png"
-            alt="IIT Indore emblem"
-            width={120}
-            height={90}
-            unoptimized
-            className={cn(
-              "w-auto shrink-0 transition-all duration-700 ease-in-out object-contain",
-              !isHome ? "h-10 sm:h-12 lg:h-13" : "h-12 sm:h-15 lg:h-18"
+        {/* ── Tier 2: Logo + Title (and Pill Nav on inner pages) ─────── */}
+        <div className={cn(
+          "flex w-full items-center justify-between px-4 transition-all duration-700 ease-in-out sm:px-6 lg:px-8",
+          !isHome ? "py-1.5 sm:py-2.5" : "py-2 sm:py-3.5"
+        )}>
+          <Link href="/" className="flex items-center gap-2.5 transition-all duration-700 ease-in-out sm:gap-3.5 shrink-0" onClick={() => setMenuOpen(false)}>
+            <Image
+              src="/logos/iit-indore-logo.png"
+              alt="IIT Indore emblem"
+              width={120}
+              height={90}
+              unoptimized
+              className={cn(
+                "w-auto shrink-0 transition-all duration-700 ease-in-out object-contain",
+                !isHome ? "h-10 sm:h-12 lg:h-13" : "h-12 sm:h-15 lg:h-18"
+              )}
+              priority
+            />
+            <div className={cn(
+              "w-px bg-white/30 transition-all duration-700 ease-in-out",
+              !isHome ? "h-8 sm:h-9" : "h-10 sm:h-12"
+            )} />
+            <span className="flex min-w-0 flex-col leading-tight transition-all duration-700 ease-in-out">
+              <span className={cn(
+                "font-bold tracking-wide text-white transition-all duration-700 ease-in-out whitespace-nowrap",
+                !isHome ? "text-sm sm:text-base lg:text-lg" : "text-base sm:text-xl lg:text-2xl"
+              )}>
+                Malwa Chemical Conclave 2026
+              </span>
+              <span className={cn(
+                "font-medium text-white/75 transition-all duration-700 ease-in-out whitespace-nowrap",
+                !isHome ? "text-[10px] sm:text-xs" : "text-xs sm:text-sm lg:text-base"
+              )}>
+                Dept. of Chemical Engineering, IIT Indore
+              </span>
+            </span>
+          </Link>
+
+          {/* Right side: Pill Nav in same line on Inner pages */}
+          <div className="flex items-center gap-3">
+            {!isHome && (
+              <motion.nav
+                layout
+                layoutId="desktop-pill-nav"
+                transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+                className="hidden lg:flex items-center"
+              >
+                <div className="pill-nav pill-nav-compact transition-all duration-700 ease-in-out">
+                  {NAV_LINKS.map((link) => {
+                    const active = pathname === link.href;
+                    return (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        data-active={active}
+                        className="transition-all duration-700 ease-in-out"
+                      >
+                        {link.label}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </motion.nav>
             )}
-            priority
-          />
-          <div className={cn(
-            "w-px bg-white/30 transition-all duration-700 ease-in-out",
-            !isHome ? "h-8 sm:h-9" : "h-10 sm:h-12"
-          )} />
-          <span className="flex min-w-0 flex-col leading-tight transition-all duration-700 ease-in-out">
-            <span className={cn(
-              "font-bold tracking-wide text-white transition-all duration-700 ease-in-out whitespace-nowrap",
-              !isHome ? "text-sm sm:text-base lg:text-lg" : "text-base sm:text-xl lg:text-2xl"
-            )}>
-              Malwa Chemical Conclave 2026
-            </span>
-            <span className={cn(
-              "font-medium text-white/75 transition-all duration-700 ease-in-out whitespace-nowrap",
-              !isHome ? "text-[10px] sm:text-xs" : "text-xs sm:text-sm lg:text-base"
-            )}>
-              Dept. of Chemical Engineering, IIT Indore
-            </span>
-          </span>
-        </Link>
 
-        {/* Right side: Pill Nav in same line on Inner pages */}
-        <div className="flex items-center gap-3">
-          {!isHome && (
-            <nav className="hidden lg:flex items-center">
-              <div className="pill-nav pill-nav-compact transition-all duration-700 ease-in-out">
+            {/* Mobile hamburger */}
+            <button
+              type="button"
+              aria-label="Toggle navigation menu"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-sm text-white lg:hidden"
+              onClick={() => setMenuOpen((v) => !v)}
+            >
+              {menuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+        </div>
+
+        {/* ── Tier 3: Pill navigation tabs (Only on Home page - 2nd Line, right aligned) ─ */}
+        {isHome && (
+          <div className="hidden lg:flex w-full items-center justify-end px-4 pb-3 pt-0.5 transition-all duration-700 ease-in-out sm:px-6 lg:px-8">
+            <motion.nav
+              layout
+              layoutId="desktop-pill-nav"
+              transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+              className="flex items-center justify-end ml-auto"
+            >
+              <div className="pill-nav transition-all duration-700 ease-in-out">
                 {NAV_LINKS.map((link) => {
                   const active = pathname === link.href;
                   return (
@@ -264,43 +309,10 @@ export function Navbar() {
                   );
                 })}
               </div>
-            </nav>
-          )}
-
-          {/* Mobile hamburger */}
-          <button
-            type="button"
-            aria-label="Toggle navigation menu"
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-sm text-white lg:hidden"
-            onClick={() => setMenuOpen((v) => !v)}
-          >
-            {menuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-      </div>
-
-      {/* ── Tier 3: Pill navigation tabs (Only on Home page - 2nd Line, right aligned) ─ */}
-      {isHome && (
-        <div className="hidden lg:flex w-full items-center justify-end px-4 pb-3 pt-0.5 transition-all duration-700 ease-in-out sm:px-6 lg:px-8">
-          <nav className="flex items-center justify-end ml-auto">
-            <div className="pill-nav transition-all duration-700 ease-in-out">
-              {NAV_LINKS.map((link) => {
-                const active = pathname === link.href;
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    data-active={active}
-                    className="transition-all duration-700 ease-in-out"
-                  >
-                    {link.label}
-                  </Link>
-                );
-              })}
-            </div>
-          </nav>
-        </div>
-      )}
+            </motion.nav>
+          </div>
+        )}
+      </LayoutGroup>
 
       {/* ── Mega menu (desktop dropdown + mobile full-screen) ────── */}
       <AnimatePresence>
