@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
-import { MapPinned, ClipboardCheck, TrendingUp, Target, Award, Users } from "lucide-react";
+import { MapPinned, ClipboardCheck, TrendingUp } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "About",
@@ -32,6 +32,19 @@ const HIGHLIGHTS = [
 export default function AboutPage() {
   return (
     <>
+      {/* ── Top Full-Bleed Video: Fits Right to Left Corner (Edge-to-Edge) ── */}
+      <section className="relative w-full overflow-hidden bg-navy-950 border-b border-[#002F6C] shadow-md">
+        <video
+          src="/video.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          controls
+          className="w-full h-auto max-h-[85vh] min-h-[320px] object-cover"
+        />
+      </section>
+
       <PageHero
         title="About the Conclave"
         subtitle="A premier academic and industrial symposium fostering sustainable process innovation and standardisation in Central India."
@@ -40,7 +53,7 @@ export default function AboutPage() {
       <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
         {/* Mission Statement */}
         <Reveal>
-          <div className="institutional-card p-8 sm:p-10 border-l-4 border-l-navy">
+          <div className="institutional-card p-8 sm:p-10 border-l-4 border-l-navy bg-white">
             <span className="inline-block rounded bg-navy-50 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-navy-900 mb-3">
               Vision &amp; Objective
             </span>
@@ -89,7 +102,7 @@ export default function AboutPage() {
               const Icon = item.icon;
               return (
                 <Reveal key={item.title} delay={i * 0.05}>
-                  <div className="institutional-card h-full p-6 flex flex-col justify-between">
+                  <div className="institutional-card h-full p-6 flex flex-col justify-between bg-white hover:border-navy transition-all duration-300">
                     <div>
                       <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-navy-900 text-white mb-4">
                         <Icon size={24} />
@@ -107,4 +120,3 @@ export default function AboutPage() {
     </>
   );
 }
-
