@@ -5,7 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useCallback } from "react";
 import { AnimatePresence, motion, LayoutGroup } from "framer-motion";
-import { Menu, X, ChevronRight } from "lucide-react";
+import { Menu, X, ChevronRight, Mail, Phone, MapPin, ExternalLink, Calendar, UserCheck } from "lucide-react";
 import { cn } from "@/lib/cn";
 
 /* ── Social SVG icons ─────────────────────────────────────────── */
@@ -41,82 +41,10 @@ const NAV_LINKS = [
   { label: "Contact", href: "/contact" },
 ];
 
-/* ── Mega menu tab content ─────────────────────────────────────── */
-const MEGA_TABS = [
-  {
-    id: "about",
-    label: "About",
-    columns: [
-      {
-        heading: "The Conclave",
-        links: [
-          { label: "About MCC 2026", href: "/about" },
-          { label: "Theme & Vision", href: "/about#theme" },
-          { label: "Key Highlights", href: "/about#highlights" },
-        ],
-      },
-      {
-        heading: "Department",
-        links: [
-          { label: "Chemical Engineering, IIT Indore", href: "https://chemical.iiti.ac.in/" },
-          { label: "IIT Indore Home", href: "https://www.iiti.ac.in/" },
-        ],
-      },
-    ],
-  },
-  {
-    id: "program",
-    label: "Programme",
-    columns: [
-      {
-        heading: "Verticals",
-        links: [
-          { label: "Industry Talks", href: "/schedule#talks" },
-          { label: "Industry Matchmaking", href: "/schedule#matchmaking" },
-          { label: "Student Innovation Expo", href: "/schedule#expo" },
-          { label: "BIS Panel Discussion", href: "/schedule#panel" },
-        ],
-      },
-      {
-        heading: "Events",
-        links: [
-          { label: "Hands-on Workshops", href: "/schedule#workshops" },
-          { label: "Annual Outlook Release", href: "/schedule#outlook" },
-          { label: "Awards Programme", href: "/schedule#awards" },
-          { label: "Full Schedule", href: "/schedule" },
-        ],
-      },
-    ],
-  },
-  {
-    id: "connect",
-    label: "Connect",
-    columns: [
-      {
-        heading: "Get Involved",
-        links: [
-          { label: "Register Now", href: "/registration" },
-          { label: "Become a Sponsor", href: "/sponsors" },
-          { label: "Organizing Committee", href: "/organizers" },
-        ],
-      },
-      {
-        heading: "Reach Us",
-        links: [
-          { label: "Contact Information", href: "/contact" },
-          { label: "Venue & Directions", href: "/accommodation-venue" },
-          { label: "Accommodation", href: "/accommodation-venue#accommodation" },
-        ],
-      },
-    ],
-  },
-];
-
 export function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("about");
 
   const onScroll = useCallback(() => {
     setScrolled(window.scrollY > 60);
@@ -128,7 +56,7 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, [onScroll]);
 
-  // Close mega menu on route change
+  // Close menu on route change
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
@@ -138,7 +66,7 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "site-header transition-all duration-700 ease-in-out",
+        "site-header transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]",
         scrolled && "scrolled",
         !isHome ? "header-inner" : "header-home"
       )}
@@ -146,8 +74,8 @@ export function Navbar() {
       <LayoutGroup id="header-nav-group">
         {/* ── Tier 1: Top utility bar ──────────────────────────────── */}
         <div className={cn(
-          "top-bar flex w-full items-center justify-between px-4 transition-all duration-700 ease-in-out sm:px-6 lg:px-8",
-          !isHome ? "py-1 text-xs" : "py-1.5 text-xs sm:text-sm"
+          "top-bar flex w-full items-center justify-between px-4 transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] sm:px-6 lg:px-8",
+          !isHome ? "py-1 text-[11px]" : "py-1.5 text-xs sm:text-sm"
         )}>
           <div className="flex items-center gap-3">
             <a
@@ -208,33 +136,55 @@ export function Navbar() {
           </div>
         </div>
 
-        {/* ── Tier 2: Logo + Title on Left, Pill Nav on Right (Single Line on All Pages) ── */}
-        <div className="flex w-full items-center justify-between px-4 py-2 transition-all duration-700 ease-in-out sm:px-6 lg:px-8 sm:py-3">
-          <Link href="/" className="flex items-center gap-2.5 transition-all duration-700 ease-in-out sm:gap-3.5 shrink-0" onClick={() => setMenuOpen(false)}>
+        {/* ── Tier 2: Dynamic Sizing Logo + Title on Left, Pill Nav on Right ── */}
+        <div className={cn(
+          "flex w-full items-center justify-between px-4 transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] sm:px-6 lg:px-8",
+          isHome ? "py-3 sm:py-4 lg:py-4.5" : "py-1.5 sm:py-2.5"
+        )}>
+          <Link
+            href="/"
+            className="flex items-center gap-2.5 transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] sm:gap-3.5 shrink-0"
+            onClick={() => setMenuOpen(false)}
+          >
+            {/* IIT Indore Logo with Smooth Scale */}
             <Image
               src="/logos/iit-indore-logo.png"
               alt="IIT Indore emblem"
-              width={120}
-              height={90}
+              width={140}
+              height={100}
               unoptimized
-              className="h-10 sm:h-12 lg:h-13 w-auto shrink-0 transition-all duration-700 ease-in-out object-contain"
+              className={cn(
+                "w-auto shrink-0 transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] object-contain",
+                isHome ? "h-12 sm:h-14 lg:h-16" : "h-9 sm:h-11 lg:h-12"
+              )}
               priority
             />
-            <div className="h-8 sm:h-9 w-px bg-white/30 transition-all duration-700 ease-in-out" />
-            <span className="flex min-w-0 flex-col leading-tight transition-all duration-700 ease-in-out">
-              <span className="text-sm sm:text-base lg:text-lg font-bold tracking-wide text-white transition-all duration-700 ease-in-out whitespace-nowrap">
+            <div className={cn(
+              "w-px bg-white/30 transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]",
+              isHome ? "h-10 sm:h-12" : "h-7 sm:h-8"
+            )} />
+
+            {/* Prominent Title on Home, Smoothly Reduced on Inner Pages */}
+            <span className="flex min-w-0 flex-col leading-tight transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]">
+              <span className={cn(
+                "font-extrabold tracking-wide text-white transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] whitespace-nowrap drop-shadow-xs",
+                isHome ? "text-base sm:text-xl lg:text-2xl" : "text-xs sm:text-sm lg:text-base font-bold"
+              )}>
                 Malwa Chemical Conclave 2026
               </span>
-              <span className="text-[10px] sm:text-xs font-medium text-white/75 transition-all duration-700 ease-in-out whitespace-nowrap">
+              <span className={cn(
+                "font-medium text-white/80 transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] whitespace-nowrap",
+                isHome ? "text-xs sm:text-sm lg:text-base" : "text-[9px] sm:text-xs text-white/70"
+              )}>
                 Dept. of Chemical Engineering, IIT Indore
               </span>
             </span>
           </Link>
 
-          {/* Right side: Pill Nav in exact same line */}
+          {/* Right side: Desktop Pill Nav + Popout 3-Line Menu Button */}
           <div className="flex items-center gap-3">
-            <nav className="hidden lg:flex items-center">
-              <div className="pill-nav pill-nav-compact transition-all duration-700 ease-in-out">
+            <nav className="hidden xl:flex items-center">
+              <div className="pill-nav pill-nav-compact transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]">
                 {NAV_LINKS.map((link) => {
                   const active = pathname === link.href;
                   return (
@@ -242,7 +192,7 @@ export function Navbar() {
                       key={link.href}
                       href={link.href}
                       data-active={active}
-                      className="transition-all duration-700 ease-in-out"
+                      className="transition-all duration-500 ease-in-out"
                     >
                       {link.label}
                     </Link>
@@ -251,124 +201,172 @@ export function Navbar() {
               </div>
             </nav>
 
-            {/* Mobile hamburger */}
+            {/* 3-Line Pop-out Menu Trigger (Prominent on all devices) */}
             <button
               type="button"
-              aria-label="Toggle navigation menu"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-sm text-white lg:hidden"
+              aria-label="Toggle navigation and contact menu"
+              className={cn(
+                "flex items-center justify-center rounded-lg border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all duration-300 hover:bg-gold hover:border-gold hover:text-white cursor-pointer shadow-sm",
+                isHome ? "h-11 w-11" : "h-9 w-9"
+              )}
               onClick={() => setMenuOpen((v) => !v)}
             >
-              {menuOpen ? <X size={24} /> : <Menu size={24} />}
+              {menuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
       </LayoutGroup>
 
-      {/* ── Mobile Navigation Drawer (Full-Screen / Slide-Down) ── */}
+      {/* ── Slide-Down Pop-Out Drawer with Full Navigation & Contact Section ── */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="lg:hidden border-t border-white/10 bg-navy-950/98 backdrop-blur-xl overflow-hidden shadow-2xl"
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="border-t border-white/10 bg-navy-950/98 backdrop-blur-2xl overflow-hidden shadow-2xl"
           >
-            <div className="mx-auto max-w-lg px-5 py-6 space-y-5">
-              {/* Primary Navigation Links */}
-              <div className="space-y-1">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-gold/80 block px-3 mb-2">
-                  Navigation Menu
-                </span>
-                <nav className="grid gap-1">
-                  {NAV_LINKS.map((link) => {
-                    const active = pathname === link.href;
-                    return (
-                      <Link
-                        key={link.href}
-                        href={link.href}
-                        onClick={() => setMenuOpen(false)}
-                        className={cn(
-                          "flex items-center justify-between px-3.5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200",
-                          active
-                            ? "bg-gold text-white shadow-xs font-bold"
-                            : "text-white/85 hover:bg-white/10 hover:text-white"
-                        )}
-                      >
-                        <span>{link.label}</span>
-                        <ChevronRight size={16} className={active ? "text-white" : "text-white/40"} />
-                      </Link>
-                    );
-                  })}
-                </nav>
-              </div>
+            <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+              <div className="grid gap-8 lg:grid-cols-12">
+                {/* Column 1: Primary Navigation Links (7 cols) */}
+                <div className="lg:col-span-7 space-y-4">
+                  <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                    <span className="text-xs font-bold uppercase tracking-widest text-gold">
+                      Conference Navigation
+                    </span>
+                    <span className="text-[11px] text-white/50">October 11–12, 2026</span>
+                  </div>
 
-              {/* Quick Action: Register Button */}
-              <div className="pt-2">
-                <Link
-                  href="/registration"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-gold py-3 text-sm font-bold text-white shadow-md hover:bg-gold-700 transition-colors uppercase tracking-wider"
-                >
-                  <span>Register as Delegate</span>
-                  <ChevronRight size={16} />
-                </Link>
-              </div>
+                  <nav className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                    {NAV_LINKS.map((link) => {
+                      const active = pathname === link.href;
+                      return (
+                        <Link
+                          key={link.href}
+                          href={link.href}
+                          onClick={() => setMenuOpen(false)}
+                          className={cn(
+                            "flex items-center justify-between px-3.5 py-3 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-200 border",
+                            active
+                              ? "bg-gold text-white border-gold shadow-xs font-bold"
+                              : "bg-white/5 text-white/85 border-white/5 hover:bg-white/10 hover:border-white/20 hover:text-white"
+                          )}
+                        >
+                          <span>{link.label}</span>
+                          <ChevronRight size={14} className={active ? "text-white" : "text-white/40"} />
+                        </Link>
+                      );
+                    })}
+                  </nav>
 
-              {/* Department & External Institutional Links */}
-              <div className="pt-3 border-t border-white/10 space-y-2">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-white/50 block px-3">
-                  Institutional Portals
-                </span>
-                <div className="grid grid-cols-2 gap-2 text-xs font-medium">
-                  <a
-                    href="https://www.iiti.ac.in/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="rounded-md bg-white/5 p-2.5 text-center text-white/80 hover:bg-white/10 hover:text-gold transition-colors"
-                  >
-                    IIT Indore Official
-                  </a>
-                  <a
-                    href="https://chemical.iiti.ac.in"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="rounded-md bg-white/5 p-2.5 text-center text-white/80 hover:bg-white/10 hover:text-gold transition-colors"
-                  >
-                    Chemical Engg Dept
-                  </a>
+                  {/* Register CTA Banner */}
+                  <div className="pt-2">
+                    <Link
+                      href="/registration"
+                      onClick={() => setMenuOpen(false)}
+                      className="flex w-full items-center justify-center gap-2 rounded-lg bg-gold py-3.5 text-sm font-bold text-white shadow-lg hover:bg-gold-700 transition-colors uppercase tracking-wider"
+                    >
+                      <UserCheck size={18} />
+                      <span>Register for Malwa Chemical Conclave 2026</span>
+                    </Link>
+                  </div>
                 </div>
-              </div>
 
-              {/* Social Media Footer in Drawer */}
-              <div className="pt-2 flex items-center justify-center gap-6 text-white/70">
-                <a
-                  href="https://www.linkedin.com/company/bis-chem-iiti/?viewAsMember=true"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn"
-                  className="hover:text-gold transition-colors p-1"
-                >
-                  <LinkedInIcon />
-                </a>
-                <a
-                  href="https://www.instagram.com/bis_chem_iiti/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Instagram"
-                  className="hover:text-gold transition-colors p-1"
-                >
-                  <InstagramIcon />
-                </a>
-                <a
-                  href="https://x.com/IITIOfficial?lang=en"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Twitter"
-                  className="hover:text-gold transition-colors p-1"
-                >
-                  <TwitterIcon />
-                </a>
+                {/* Column 2: Contact & Secretariat Section (5 cols) */}
+                <div className="lg:col-span-5 space-y-4 rounded-xl border border-white/10 bg-white/5 p-5">
+                  <div className="border-b border-white/10 pb-2 flex items-center justify-between">
+                    <span className="text-xs font-bold uppercase tracking-widest text-gold">
+                      Secretariat &amp; Contact
+                    </span>
+                    <span className="text-[10px] text-white/60">IIT Indore</span>
+                  </div>
+
+                  <div className="space-y-3.5 text-xs text-white/80">
+                    <div className="flex items-start gap-2.5">
+                      <MapPin size={16} className="mt-0.5 shrink-0 text-gold" />
+                      <span>
+                        Department of Chemical Engineering, IIT Indore, Simrol Campus, Khandwa Road, Indore, MP – 453552
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2.5">
+                      <Mail size={16} className="shrink-0 text-gold" />
+                      <a
+                        href="mailto:chemenggoffice@iiti.ac.in"
+                        className="text-white hover:text-gold transition-colors font-medium underline underline-offset-2"
+                      >
+                        chemenggoffice@iiti.ac.in
+                      </a>
+                    </div>
+
+                    <div className="flex items-center gap-2.5">
+                      <Phone size={16} className="shrink-0 text-gold" />
+                      <span>+91 731 2438 700</span>
+                    </div>
+                  </div>
+
+                  {/* External Portal Links */}
+                  <div className="pt-3 border-t border-white/10">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-white/50 block mb-2">
+                      External Portals
+                    </span>
+                    <div className="grid grid-cols-2 gap-2 text-xs">
+                      <a
+                        href="https://www.iiti.ac.in/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-1 rounded bg-white/5 p-2 text-center text-white/80 hover:bg-white/10 hover:text-gold transition-colors"
+                      >
+                        <span>IIT Indore Portal</span>
+                        <ExternalLink size={12} />
+                      </a>
+                      <a
+                        href="https://chemical.iiti.ac.in"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-1 rounded bg-white/5 p-2 text-center text-white/80 hover:bg-white/10 hover:text-gold transition-colors"
+                      >
+                        <span>Chemical Engg Dept</span>
+                        <ExternalLink size={12} />
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Social Links */}
+                  <div className="pt-2 flex items-center justify-between border-t border-white/10 text-white/70">
+                    <span className="text-[10px] uppercase font-bold text-white/50">Follow Us</span>
+                    <div className="flex items-center gap-4">
+                      <a
+                        href="https://www.linkedin.com/company/bis-chem-iiti/?viewAsMember=true"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="LinkedIn"
+                        className="hover:text-gold transition-colors p-1"
+                      >
+                        <LinkedInIcon />
+                      </a>
+                      <a
+                        href="https://www.instagram.com/bis_chem_iiti/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Instagram"
+                        className="hover:text-gold transition-colors p-1"
+                      >
+                        <InstagramIcon />
+                      </a>
+                      <a
+                        href="https://x.com/IITIOfficial?lang=en"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Twitter"
+                        className="hover:text-gold transition-colors p-1"
+                      >
+                        <TwitterIcon />
+                      </a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </motion.div>
