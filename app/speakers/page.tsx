@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: "Distinguished invited speakers and keynote delegates for Malwa Chemical Conclave 2026.",
 };
 
-const CONFIRMED_SPEAKERS_2026 = [
+const FEATURED_SPEAKERS_2026 = [
   {
     name: "Zahid Hussain",
     role: "Head, Technology Development & Design",
@@ -99,23 +99,23 @@ export default function SpeakersPage() {
           </div>
         </Reveal>
 
-        {/* ── 2026 Confirmed Keynote Speakers ──────────────────────── */}
+        {/* ── 2026 Featured Keynote Speakers ─────────────────────── */}
         <div className="mb-8">
-          <span className="inline-block rounded bg-gold-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-gold-900">
+          <span className="inline-block rounded bg-gold-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-gold-900 border border-gold-200">
             Conclave 2026 Line-Up
           </span>
           <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-navy-950">
-            Confirmed Keynote Speakers
+            Distinguished Keynote Speakers
           </h2>
           <p className="mt-1 text-sm text-gray-600">
-            Distinguished industry leaders and keynote delegates addressing Malwa Chemical Conclave 2026.
+            Eminent chemical pioneers, corporate technology leaders, and academic dignitaries delivering keynote talks at Malwa Chemical Conclave 2026.
           </p>
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-16">
-          {CONFIRMED_SPEAKERS_2026.map((speaker, i) => (
+          {FEATURED_SPEAKERS_2026.map((speaker, i) => (
             <Reveal key={speaker.name} delay={i * 0.05}>
-              <div className="institutional-card overflow-hidden bg-white border border-[#E5E7EB] rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 group flex flex-col justify-between h-full">
+              <div className="institutional-card overflow-hidden bg-white border border-[#E5E7EB] rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 group flex flex-col justify-between h-full hover:border-navy">
                 <div>
                   <div className="relative h-64 w-full overflow-hidden bg-gray-100">
                     <img
@@ -147,7 +147,7 @@ export default function SpeakersPage() {
                 </div>
 
                 <div className="bg-gray-50/80 px-6 py-3 border-t border-gray-100 text-xs text-navy font-semibold flex items-center justify-between">
-                  <span>Conclave Speaker &bull; 2026</span>
+                  <span>Distinguished Keynote &bull; 2026</span>
                   <Award size={14} className="text-gold" />
                 </div>
               </div>
