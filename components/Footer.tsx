@@ -55,7 +55,6 @@ const QUICK_LINKS = [
 const DEPT_LINKS = [
   { label: "IIT Indore Home", href: "https://www.iiti.ac.in/", external: true },
   { label: "Dept. of Chemical Engineering", href: "https://chemical.iiti.ac.in/", external: true },
-  { label: "Bureau of Indian Standards", href: "https://www.bis.gov.in/", external: true },
 ];
 
 const SOCIAL_LINKS = [
