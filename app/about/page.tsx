@@ -48,7 +48,7 @@ export default function AboutPage() {
           playsInline
           preload="auto"
           disablePictureInPicture
-          className="w-full h-auto max-h-[85vh] min-h-[320px] object-cover pointer-events-none"
+          className="w-full h-auto max-h-[85vh] min-h-[320px] object-cover pointer-events-none transform-gpu will-change-transform"
         />
       </section>
 
