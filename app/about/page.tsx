@@ -46,6 +46,7 @@ export default function AboutPage() {
           muted
           loop
           playsInline
+          preload="auto"
           disablePictureInPicture
           className="w-full h-auto max-h-[85vh] min-h-[320px] object-cover pointer-events-none"
         />
