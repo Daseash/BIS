@@ -99,14 +99,6 @@ export function Footer() {
               height={40}
               className="h-9 w-9 object-contain"
             />
-            <div className="h-8 w-px bg-white/20" />
-            <Image
-              src="/logos/BIS.png"
-              alt="Bureau of Indian Standards logo"
-              width={45}
-              height={40}
-              className="h-9 w-auto object-contain bg-white rounded-xs p-0.5"
-            />
           </div>
           <p className="mt-4 text-sm font-semibold text-gold">
             Malwa Chemical Conclave 2026
