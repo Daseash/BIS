@@ -8,87 +8,193 @@ import {
   Loader2,
   ShieldCheck,
   Receipt,
-  Award,
   Check,
-  Sparkles,
   Building,
   User,
   Mail,
   Phone,
   HelpCircle,
   FileCheck,
+  Calendar,
+  Hotel,
+  Sparkles,
+  Info,
 } from "lucide-react";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/Button";
 import { cn } from "@/lib/cn";
 
-interface CategoryOption {
-  id: string;
-  name: string;
-  badge: string;
+type CategoryId = "iiti" | "external_student" | "academia" | "industry";
+type DurationId = "1day" | "2days";
+
+interface DurationOption {
+  id: DurationId;
+  label: string;
+  sublabel: string;
   amount: number;
-  description: string;
 }
 
-const CATEGORY_OPTIONS: CategoryOption[] = [
+interface AccommodationOption {
+  id: string;
+  label: string;
+  sublabel?: string;
+  amount: number;
+  note?: string;
+}
+
+interface CategoryTier {
+  id: CategoryId;
+  name: string;
+  badge: string;
+  description: string;
+  durations: DurationOption[];
+  accommodationType: "none" | "checkbox" | "options";
+  accommodationOptions?: AccommodationOption[];
+}
+
+const CATEGORIES: CategoryTier[] = [
   {
-    id: "student",
-    name: "Student / Research Scholar",
-    badge: "Academic",
-    amount: 1500,
-    description: "Full 2-day conclave access, workshop sessions, delegate kit & certificate.",
+    id: "iiti",
+    name: "IIT Indore Student/Researcher/Faculty",
+    badge: "IIT Indore",
+    description: "Registered students, PhD research scholars, and faculty members of IIT Indore.",
+    durations: [
+      { id: "1day", label: "1 Day", sublabel: "Single-day access to technical sessions & exhibitions", amount: 0 },
+      { id: "2days", label: "2 Days [with Workshop]", sublabel: "Full 2-day conclave access + Hands-on masterclasses", amount: 200 },
+    ],
+    accommodationType: "none",
   },
   {
-    id: "faculty",
-    name: "Academic Faculty",
-    badge: "Faculty",
-    amount: 3500,
-    description: "Plenary sessions, technical talks, paper presentation & networking dinner.",
+    id: "external_student",
+    name: "External Student/PhD Scholar",
+    badge: "External Scholar",
+    description: "Students, postgraduates, and doctoral researchers from external universities and institutes.",
+    durations: [
+      { id: "1day", label: "1 Day", sublabel: "Single-day access to technical sessions & exhibitions", amount: 200 },
+      { id: "2days", label: "2 Days [with Workshop]", sublabel: "Full 2-day conclave access + Hands-on masterclasses", amount: 400 },
+    ],
+    accommodationType: "checkbox",
+    accommodationOptions: [
+      {
+        id: "on_campus_900",
+        label: "On-Campus Accommodation",
+        sublabel: "Subsidized hostel / guest room on Simrol campus",
+        amount: 900,
+      },
+    ],
+  },
+  {
+    id: "academia",
+    name: "Academia/Faculty",
+    badge: "Faculty / Academic",
+    description: "Professors, scientists, and researchers from universities and national research labs.",
+    durations: [
+      { id: "1day", label: "1 Day", sublabel: "Single-day access to keynote addresses & technical talks", amount: 400 },
+      { id: "2days", label: "2 Days [with Workshop]", sublabel: "Full 2-day conclave access + Hands-on masterclasses", amount: 1000 },
+    ],
+    accommodationType: "checkbox",
+    accommodationOptions: [
+      {
+        id: "on_campus_900",
+        label: "On-Campus Accommodation",
+        sublabel: "IIT Indore campus guest house accommodation",
+        amount: 900,
+      },
+    ],
   },
   {
     id: "industry",
-    name: "Industry Delegate / Corporate Executive",
-    badge: "Industry",
-    amount: 6500,
-    description: "Executive matchmaking, exhibition booth entry, panel dialogue & outlook copy.",
-  },
-  {
-    id: "bis_official",
-    name: "Bureau of Indian Standards Official",
-    badge: "Regulatory",
-    amount: 2500,
-    description: "Standardisation forum access, policy panel & institutional memento.",
-  },
-  {
-    id: "other",
-    name: "Other Participant / General Attendee",
-    badge: "Standard",
-    amount: 4000,
-    description: "General session entry, keynote attendance & digital participation kit.",
+    name: "Industrial Delegate and Others",
+    badge: "Industry / Corporate",
+    description: "Corporate executives, chemical manufacturers, R&D leaders, and standardisation officials.",
+    durations: [
+      { id: "1day", label: "1 Day", sublabel: "Single-day executive dialogue & technical sessions", amount: 1000 },
+      { id: "2days", label: "2 Days [with Workshop]", sublabel: "Full 2-day conclave access + Matchmaking & Masterclasses", amount: 2000 },
+    ],
+    accommodationType: "options",
+    accommodationOptions: [
+      {
+        id: "none",
+        label: "No Accommodation Needed",
+        sublabel: "Self-arranged daily commute",
+        amount: 0,
+      },
+      {
+        id: "on_campus_1300",
+        label: "Accommodation on campus",
+        sublabel: "IIT Indore Executive Guest House / VIP Suite",
+        amount: 1300,
+      },
+      {
+        id: "outside_sky_imperial",
+        label: "Accommodation outside — Sky Imperial",
+        sublabel: "Partner hotel (Book on your own / 0 Rs. added)",
+        amount: 0,
+        note: "Partner booking guidance & contact will be provided upon confirmation.",
+      },
+    ],
   },
 ];
 
 type Status = "idle" | "submitting" | "success" | "error";
 
 export default function RegistrationPage() {
-  const [selectedCategory, setSelectedCategory] = useState<CategoryOption>(CATEGORY_OPTIONS[0]);
-  const [includeWorkshop, setIncludeWorkshop] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState<CategoryTier>(CATEGORIES[0]);
+  const [selectedDurationId, setSelectedDurationId] = useState<DurationId>("2days");
+  const [selectedAccommodationId, setSelectedAccommodationId] = useState<string>("none");
+  const [isAccommodationChecked, setIsAccommodationChecked] = useState<boolean>(false);
+
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [submittedData, setSubmittedData] = useState<{
     name: string;
     email: string;
     category: string;
+    duration: string;
+    accommodation: string;
     totalAmount: number;
   } | null>(null);
 
-  // Fee Calculations
-  const baseFee = selectedCategory.amount;
-  const workshopFee = 0; // Included complimentary
-  const delegateKitFee = 0; // Included
-  const gstAmount = Math.round(baseFee * 0.18);
-  const totalAmount = baseFee; // Transparent fee
+  // Handle Category Change
+  const handleCategorySelect = (category: CategoryTier) => {
+    setSelectedCategory(category);
+    // Reset or keep default duration to 2 days
+    setSelectedDurationId("2days");
+    // Reset accommodation selections
+    setIsAccommodationChecked(false);
+    setSelectedAccommodationId("none");
+  };
+
+  // Find active duration option
+  const activeDuration =
+    selectedCategory.durations.find((d) => d.id === selectedDurationId) ??
+    selectedCategory.durations[0];
+
+  // Calculate Accommodation fee
+  let accommodationFee = 0;
+  let accommodationLabel = "None";
+
+  if (selectedCategory.accommodationType === "checkbox") {
+    if (isAccommodationChecked && selectedCategory.accommodationOptions?.[0]) {
+      accommodationFee = selectedCategory.accommodationOptions[0].amount;
+      accommodationLabel = `${selectedCategory.accommodationOptions[0].label} (₹${accommodationFee})`;
+    } else {
+      accommodationLabel = "Not Selected (Self-arranged)";
+    }
+  } else if (selectedCategory.accommodationType === "options") {
+    const opt = selectedCategory.accommodationOptions?.find((o) => o.id === selectedAccommodationId);
+    if (opt) {
+      accommodationFee = opt.amount;
+      accommodationLabel = opt.label;
+    }
+  } else {
+    accommodationLabel = "IIT Indore Campus Resident";
+  }
+
+  // Calculate Total Sum of Amount
+  const basePassFee = activeDuration.amount;
+  const totalAmount = basePassFee + accommodationFee;
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -101,7 +207,7 @@ export default function RegistrationPage() {
       name: data.get("name"),
       email: data.get("email"),
       phone: data.get("phone"),
-      category: selectedCategory.name,
+      category: `${selectedCategory.name} — ${activeDuration.label}`,
       organization: data.get("organization"),
       designation: data.get("designation"),
       message: data.get("message"),
@@ -125,6 +231,8 @@ export default function RegistrationPage() {
         name: String(payload.name || ""),
         email: String(payload.email || ""),
         category: selectedCategory.name,
+        duration: activeDuration.label,
+        accommodation: accommodationLabel,
         totalAmount: totalAmount,
       });
       setStatus("success");
@@ -139,11 +247,11 @@ export default function RegistrationPage() {
     <>
       <PageHero
         title="Delegate Registration"
-        subtitle="Reserve your delegate pass for the Malwa Chemical Conclave 2026 at IIT Indore. Complete your profile and review fee calculation."
+        subtitle="Reserve your delegate pass for the Malwa Chemical Conclave 2026 at IIT Indore. Select category, participation duration, and accommodation."
       />
 
       <div className="mx-auto max-w-7xl px-4 py-12 sm:py-16 sm:px-6 lg:px-8">
-        {/* Intro strip */}
+        {/* Top summary strip */}
         <div className="mb-10 flex flex-wrap items-center justify-between gap-4 border-b border-[#E5E7EB] pb-6">
           <div>
             <span className="inline-block rounded bg-navy-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-navy-900">
@@ -169,14 +277,14 @@ export default function RegistrationPage() {
           </div>
         </div>
 
-        {/* ── Two-Column Layout: Form on Left, Classic Invoice Receipt on Right ── */}
+        {/* ── Two-Column Layout: Form on Left, Live Receipt on Right ── */}
         <div className="grid gap-10 lg:grid-cols-12 lg:items-start">
           {/* ── LEFT COLUMN: Registration Form (7 cols) ── */}
           <div className="lg:col-span-7 space-y-8">
             <Reveal>
               <div className="institutional-card p-6 sm:p-8 bg-white border border-[#E5E7EB]">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* Step 1: Delegate Category */}
+                <form onSubmit={handleSubmit} className="space-y-8">
+                  {/* Step 1: 4 Categories Selection */}
                   <div>
                     <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
                       <div className="flex items-center gap-2">
@@ -184,60 +292,223 @@ export default function RegistrationPage() {
                           1
                         </span>
                         <h3 className="text-base font-bold text-navy-950">
-                          Select Participation Category
+                          Select Participant Category
                         </h3>
                       </div>
                       <span className="text-xs text-gray-500 font-medium">Step 1 of 3</span>
                     </div>
 
+                    {/* 4 Category Cards (No fixed price upfront) */}
                     <div className="grid gap-3 sm:grid-cols-2">
-                      {CATEGORY_OPTIONS.map((cat) => {
+                      {CATEGORIES.map((cat) => {
                         const isSelected = selectedCategory.id === cat.id;
                         return (
                           <div
                             key={cat.id}
-                            onClick={() => setSelectedCategory(cat)}
+                            onClick={() => handleCategorySelect(cat)}
                             className={cn(
-                              "cursor-pointer rounded-lg border p-4 transition-all duration-200 text-left flex flex-col justify-between",
+                              "cursor-pointer rounded-xl border p-4 transition-all duration-300 text-left flex flex-col justify-between",
                               isSelected
-                                ? "border-navy bg-navy-50/60 shadow-sm ring-1 ring-navy"
-                                : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50/50"
+                                ? "border-navy bg-navy-50/70 shadow-sm ring-1 ring-navy"
+                                : "border-gray-200 bg-white hover:border-navy hover:shadow-xs"
                             )}
                           >
                             <div>
-                              <div className="flex items-center justify-between mb-1.5">
-                                <span className={cn(
-                                  "rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider",
-                                  isSelected ? "bg-navy-900 text-white" : "bg-gray-100 text-gray-700"
-                                )}>
+                              <div className="flex items-center justify-between mb-2">
+                                <span
+                                  className={cn(
+                                    "rounded px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider",
+                                    isSelected
+                                      ? "bg-navy-900 text-white"
+                                      : "bg-gray-100 text-gray-700"
+                                  )}
+                                >
                                   {cat.badge}
                                 </span>
-                                <span className="font-mono text-sm font-bold text-navy-950">
-                                  ₹{cat.amount.toLocaleString("en-IN")}
+                                <span className="text-xs font-semibold text-navy">
+                                  {isSelected ? "Active" : "Select"}
                                 </span>
                               </div>
                               <h4 className="text-sm font-bold text-navy-950 leading-snug">
                                 {cat.name}
                               </h4>
-                              <p className="mt-1 text-xs text-gray-500 line-clamp-2">
+                              <p className="mt-1.5 text-xs text-gray-500 leading-relaxed">
                                 {cat.description}
                               </p>
                             </div>
 
-                            <div className="mt-3 flex items-center gap-1.5 text-xs font-semibold">
-                              <div className={cn(
-                                "flex h-4 w-4 items-center justify-center rounded-full border",
-                                isSelected ? "border-navy bg-navy text-white" : "border-gray-300 bg-white"
-                              )}>
+                            <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-semibold">
+                              <span className="text-gray-500 font-normal">
+                                {isSelected ? "Category Chosen" : "Click to view options"}
+                              </span>
+                              <div
+                                className={cn(
+                                  "flex h-4 w-4 items-center justify-center rounded-full border",
+                                  isSelected
+                                    ? "border-navy bg-navy text-white"
+                                    : "border-gray-300 bg-white"
+                                )}
+                              >
                                 {isSelected && <Check size={10} strokeWidth={3} />}
                               </div>
-                              <span className={isSelected ? "text-navy" : "text-gray-400"}>
-                                {isSelected ? "Selected" : "Select Tier"}
-                              </span>
                             </div>
                           </div>
                         );
                       })}
+                    </div>
+
+                    {/* ── Dynamic Sub-options for Selected Category ── */}
+                    <div className="mt-6 rounded-xl border border-navy/20 bg-gradient-to-b from-navy-50/40 to-white p-5 space-y-5">
+                      <div className="flex items-center justify-between border-b border-navy-100 pb-2.5">
+                        <span className="text-xs font-bold uppercase tracking-wider text-navy-900 flex items-center gap-1.5">
+                          <Calendar size={14} className="text-navy" />
+                          Participation Duration for: <span className="text-navy-950 font-extrabold">{selectedCategory.name}</span>
+                        </span>
+                      </div>
+
+                      {/* Duration Radio Options with Respective Amount */}
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        {selectedCategory.durations.map((duration) => {
+                          const isDurationSelected = selectedDurationId === duration.id;
+                          return (
+                            <div
+                              key={duration.id}
+                              onClick={() => setSelectedDurationId(duration.id)}
+                              className={cn(
+                                "cursor-pointer rounded-lg border p-4 transition-all duration-200 text-left flex flex-col justify-between",
+                                isDurationSelected
+                                  ? "border-navy bg-white shadow-sm ring-2 ring-navy/20"
+                                  : "border-gray-200 bg-white/80 hover:border-gray-300"
+                              )}
+                            >
+                              <div className="flex items-center justify-between mb-1.5">
+                                <h5 className="text-sm font-bold text-navy-950">
+                                  {duration.label}
+                                </h5>
+                                <span className="font-mono text-base font-extrabold text-navy-900 bg-navy-50 px-2 py-0.5 rounded">
+                                  ₹{duration.amount}
+                                </span>
+                              </div>
+                              <p className="text-xs text-gray-500 leading-relaxed">
+                                {duration.sublabel}
+                              </p>
+                              <div className="mt-3 flex items-center gap-1.5 text-xs font-semibold text-navy">
+                                <div
+                                  className={cn(
+                                    "flex h-3.5 w-3.5 items-center justify-center rounded-full border",
+                                    isDurationSelected
+                                      ? "border-navy bg-navy text-white"
+                                      : "border-gray-300 bg-white"
+                                  )}
+                                >
+                                  {isDurationSelected && <Check size={8} strokeWidth={3} />}
+                                </div>
+                                <span className={isDurationSelected ? "text-navy" : "text-gray-400"}>
+                                  {isDurationSelected ? "Selected Option" : "Choose this option"}
+                                </span>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* ── Dynamic Accommodation Section for Selected Category ── */}
+                      {selectedCategory.accommodationType === "checkbox" && selectedCategory.accommodationOptions?.[0] && (
+                        <div className="pt-4 border-t border-navy-100">
+                          <label
+                            onClick={() => setIsAccommodationChecked(!isAccommodationChecked)}
+                            className={cn(
+                              "cursor-pointer rounded-lg border p-4 transition-all duration-200 flex items-start justify-between gap-4",
+                              isAccommodationChecked
+                                ? "border-navy bg-white shadow-sm ring-2 ring-navy/20"
+                                : "border-gray-200 bg-white/80 hover:border-gray-300"
+                            )}
+                          >
+                            <div className="flex items-start gap-3">
+                              <input
+                                type="checkbox"
+                                checked={isAccommodationChecked}
+                                onChange={(e) => setIsAccommodationChecked(e.target.checked)}
+                                className="mt-1 h-4 w-4 rounded border-gray-300 text-navy focus:ring-navy cursor-pointer"
+                              />
+                              <div>
+                                <span className="text-sm font-bold text-navy-950 flex items-center gap-1.5">
+                                  <Hotel size={15} className="text-navy" />
+                                  {selectedCategory.accommodationOptions[0].label}
+                                </span>
+                                <p className="mt-0.5 text-xs text-gray-500 leading-relaxed">
+                                  {selectedCategory.accommodationOptions[0].sublabel}
+                                </p>
+                              </div>
+                            </div>
+                            <span className="font-mono text-sm font-extrabold text-navy-900 shrink-0 bg-gold/15 px-2.5 py-1 rounded border border-gold/30">
+                              +₹{selectedCategory.accommodationOptions[0].amount}
+                            </span>
+                          </label>
+                        </div>
+                      )}
+
+                      {/* Industry Accommodation Options */}
+                      {selectedCategory.accommodationType === "options" && selectedCategory.accommodationOptions && (
+                        <div className="pt-4 border-t border-navy-100 space-y-3">
+                          <span className="text-xs font-bold uppercase tracking-wider text-navy-900 flex items-center gap-1.5">
+                            <Hotel size={14} className="text-navy" />
+                            Accommodation Preference
+                          </span>
+                          <div className="space-y-2">
+                            {selectedCategory.accommodationOptions.map((opt) => {
+                              const isOptSelected = selectedAccommodationId === opt.id;
+                              return (
+                                <div
+                                  key={opt.id}
+                                  onClick={() => setSelectedAccommodationId(opt.id)}
+                                  className={cn(
+                                    "cursor-pointer rounded-lg border p-3.5 transition-all duration-200 flex items-start justify-between gap-3",
+                                    isOptSelected
+                                      ? "border-navy bg-white shadow-sm ring-2 ring-navy/20"
+                                      : "border-gray-200 bg-white/80 hover:border-gray-300"
+                                  )}
+                                >
+                                  <div className="flex items-start gap-2.5">
+                                    <div
+                                      className={cn(
+                                        "mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border",
+                                        isOptSelected ? "border-navy bg-navy text-white" : "border-gray-300 bg-white"
+                                      )}
+                                    >
+                                      {isOptSelected && <Check size={10} strokeWidth={3} />}
+                                    </div>
+                                    <div>
+                                      <span className="text-xs sm:text-sm font-bold text-navy-950">
+                                        {opt.label}
+                                      </span>
+                                      <p className="text-[11px] sm:text-xs text-gray-500 leading-relaxed">
+                                        {opt.sublabel}
+                                      </p>
+                                      {opt.note && (
+                                        <p className="mt-1 text-[11px] text-amber-700 italic">
+                                          {opt.note}
+                                        </p>
+                                      )}
+                                    </div>
+                                  </div>
+                                  <span className="font-mono text-xs sm:text-sm font-extrabold text-navy-900 shrink-0 bg-navy-50 px-2 py-0.5 rounded">
+                                    {opt.amount > 0 ? `+₹${opt.amount}` : "₹0"}
+                                  </span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* IIT Indore note */}
+                      {selectedCategory.accommodationType === "none" && (
+                        <div className="pt-2 text-xs text-gray-500 flex items-center gap-2 bg-white/80 p-2.5 rounded-lg border border-gray-200">
+                          <Info size={14} className="text-navy shrink-0" />
+                          <span>Campus resident pass — on-campus housing not applicable.</span>
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -355,7 +626,7 @@ export default function RegistrationPage() {
                     </div>
                   </div>
 
-                  {/* Submit Button */}
+                  {/* Submit Button with Dynamic Respective Sum */}
                   <div className="pt-4 border-t border-gray-100">
                     <Button
                       type="submit"
@@ -364,7 +635,9 @@ export default function RegistrationPage() {
                       className="w-full text-base py-3.5 shadow-md hover:shadow-lg font-bold"
                     >
                       {status === "submitting" && <Loader2 size={18} className="animate-spin mr-2" />}
-                      {status === "submitting" ? "Processing Registration..." : `Submit Registration — ₹${totalAmount.toLocaleString("en-IN")}`}
+                      {status === "submitting"
+                        ? "Processing Registration..."
+                        : `Submit Registration — ₹${totalAmount.toLocaleString("en-IN")}`}
                     </Button>
                   </div>
 
@@ -381,7 +654,7 @@ export default function RegistrationPage() {
                           <span>Registration Successfully Received!</span>
                         </div>
                         <p className="text-xs text-green-700 leading-relaxed">
-                          Thank you, <strong>{submittedData?.name}</strong>. Your registration for <strong>{submittedData?.category}</strong> has been logged in the conference database. An official confirmation email with payment instructions has been sent to <strong>{submittedData?.email}</strong>.
+                          Thank you, <strong>{submittedData?.name}</strong>. Your registration for <strong>{submittedData?.category}</strong> ({submittedData?.duration}) has been logged in the conference database. An official confirmation email with payment instructions has been sent to <strong>{submittedData?.email}</strong>.
                         </p>
                       </motion.div>
                     )}
@@ -402,18 +675,18 @@ export default function RegistrationPage() {
             </Reveal>
           </div>
 
-          {/* ── RIGHT COLUMN: Classic Fee Summary & Total Amount Receipt Card (5 cols) ── */}
+          {/* ── RIGHT COLUMN: Live Invoice Breakdown & Calculated Sum (5 cols) ── */}
           <div className="lg:col-span-5 sticky top-28 space-y-6">
             <Reveal delay={0.1}>
               <div className="rounded-xl border border-[#D1D5DB] bg-white shadow-xl overflow-hidden">
-                {/* Classic Header Band */}
+                {/* Header Band */}
                 <div className="bg-gradient-to-r from-navy-950 via-navy-900 to-navy-950 p-5 text-white border-b-2 border-gold">
                   <div className="flex items-center justify-between">
                     <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-gold">
-                      <Receipt size={15} /> Fee Assessment
+                      <Receipt size={15} /> Live Assessment
                     </span>
                     <span className="rounded bg-white/10 px-2 py-0.5 text-[10px] font-mono font-bold text-white/80 border border-white/15">
-                      MCC-2026-INV
+                      MCC-2026-REG
                     </span>
                   </div>
                   <h3 className="mt-2 text-xl font-bold text-white tracking-tight">
@@ -424,93 +697,88 @@ export default function RegistrationPage() {
                   </p>
                 </div>
 
-                {/* Classic Invoice Body */}
+                {/* Body with Dynamic Calculations */}
                 <div className="p-6 space-y-5 bg-white">
                   {/* Selected Tier Banner */}
                   <div className="rounded-lg bg-navy-50 p-4 border border-navy-100 flex items-start justify-between">
                     <div>
                       <span className="text-[10px] font-bold uppercase tracking-wider text-navy-900 block mb-0.5">
-                        Selected Delegate Tier
+                        Selected Participant Tier
                       </span>
                       <h4 className="text-sm font-bold text-navy-950">
                         {selectedCategory.name}
                       </h4>
                       <p className="mt-0.5 text-xs text-gray-500">
-                        2-Day Full Conclave Access Pass
+                        {activeDuration.label}
                       </p>
                     </div>
                     <span className="font-mono text-base font-extrabold text-navy">
-                      ₹{baseFee.toLocaleString("en-IN")}
+                      ₹{basePassFee.toLocaleString("en-IN")}
                     </span>
                   </div>
 
-                  {/* Included Items Breakdown */}
-                  <div className="space-y-2.5 pt-2 border-t border-gray-100">
-                    <span className="text-xs font-bold uppercase tracking-wider text-gray-500 block mb-2">
-                      Inclusions &amp; Entitlements
+                  {/* Itemized Line Items */}
+                  <div className="space-y-3 pt-2 border-t border-gray-100">
+                    <span className="text-xs font-bold uppercase tracking-wider text-gray-500 block">
+                      Fee Breakdown &amp; Options
                     </span>
 
+                    {/* Participation Pass */}
                     <div className="flex items-center justify-between text-xs text-gray-700">
                       <span className="flex items-center gap-2">
                         <Check size={14} className="text-green-600 shrink-0" />
-                        Keynote Sessions &amp; BIS Panel Access
+                        <span>Conference Pass ({activeDuration.label})</span>
                       </span>
-                      <span className="font-mono text-gray-500 font-medium">Included</span>
+                      <span className="font-mono font-bold text-gray-900">
+                        ₹{basePassFee.toLocaleString("en-IN")}
+                      </span>
                     </div>
 
+                    {/* Accommodation Option */}
                     <div className="flex items-center justify-between text-xs text-gray-700">
                       <span className="flex items-center gap-2">
-                        <Check size={14} className="text-green-600 shrink-0" />
-                        Day 1 Hands-on Workshop Entry
+                        <Hotel size={14} className="text-navy shrink-0" />
+                        <span className="truncate max-w-[200px]" title={accommodationLabel}>
+                          {accommodationLabel}
+                        </span>
                       </span>
-                      <span className="font-mono text-gray-500 font-medium">Included</span>
+                      <span className="font-mono font-bold text-gray-900">
+                        ₹{accommodationFee.toLocaleString("en-IN")}
+                      </span>
                     </div>
 
-                    <div className="flex items-center justify-between text-xs text-gray-700">
-                      <span className="flex items-center gap-2">
-                        <Check size={14} className="text-green-600 shrink-0" />
+                    {/* Inclusions */}
+                    <div className="pt-2 border-t border-dashed border-gray-200 space-y-1.5">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 block">
+                        Included Entitlements
+                      </span>
+                      <div className="flex items-center gap-1.5 text-[11px] text-gray-600">
+                        <Check size={12} className="text-green-600 shrink-0" />
+                        Keynotes, Oral Talks &amp; BIS Policy Panel Access
+                      </div>
+                      <div className="flex items-center gap-1.5 text-[11px] text-gray-600">
+                        <Check size={12} className="text-green-600 shrink-0" />
                         Delegate Kit, Badge &amp; Conference Bag
-                      </span>
-                      <span className="font-mono text-gray-500 font-medium">Included</span>
-                    </div>
-
-                    <div className="flex items-center justify-between text-xs text-gray-700">
-                      <span className="flex items-center gap-2">
-                        <Check size={14} className="text-green-600 shrink-0" />
-                        Networking Lunch &amp; High-Tea
-                      </span>
-                      <span className="font-mono text-gray-500 font-medium">Included</span>
-                    </div>
-
-                    <div className="flex items-center justify-between text-xs text-gray-700">
-                      <span className="flex items-center gap-2">
-                        <Check size={14} className="text-green-600 shrink-0" />
-                        IIT Indore &amp; BIS Certificate
-                      </span>
-                      <span className="font-mono text-gray-500 font-medium">Included</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 text-[11px] text-gray-600">
+                        <Check size={12} className="text-green-600 shrink-0" />
+                        Hosted Luncheon &amp; High-Tea Refreshments
+                      </div>
+                      <div className="flex items-center gap-1.5 text-[11px] text-gray-600">
+                        <Check size={12} className="text-green-600 shrink-0" />
+                        Official IIT Indore &amp; BIS Certificate
+                      </div>
                     </div>
                   </div>
 
-                  {/* Subtotal & Taxes */}
-                  <div className="space-y-2 pt-3 border-t border-dashed border-gray-200">
-                    <div className="flex justify-between text-xs text-gray-600">
-                      <span>Base Registration Fee:</span>
-                      <span className="font-mono font-medium text-gray-900">₹{baseFee.toLocaleString("en-IN")}</span>
-                    </div>
-                    <div className="flex justify-between text-xs text-gray-600">
-                      <span>Institutional Taxes &amp; GST (18%):</span>
-                      <span className="font-mono font-medium text-green-700">Inclusive</span>
-                    </div>
-                  </div>
-
-                  {/* ── Grand Total Amount Highlight ── */}
+                  {/* Grand Total Amount Sum */}
                   <div className="rounded-lg bg-navy-950 p-4 text-white flex items-center justify-between border-2 border-gold shadow-md">
                     <div>
                       <span className="text-[10px] font-bold uppercase tracking-widest text-gold-300 block">
-                        Total Amount Payable
+                        Total Sum Payable
                       </span>
                       <span className="text-xs text-white/70">
-                        Net Conference Fee (INR)
+                        Pass Fee + Accommodation
                       </span>
                     </div>
                     <div className="text-right">
@@ -544,7 +812,10 @@ export default function RegistrationPage() {
               <div>
                 <span className="font-bold text-navy-950 block">Need assistance or group registration?</span>
                 <p className="mt-0.5">
-                  Contact the Secretariat at <a href="mailto:chemenggoffice@iiti.ac.in" className="text-navy font-semibold hover:underline">chemenggoffice@iiti.ac.in</a>
+                  Contact the Secretariat at{" "}
+                  <a href="mailto:chemenggoffice@iiti.ac.in" className="text-navy font-semibold hover:underline">
+                    chemenggoffice@iiti.ac.in
+                  </a>
                 </p>
               </div>
             </div>
