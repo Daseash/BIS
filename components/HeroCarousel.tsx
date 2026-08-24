@@ -19,28 +19,23 @@ const HERO_SLIDES = [
   },
 ];
 
-const INTERVAL_MS = 5000;
+const INTERVAL_MS = 3000;
 
 export function HeroCarousel() {
   const [current, setCurrent] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
 
   const nextSlide = useCallback(() => {
     setCurrent((prev) => (prev + 1) % HERO_SLIDES.length);
   }, []);
 
   useEffect(() => {
-    if (isPaused || HERO_SLIDES.length <= 1) return;
+    if (HERO_SLIDES.length <= 1) return;
     const timer = setInterval(nextSlide, INTERVAL_MS);
     return () => clearInterval(timer);
-  }, [nextSlide, isPaused]);
+  }, [nextSlide]);
 
   return (
-    <div
-      className="relative h-full w-full overflow-hidden"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-    >
+    <div className="relative h-full w-full overflow-hidden">
       {HERO_SLIDES.map((slide, index) => (
         <div
           key={slide.src}
@@ -63,25 +58,6 @@ export function HeroCarousel() {
 
       {/* Hero overlay gradient */}
       <div className="hero-overlay z-2" />
-
-      {/* Carousel Navigation Dot Indicators */}
-      {HERO_SLIDES.length > 1 && (
-        <div className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2.5">
-          {HERO_SLIDES.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrent(i)}
-              aria-label={`Switch to hero slide ${i + 1}`}
-              className={cn(
-                "h-2.5 rounded-full transition-all duration-500 cursor-pointer shadow-sm",
-                i === current
-                  ? "w-8 bg-gold"
-                  : "w-2.5 bg-white/50 hover:bg-white/90"
-              )}
-            />
-          ))}
-        </div>
-      )}
     </div>
   );
 }
