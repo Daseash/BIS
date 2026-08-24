@@ -6,7 +6,7 @@ import { Button } from "@/components/Button";
 
 export const metadata: Metadata = {
   title: "Sponsors & Partners",
-  description: "Sponsorship tiers and partnerships for Malwa Chemical Conclave 2026 at IIT Indore.",
+  description: "Principal institutional partner and sponsorship tiers for Malwa Chemical Conclave 2026 at IIT Indore.",
 };
 
 const TIERS = [
@@ -83,65 +83,16 @@ export default function SponsorsPage() {
       />
 
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mb-10">
-          <span className="inline-block rounded bg-navy-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-navy-900">
-            Partnership Packages
-          </span>
-          <h2 className="mt-2 text-3xl font-bold tracking-tight text-navy-950">
-            Sponsorship Tiers &amp; Deliverables
-          </h2>
-          <p className="mt-1 text-base text-gray-600">
-            Choose a tier tailored to your organization&apos;s visibility and recruitment goals.
-          </p>
-        </div>
-
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {TIERS.map((tier, i) => (
-            <Reveal key={tier.name} delay={i * 0.04}>
-              <div className="institutional-card flex h-full flex-col overflow-hidden">
-                <div className={`p-5 ${tier.accentHeader}`}>
-                  <span className={`inline-block rounded px-2 py-0.5 text-xs font-bold uppercase tracking-wider ${tier.badgeColor}`}>
-                    {tier.badge}
-                  </span>
-                  <h3 className="mt-2 text-xl font-bold tracking-tight text-white">{tier.name}</h3>
-                  <p className="mt-1 text-2xl font-extrabold text-white">{tier.amount}</p>
-                </div>
-
-                <div className="flex flex-1 flex-col justify-between p-5 bg-white">
-                  <ul className="space-y-2.5 text-xs sm:text-sm text-gray-700">
-                    {tier.benefits.map((b) => (
-                      <li key={b} className="flex items-start gap-2">
-                        <Check size={15} className="mt-0.5 shrink-0 text-navy" />
-                        <span>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="mt-6 pt-4 border-t border-gray-100">
-                    <Button
-                      href="/contact"
-                      variant="outline"
-                      className="w-full text-xs py-2"
-                    >
-                      Inquire Sponsorship
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-
-        {/* Confirmed Partners Section */}
-        <div className="mt-20">
+        {/* ── 1. Our Principal Associate (Up) ─────────────────────── */}
+        <div className="mb-20">
           <div className="mb-8">
-            <span className="inline-block rounded bg-gold-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-gold-900">
+            <span className="inline-block rounded bg-gold-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-gold-900 border border-gold-200">
               Institutional Partner &amp; Sponsor
             </span>
-            <h3 className="mt-2 text-2xl sm:text-3xl font-bold text-navy-950">
+            <h2 className="mt-2 text-3xl font-bold tracking-tight text-navy-950 sm:text-4xl">
               Our Principal Associate
-            </h3>
-            <p className="text-sm text-gray-600 mt-1">
+            </h2>
+            <p className="text-base text-gray-600 mt-1">
               National regulatory body and key institutional partner collaborating for the conclave.
             </p>
           </div>
@@ -168,9 +119,9 @@ export default function SponsorsPage() {
                       National Standards Body
                     </span>
                   </div>
-                  <h4 className="text-xl sm:text-2xl font-bold text-navy-950">
+                  <h3 className="text-xl sm:text-2xl font-bold text-navy-950">
                     Bureau of Indian Standards (BIS)
-                  </h4>
+                  </h3>
                   <p className="text-sm text-gray-600 leading-relaxed">
                     The Bureau of Indian Standards is the National Standards Body of India, operating under the Ministry of Consumer Affairs, Food &amp; Public Distribution. BIS collaborates closely with the Department of Chemical Engineering at IIT Indore to foster standardisation awareness, quality assurance, student chapters, and research-led regulatory policies across chemical engineering verticals.
                   </p>
@@ -189,8 +140,59 @@ export default function SponsorsPage() {
             </div>
           </Reveal>
         </div>
+
+        {/* ── 2. Sponsorship Tiers & Deliverables (Down) ──────────── */}
+        <div>
+          <div className="mb-10">
+            <span className="inline-block rounded bg-navy-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-navy-900">
+              Partnership Packages
+            </span>
+            <h2 className="mt-2 text-3xl font-bold tracking-tight text-navy-950 sm:text-4xl">
+              Sponsorship Tiers &amp; Deliverables
+            </h2>
+            <p className="mt-1 text-base text-gray-600">
+              Choose a tier tailored to your organization&apos;s visibility, recruitment, and industry engagement goals.
+            </p>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {TIERS.map((tier, i) => (
+              <Reveal key={tier.name} delay={i * 0.04}>
+                <div className="institutional-card flex h-full flex-col overflow-hidden hover:border-navy hover:shadow-md transition-all duration-300">
+                  <div className={`p-5 ${tier.accentHeader}`}>
+                    <span className={`inline-block rounded px-2 py-0.5 text-xs font-bold uppercase tracking-wider ${tier.badgeColor}`}>
+                      {tier.badge}
+                    </span>
+                    <h3 className="mt-2 text-xl font-bold tracking-tight text-white">{tier.name}</h3>
+                    <p className="mt-1 text-2xl font-extrabold text-white">{tier.amount}</p>
+                  </div>
+
+                  <div className="flex flex-1 flex-col justify-between p-5 bg-white">
+                    <ul className="space-y-2.5 text-xs sm:text-sm text-gray-700">
+                      {tier.benefits.map((b) => (
+                        <li key={b} className="flex items-start gap-2">
+                          <Check size={15} className="mt-0.5 shrink-0 text-navy" />
+                          <span>{b}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="mt-6 pt-4 border-t border-gray-100">
+                      <Button
+                        href="/contact"
+                        variant="outline"
+                        className="w-full text-xs py-2"
+                      >
+                        Inquire Sponsorship
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
       </div>
     </>
   );
 }
-
