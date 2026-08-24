@@ -147,7 +147,7 @@ export default function RegistrationPage() {
         <div className="mb-10 flex flex-wrap items-center justify-between gap-4 border-b border-[#E5E7EB] pb-6">
           <div>
             <span className="inline-block rounded bg-navy-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-navy-900">
-              IIT Indore &bull; October 12&ndash;13, 2026
+              IIT Indore &bull; October 11&ndash;12, 2026
             </span>
             <h2 className="mt-2 text-2xl font-bold tracking-tight text-navy-950 sm:text-3xl">
               Official Conference Registration Portal

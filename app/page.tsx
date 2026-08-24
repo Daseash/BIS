@@ -97,7 +97,7 @@ export default function HomePage() {
           <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
             <div className="lg:col-span-6">
               <span className="inline-block rounded bg-navy-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-navy-900">
-                IIT Indore &bull; October 12&ndash;13, 2026
+                IIT Indore &bull; October 11&ndash;12, 2026
               </span>
               <h2 className="mt-4 text-3xl font-bold tracking-tight text-navy-950 sm:text-4xl lg:text-5xl leading-tight">
                 Bringing academia, industry, and regulators onto one stage.
@@ -249,10 +249,10 @@ export default function HomePage() {
                 <Calendar size={15} /> Dates
               </p>
               <p className="mt-2 text-lg font-bold text-navy-950">
-                October 12&ndash;13, 2026
+                October 11&ndash;12, 2026
               </p>
               <p className="mt-1 text-xs text-gray-500">
-                Day 1: Workshops &bull; Day 2: Main Conclave
+                Day 1 (Oct 11): Workshops &bull; Day 2 (Oct 12): Main Conclave
               </p>
             </div>
 
