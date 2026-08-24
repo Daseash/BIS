@@ -208,11 +208,8 @@ export function Navbar() {
           </div>
         </div>
 
-        {/* ── Tier 2: Logo + Title (and Pill Nav on inner pages) ─────── */}
-        <div className={cn(
-          "flex w-full items-center justify-between px-4 transition-all duration-700 ease-in-out sm:px-6 lg:px-8",
-          !isHome ? "py-1.5 sm:py-2.5" : "py-2 sm:py-3.5"
-        )}>
+        {/* ── Tier 2: Logo + Title on Left, Pill Nav on Right (Single Line on All Pages) ── */}
+        <div className="flex w-full items-center justify-between px-4 py-2 transition-all duration-700 ease-in-out sm:px-6 lg:px-8 sm:py-3">
           <Link href="/" className="flex items-center gap-2.5 transition-all duration-700 ease-in-out sm:gap-3.5 shrink-0" onClick={() => setMenuOpen(false)}>
             <Image
               src="/logos/iit-indore-logo.png"
@@ -220,81 +217,24 @@ export function Navbar() {
               width={120}
               height={90}
               unoptimized
-              className={cn(
-                "w-auto shrink-0 transition-all duration-700 ease-in-out object-contain",
-                !isHome ? "h-10 sm:h-12 lg:h-13" : "h-12 sm:h-15 lg:h-18"
-              )}
+              className="h-10 sm:h-12 lg:h-13 w-auto shrink-0 transition-all duration-700 ease-in-out object-contain"
               priority
             />
-            <div className={cn(
-              "w-px bg-white/30 transition-all duration-700 ease-in-out",
-              !isHome ? "h-8 sm:h-9" : "h-10 sm:h-12"
-            )} />
+            <div className="h-8 sm:h-9 w-px bg-white/30 transition-all duration-700 ease-in-out" />
             <span className="flex min-w-0 flex-col leading-tight transition-all duration-700 ease-in-out">
-              <span className={cn(
-                "font-bold tracking-wide text-white transition-all duration-700 ease-in-out whitespace-nowrap",
-                !isHome ? "text-sm sm:text-base lg:text-lg" : "text-base sm:text-xl lg:text-2xl"
-              )}>
+              <span className="text-sm sm:text-base lg:text-lg font-bold tracking-wide text-white transition-all duration-700 ease-in-out whitespace-nowrap">
                 Malwa Chemical Conclave 2026
               </span>
-              <span className={cn(
-                "font-medium text-white/75 transition-all duration-700 ease-in-out whitespace-nowrap",
-                !isHome ? "text-[10px] sm:text-xs" : "text-xs sm:text-sm lg:text-base"
-              )}>
+              <span className="text-[10px] sm:text-xs font-medium text-white/75 transition-all duration-700 ease-in-out whitespace-nowrap">
                 Dept. of Chemical Engineering, IIT Indore
               </span>
             </span>
           </Link>
 
-          {/* Right side: Pill Nav in same line on Inner pages */}
+          {/* Right side: Pill Nav in exact same line */}
           <div className="flex items-center gap-3">
-            {!isHome && (
-              <motion.nav
-                layout
-                layoutId="desktop-pill-nav"
-                transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-                className="hidden lg:flex items-center"
-              >
-                <div className="pill-nav pill-nav-compact transition-all duration-700 ease-in-out">
-                  {NAV_LINKS.map((link) => {
-                    const active = pathname === link.href;
-                    return (
-                      <Link
-                        key={link.href}
-                        href={link.href}
-                        data-active={active}
-                        className="transition-all duration-700 ease-in-out"
-                      >
-                        {link.label}
-                      </Link>
-                    );
-                  })}
-                </div>
-              </motion.nav>
-            )}
-
-            {/* Mobile hamburger */}
-            <button
-              type="button"
-              aria-label="Toggle navigation menu"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-sm text-white lg:hidden"
-              onClick={() => setMenuOpen((v) => !v)}
-            >
-              {menuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
-        </div>
-
-        {/* ── Tier 3: Pill navigation tabs (Only on Home page - 2nd Line, right aligned) ─ */}
-        {isHome && (
-          <div className="hidden lg:flex w-full items-center justify-end px-4 pb-3 pt-0.5 transition-all duration-700 ease-in-out sm:px-6 lg:px-8">
-            <motion.nav
-              layout
-              layoutId="desktop-pill-nav"
-              transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-              className="flex items-center justify-end ml-auto"
-            >
-              <div className="pill-nav transition-all duration-700 ease-in-out">
+            <nav className="hidden lg:flex items-center">
+              <div className="pill-nav pill-nav-compact transition-all duration-700 ease-in-out">
                 {NAV_LINKS.map((link) => {
                   const active = pathname === link.href;
                   return (
@@ -309,9 +249,19 @@ export function Navbar() {
                   );
                 })}
               </div>
-            </motion.nav>
+            </nav>
+
+            {/* Mobile hamburger */}
+            <button
+              type="button"
+              aria-label="Toggle navigation menu"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-sm text-white lg:hidden"
+              onClick={() => setMenuOpen((v) => !v)}
+            >
+              {menuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
-        )}
+        </div>
       </LayoutGroup>
 
       {/* ── Mobile Navigation Drawer (Full-Screen / Slide-Down) ── */}
