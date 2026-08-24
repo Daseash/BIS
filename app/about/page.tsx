@@ -32,7 +32,13 @@ const HIGHLIGHTS = [
 export default function AboutPage() {
   return (
     <>
-      {/* ── Top Full-Bleed Video: Fits Right to Left Corner (Edge-to-Edge) ── */}
+      {/* ── 1. Page Header (About the Conclave) ────────────────── */}
+      <PageHero
+        title="About the Conclave"
+        subtitle="A premier academic and industrial symposium fostering sustainable process innovation and standardisation in Central India."
+      />
+
+      {/* ── 2. Full-Bleed Continuous Video Banner (Below Header, Muted, No Pause Button) ── */}
       <section className="relative w-full overflow-hidden bg-navy-950 border-b border-[#002F6C] shadow-md">
         <video
           src="/video.mp4"
@@ -40,16 +46,12 @@ export default function AboutPage() {
           muted
           loop
           playsInline
-          controls
-          className="w-full h-auto max-h-[85vh] min-h-[320px] object-cover"
+          disablePictureInPicture
+          className="w-full h-auto max-h-[85vh] min-h-[320px] object-cover pointer-events-none"
         />
       </section>
 
-      <PageHero
-        title="About the Conclave"
-        subtitle="A premier academic and industrial symposium fostering sustainable process innovation and standardisation in Central India."
-      />
-
+      {/* ── 3. Conclave Details & Sections ─────────────────────── */}
       <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
         {/* Mission Statement */}
         <Reveal>
