@@ -1,24 +1,36 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { MemberCard } from "@/components/MemberCard";
-import { Building2 } from "lucide-react";
+import { Building2, Sparkles, Award } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Invited Speakers",
   description: "Distinguished invited speakers and keynote delegates for Malwa Chemical Conclave 2026.",
 };
 
-const SPEAKER_SLOTS = [
+const CONFIRMED_SPEAKERS_2026 = [
+  {
+    name: "Zahid Hussain",
+    role: "Head, Technology Development & Design",
+    organization: "DCM Nouvelle Specialty Chemicals Limited",
+    image: "/speakers/zahid-hussain.jpeg",
+    badge: "Keynote Speaker",
+    focus: "Specialty Chemicals, Process Innovation & Technology Design",
+  },
+];
+
+const UPCOMING_SPEAKER_SLOTS = [
   { role: "Plenary Keynote", name: "Speaker Invitation in Progress", note: "Leading Global Chemical Enterprise" },
   { role: "Technical Keynote", name: "Speaker Invitation in Progress", note: "Process Simulation & Safety Expert" },
   { role: "BIS Policy Address", name: "Senior BIS Regulatory Official", note: "Bureau of Indian Standards" },
   { role: "Industry Talk", name: "Speaker Invitation in Progress", note: "Sustainable Refining & Petrochemicals" },
   { role: "Special Lecture", name: "Eminent Academic Scholar", note: "IIT / Global Research Institution" },
-  { role: "Industrial Case Study", name: "Chief Technology Officer / VP", note: "Speciality Chemical Manufacturer" },
 ];
 
 const ANTICIPATED_PARTNERS = [
+  "DCM Nouvelle",
   "BASF",
   "Shell",
   "Chevron",
@@ -67,12 +79,12 @@ export default function SpeakersPage() {
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
         {/* Institutional Partner Banner */}
         <Reveal>
-          <div className="institutional-card p-6 sm:p-8 border-l-4 border-l-navy mb-10 bg-white">
+          <div className="institutional-card p-6 sm:p-8 border-l-4 border-l-navy mb-12 bg-white">
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-navy-900 mb-2">
-              <Building2 size={16} /> Anticipated Participation
+              <Building2 size={16} /> Anticipated &amp; Partner Organizations
             </div>
             <p className="text-sm sm:text-base leading-relaxed text-gray-700">
-              The organizing committee is actively confirming distinguished speakers and technical leads from top chemical corporations and academic bodies including:
+              The organizing committee is actively confirming distinguished speakers and technical leads from top chemical corporations and regulatory bodies including:
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               {ANTICIPATED_PARTNERS.map((org) => (
@@ -87,21 +99,77 @@ export default function SpeakersPage() {
           </div>
         </Reveal>
 
-        {/* 2026 Speaker Slots */}
+        {/* ── 2026 Confirmed Keynote Speakers ──────────────────────── */}
         <div className="mb-8">
-          <span className="inline-block rounded bg-navy-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-navy-900">
-            Conclave 2026
+          <span className="inline-block rounded bg-gold-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-gold-900">
+            Conclave 2026 Line-Up
           </span>
           <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-navy-950">
-            Confirmed &amp; Upcoming Keynotes
+            Confirmed Keynote Speakers
           </h2>
           <p className="mt-1 text-sm text-gray-600">
-            Plenary addresses and technical sessions across industry innovation and standardisation.
+            Distinguished industry leaders and keynote delegates addressing Malwa Chemical Conclave 2026.
+          </p>
+        </div>
+
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-16">
+          {CONFIRMED_SPEAKERS_2026.map((speaker, i) => (
+            <Reveal key={speaker.name} delay={i * 0.05}>
+              <div className="institutional-card overflow-hidden bg-white border border-[#E5E7EB] rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 group flex flex-col justify-between h-full">
+                <div>
+                  <div className="relative h-64 w-full overflow-hidden bg-gray-100">
+                    <img
+                      src={speaker.image}
+                      alt={speaker.name}
+                      className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute top-3 right-3">
+                      <span className="rounded-full bg-navy-950/90 text-gold px-3 py-1 text-[11px] font-bold uppercase tracking-wider backdrop-blur-xs border border-gold/30">
+                        {speaker.badge}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-navy-950 tracking-tight group-hover:text-navy transition-colors">
+                      {speaker.name}
+                    </h3>
+                    <p className="mt-1 text-sm font-semibold text-gold-900">
+                      {speaker.role}
+                    </p>
+                    <p className="mt-1 text-xs font-medium text-navy-950">
+                      {speaker.organization}
+                    </p>
+                    <p className="mt-3 text-xs text-gray-500 border-t border-gray-100 pt-3 leading-relaxed">
+                      {speaker.focus}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="bg-gray-50/80 px-6 py-3 border-t border-gray-100 text-xs text-navy font-semibold flex items-center justify-between">
+                  <span>Conclave Speaker &bull; 2026</span>
+                  <Award size={14} className="text-gold" />
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        {/* ── Upcoming 2026 Speaker Invitations ────────────────────── */}
+        <div className="mb-6">
+          <span className="inline-block rounded bg-navy-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-navy-900">
+            Programme In Progress
+          </span>
+          <h3 className="mt-2 text-xl sm:text-2xl font-bold tracking-tight text-navy-950">
+            Upcoming Plenary &amp; Technical Slots
+          </h3>
+          <p className="mt-1 text-sm text-gray-600">
+            Speaker invitations and confirmation announcements are currently in progress.
           </p>
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {SPEAKER_SLOTS.map((speaker, i) => (
+          {UPCOMING_SPEAKER_SLOTS.map((speaker, i) => (
             <Reveal key={i} delay={i * 0.04}>
               <MemberCard
                 name={speaker.name}
@@ -112,7 +180,7 @@ export default function SpeakersPage() {
           ))}
         </div>
 
-        {/* ── Previous Speakers Section (Round Images) ─────────────── */}
+        {/* ── Previous Speakers Section ────────────────────────────── */}
         <div className="mt-20 pt-12 border-t border-[#E5E7EB]">
           <div className="text-center sm:text-left mb-10">
             <span className="inline-block rounded bg-gold-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-gold-900">
@@ -155,4 +223,3 @@ export default function SpeakersPage() {
     </>
   );
 }
-

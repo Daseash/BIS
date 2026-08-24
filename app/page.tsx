@@ -18,6 +18,7 @@ import { CampusMap } from "@/components/CampusMap";
 import { Button } from "@/components/Button";
 import { AnnouncementTicker } from "@/components/AnnouncementTicker";
 import { CountUpStat } from "@/components/CountUpStat";
+import { HeroCarousel } from "@/components/HeroCarousel";
 
 const STATS = [
   { value: 7, suffix: "", label: "Integrated Verticals" },
@@ -76,14 +77,9 @@ const VERTICALS = [
 export default function HomePage() {
   return (
     <>
-      {/* ── HERO: Full-viewport background image ──────────────────── */}
+      {/* ── HERO: Full-viewport background image carousel ────────── */}
       <section className="hero-wrapper">
-        <img
-          src="/hero-2.jpeg"
-          alt="2025 Malwa Chemical Conclave — group photo at IIT Indore"
-          className="hero-media"
-        />
-        <div className="hero-overlay" />
+        <HeroCarousel />
       </section>
 
       {/* ── ANNOUNCEMENTS TICKER ──────────────────────────────────── */}

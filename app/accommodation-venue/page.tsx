@@ -2,79 +2,160 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { CampusMap } from "@/components/CampusMap";
-import { Building, MapPin, Plane, Train, Car, Hotel } from "lucide-react";
+import { Building, MapPin, Plane, Train, Car, Hotel, Compass, Landmark, Trees, Sparkles } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Accommodation & Venue",
-  description: "Campus location, transport directions, and accommodation guidance for IIT Indore.",
+  description: "Campus location, transport directions, accommodation guidance, and local attractions for IIT Indore.",
 };
+
+const ATTRACTION_CATEGORIES = [
+  {
+    name: "Spiritual & Pilgrimage",
+    places: ["Mahakaleshwar Temple (Ujjain)", "Omkareshwar Jyotirlinga", "Kanch Mandir"],
+  },
+  {
+    name: "Heritage & Architecture",
+    places: ["Mandu (Jahaz Mahal)", "Rajwada Palace", "Lalbagh Palace", "Gandhi Hall", "White Church"],
+  },
+  {
+    name: "Nature & Adventure",
+    places: ["Pataalpani Waterfalls", "Tincha Fall", "Choral Dam", "Ralamandal Wildlife Sanctuary"],
+  },
+];
 
 export default function AccommodationVenuePage() {
   return (
     <>
       <PageHero
         title="Accommodation & Venue"
-        subtitle="Campus directions, transport links, and guest house accommodation guidance for delegates visiting IIT Indore."
+        subtitle="Campus directions, transport links, guest house accommodation guidance, and tourist destinations for delegates visiting IIT Indore."
       />
 
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-2 lg:items-start">
-          {/* Venue & Map */}
-          <Reveal>
-            <div className="institutional-card p-6 sm:p-8 flex flex-col justify-between h-full">
-              <div>
-                <span className="inline-block rounded bg-navy-50 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-navy-900 mb-2">
-                  Conference Location
-                </span>
-                <h2 className="text-2xl font-bold text-navy-950">IIT Indore Campus</h2>
-                <p className="mt-2 text-sm text-gray-600 leading-relaxed">
-                  Indian Institute of Technology Indore, Khandwa Road, Simrol, Indore, Madhya Pradesh &ndash; 453552.
-                </p>
-                <div className="mt-6 rounded-lg overflow-hidden border border-[#E5E7EB]">
-                  <CampusMap className="aspect-[4/3] w-full border-0" />
+          {/* ── Left Column: Venue & Map ── */}
+          <div className="space-y-8">
+            <Reveal>
+              <div className="institutional-card p-6 sm:p-8 flex flex-col justify-between bg-white border border-[#E5E7EB]">
+                <div>
+                  <span className="inline-block rounded bg-navy-50 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-navy-900 mb-2">
+                    Conference Location
+                  </span>
+                  <h2 className="text-2xl font-bold text-navy-950">IIT Indore Campus</h2>
+                  <p className="mt-2 text-sm text-gray-600 leading-relaxed">
+                    Indian Institute of Technology Indore, Khandwa Road, Simrol, Indore, Madhya Pradesh &ndash; 453552.
+                  </p>
+                  <div className="mt-6 rounded-lg overflow-hidden border border-[#E5E7EB]">
+                    <CampusMap className="aspect-[4/3] w-full border-0" />
+                  </div>
                 </div>
               </div>
-            </div>
-          </Reveal>
+            </Reveal>
 
-          {/* Transit & Accommodation Info */}
-          <div className="space-y-6">
+            {/* Accommodation Guidance */}
+            <Reveal delay={0.08}>
+              <div className="institutional-card p-6 sm:p-8 border-l-4 border-l-gold bg-white">
+                <h3 className="text-lg font-bold text-navy-950 flex items-center gap-2 mb-3">
+                  <Hotel size={18} className="text-gold-900" /> Accommodation Guidance
+                </h3>
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  Limited on-campus guest house accommodation is reserved for keynote speakers and session chairs. For outstation participants and student delegates, subsidized hostel rooms and a curated list of recommended partner hotels in Indore city will be shared upon registration confirmation.
+                </p>
+                <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+                  <span>Guest House &bull; Hostel Allotment</span>
+                  <span className="font-semibold text-navy">Simrol Campus</span>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+
+          {/* ── Right Column: Transit Info & Places to Visit ── */}
+          <div className="space-y-8">
+            {/* How to Reach IIT Indore */}
             <Reveal delay={0.05}>
-              <div className="institutional-card p-6 border-l-4 border-l-navy">
+              <div className="institutional-card p-6 sm:p-8 border-l-4 border-l-navy bg-white">
                 <h3 className="text-lg font-bold text-navy-950 flex items-center gap-2 mb-4">
                   <Plane size={18} className="text-navy" /> How to Reach IIT Indore
                 </h3>
-                <div className="space-y-3 text-sm text-gray-700">
-                  <div className="flex items-start gap-2.5">
-                    <Plane size={16} className="mt-0.5 shrink-0 text-gray-400" />
+                <div className="space-y-4 text-sm text-gray-700">
+                  <div className="flex items-start gap-3">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-navy-50 text-navy shrink-0 mt-0.5">
+                      <Plane size={16} />
+                    </div>
                     <div>
-                      <strong className="text-navy-950">By Air:</strong> Devi Ahilyabai Holkar Airport, Indore (35 km). Pre-paid airport taxis and app-based cabs are readily available to Simrol campus.
+                      <strong className="text-navy-950 block">By Air (Devi Ahilyabai Holkar Airport):</strong>
+                      <span className="text-xs text-gray-600 leading-relaxed">
+                        Located ~35 km from campus. Pre-paid airport taxis and app-based cabs (Ola/Uber) are readily available directly to the Simrol campus.
+                      </span>
                     </div>
                   </div>
-                  <div className="flex items-start gap-2.5">
-                    <Train size={16} className="mt-0.5 shrink-0 text-gray-400" />
+
+                  <div className="flex items-start gap-3">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-navy-50 text-navy shrink-0 mt-0.5">
+                      <Train size={16} />
+                    </div>
                     <div>
-                      <strong className="text-navy-950">By Train:</strong> Indore Junction Railway Station (24 km). Regular bus services and city taxis connect to the IIT Indore main gate.
+                      <strong className="text-navy-950 block">By Train (Indore Junction Station):</strong>
+                      <span className="text-xs text-gray-600 leading-relaxed">
+                        Located ~24 km from campus. Regular city buses, shared transit, and pre-booked taxis connect from the railway station to IIT Indore main gate.
+                      </span>
                     </div>
                   </div>
-                  <div className="flex items-start gap-2.5">
-                    <Car size={16} className="mt-0.5 shrink-0 text-gray-400" />
+
+                  <div className="flex items-start gap-3">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-navy-50 text-navy shrink-0 mt-0.5">
+                      <Car size={16} />
+                    </div>
                     <div>
-                      <strong className="text-navy-950">By Road:</strong> Situated on the Indore–Khandwa State Highway, accessible via public transit buses and cabs from all parts of Indore.
+                      <strong className="text-navy-950 block">By Road (State Highway):</strong>
+                      <span className="text-xs text-gray-600 leading-relaxed">
+                        Situated conveniently on the Indore–Khandwa State Highway, well-connected by express bus routes and highway corridors.
+                      </span>
                     </div>
                   </div>
                 </div>
               </div>
             </Reveal>
 
+            {/* ── Places to Visit Near Indore (Directly below How to reach) ── */}
             <Reveal delay={0.1}>
-              <div className="institutional-card p-6 border-l-4 border-l-gold">
-                <h3 className="text-lg font-bold text-navy-950 flex items-center gap-2 mb-3">
-                  <Hotel size={18} className="text-gold-900" /> Accommodation Guidance
+              <div className="institutional-card p-6 sm:p-8 border-l-4 border-l-navy bg-white shadow-sm">
+                <div className="flex items-center justify-between mb-3 border-b border-gray-100 pb-3">
+                  <span className="rounded bg-navy-50 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-navy-900 flex items-center gap-1.5">
+                    <Compass size={13} className="text-navy" /> Regional Tourism
+                  </span>
+                  <span className="text-xs text-gold-900 font-semibold">Malwa Region</span>
+                </div>
+
+                <h3 className="text-xl font-bold text-navy-950 flex items-center gap-2 mb-3">
+                  <Landmark size={20} className="text-navy" /> Places to visit near Indore
                 </h3>
+
                 <p className="text-sm text-gray-700 leading-relaxed">
-                  Limited on-campus guest house accommodation is reserved for keynote speakers and session chairs. For outstation participants and student delegates, subsidized hostel rooms and a list of recommended partner hotels in Indore city will be shared upon registration confirmation.
+                  Explore Ujjain and nearby destinations such as the Mahakaleshwar Temple, Omkareshwar Temple, and the historic town of Mandu, home to the magnificent Jahaz Mahal. Closer to Indore, discover the city’s heritage and architectural landmarks, including Lalbagh Palace, Rajwada, Kanch Mandir, Gandhi Hall, and the White Church. For nature and adventure, visit Pataalpani, Tincha Fall, Choral Dam, and Ralamandal Wildlife Sanctuary. These destinations offer a blend of spiritual, historical, architectural, and natural experiences, making them ideal for exploring the rich cultural heritage and scenic surroundings of Indore.
                 </p>
+
+                {/* Highlighted Attraction Badges */}
+                <div className="mt-5 space-y-3 pt-4 border-t border-gray-100">
+                  {ATTRACTION_CATEGORIES.map((cat) => (
+                    <div key={cat.name} className="space-y-1.5">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-navy-900 block">
+                        {cat.name}
+                      </span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {cat.places.map((place) => (
+                          <span
+                            key={place}
+                            className="rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-700"
+                          >
+                            {place}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </Reveal>
           </div>
@@ -83,4 +164,3 @@ export default function AccommodationVenuePage() {
     </>
   );
 }
-
