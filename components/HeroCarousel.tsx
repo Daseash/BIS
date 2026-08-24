@@ -19,7 +19,7 @@ const HERO_SLIDES = [
   },
 ];
 
-const INTERVAL_MS = 3000;
+const INTERVAL_MS = 5000;
 
 export function HeroCarousel() {
   const [current, setCurrent] = useState(0);
@@ -35,29 +35,35 @@ export function HeroCarousel() {
   }, [nextSlide]);
 
   return (
-    <div className="relative h-full w-full overflow-hidden">
-      {HERO_SLIDES.map((slide, index) => (
-        <div
-          key={slide.src}
-          className={cn(
-            "absolute inset-0 h-full w-full transition-opacity duration-1000 ease-in-out",
-            index === current ? "opacity-100 z-1" : "opacity-0 z-0 pointer-events-none"
-          )}
-        >
-          <Image
-            src={slide.src}
-            alt={slide.alt}
-            fill
-            priority={index === 0}
-            unoptimized
-            sizes="100vw"
-            className="h-full w-full object-cover object-center"
-          />
-        </div>
-      ))}
+    <div className="relative h-full w-full overflow-hidden bg-navy-950">
+      {HERO_SLIDES.map((slide, index) => {
+        const isActive = index === current;
+        return (
+          <div
+            key={slide.src}
+            className={cn(
+              "absolute inset-0 h-full w-full transition-opacity duration-[2000ms] ease-in-out will-change-transform",
+              isActive ? "opacity-100 z-1" : "opacity-0 z-0 pointer-events-none"
+            )}
+          >
+            <Image
+              src={slide.src}
+              alt={slide.alt}
+              fill
+              priority={index === 0}
+              unoptimized
+              sizes="100vw"
+              className={cn(
+                "h-full w-full object-cover object-center transition-transform duration-[6000ms] ease-out",
+                isActive ? "scale-105" : "scale-100"
+              )}
+            />
+          </div>
+        );
+      })}
 
       {/* Hero overlay gradient */}
-      <div className="hero-overlay z-2" />
+      <div className="hero-overlay z-2 pointer-events-none" />
     </div>
   );
 }
