@@ -623,18 +623,16 @@ export default function RegistrationPage() {
                     </div>
                   </div>
 
-                  {/* Submit Button with Dynamic Respective Sum */}
+                  {/* Move to Payment Button with Enhanced Hover Effect */}
                   <div className="pt-4 border-t border-gray-100">
                     <Button
                       type="submit"
                       disabled={status === "submitting"}
-                      showArrow={false}
-                      className="w-full text-base py-3.5 shadow-md hover:shadow-lg font-bold"
+                      showArrow={true}
+                      className="w-full text-base py-4 shadow-lg hover:shadow-2xl hover:shadow-navy/25 hover:scale-[1.015] active:scale-[0.99] font-extrabold transition-all duration-300 rounded-lg cursor-pointer bg-gradient-to-r from-navy-950 via-navy-900 to-navy-950 hover:from-navy hover:via-navy-800 hover:to-navy-900 tracking-wide text-white border border-navy/30"
                     >
                       {status === "submitting" && <Loader2 size={18} className="animate-spin mr-2" />}
-                      {status === "submitting"
-                        ? "Processing Registration..."
-                        : `Submit Registration — ₹${totalAmount.toLocaleString("en-IN")}`}
+                      {status === "submitting" ? "Processing Registration..." : "Move to Payment"}
                     </Button>
                   </div>
 
