@@ -222,7 +222,7 @@ export function Navbar() {
         </div>
       </LayoutGroup>
 
-      {/* ── Pop-Out Glassmorphism Drawer (Full Navigation & Contact Section) ── */}
+      {/* ── Pop-Out Transparent Glassmorphism Drawer ── */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -230,10 +230,10 @@ export function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="border-t border-white/20 bg-navy-950/80 backdrop-blur-2xl overflow-hidden shadow-2xl"
+            className="border-t border-white/25 bg-black/45 backdrop-blur-3xl overflow-hidden shadow-2xl"
             style={{
-              backdropFilter: "blur(24px)",
-              WebkitBackdropFilter: "blur(24px)",
+              backdropFilter: "blur(32px)",
+              WebkitBackdropFilter: "blur(32px)",
             }}
           >
             <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
