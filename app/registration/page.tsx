@@ -279,7 +279,7 @@ export default function RegistrationPage() {
           {/* ── LEFT COLUMN: Registration Form (7 cols) ── */}
           <div className="lg:col-span-7 space-y-8">
             <Reveal>
-              <div className="institutional-card p-6 sm:p-8 bg-white border border-[#E5E7EB]">
+              <div className="rounded-xl border border-[#E5E7EB] p-6 sm:p-8 bg-white shadow-sm transition-all duration-300 hover:border-navy hover:shadow-lg hover:ring-2 hover:ring-navy/20">
                 <form onSubmit={handleSubmit} className="space-y-8">
                   {/* Step 1: 4 Categories Selection */}
                   <div>
@@ -375,7 +375,7 @@ export default function RegistrationPage() {
                                 "cursor-pointer rounded-lg border p-4 transition-all duration-200 text-left flex flex-col justify-between bg-white",
                                 isDurationSelected
                                   ? "border-navy shadow-sm ring-1 ring-navy"
-                                  : "border-gray-200 hover:border-gray-300"
+                                  : "border-gray-200 hover:border-navy hover:shadow-xs"
                               )}
                             >
                               <div className="flex items-center justify-between mb-1.5">
@@ -417,8 +417,8 @@ export default function RegistrationPage() {
                             className={cn(
                               "cursor-pointer rounded-lg border p-4 transition-all duration-200 flex items-start justify-between gap-4 bg-white",
                               isAccommodationChecked
-                                ? "border-navy shadow-sm ring-1 ring-navy"
-                                : "border-gray-200 hover:border-gray-300"
+                                  ? "border-navy shadow-sm ring-1 ring-navy"
+                                  : "border-gray-200 hover:border-navy hover:shadow-xs"
                             )}
                           >
                             <div className="flex items-start gap-3">
@@ -463,7 +463,7 @@ export default function RegistrationPage() {
                                     "cursor-pointer rounded-lg border p-3.5 transition-all duration-200 flex items-start justify-between gap-3 bg-white",
                                     isOptSelected
                                       ? "border-navy shadow-sm ring-1 ring-navy"
-                                      : "border-gray-200 hover:border-gray-300"
+                                      : "border-gray-200 hover:border-navy hover:shadow-xs"
                                   )}
                                 >
                                   <div className="flex items-start gap-2.5">
@@ -673,18 +673,21 @@ export default function RegistrationPage() {
           {/* ── RIGHT COLUMN: Live Invoice Breakdown & Calculated Sum (5 cols) ── */}
           <div className="lg:col-span-5 sticky top-28 space-y-6">
             <Reveal delay={0.1}>
-              <div className="rounded-xl border border-[#E5E7EB] bg-white shadow-sm overflow-hidden">
-                {/* Header Band - Clean White Background Theme */}
-                <div className="bg-white p-5 text-navy-950 border-b border-[#E5E7EB]">
+              <div className="group rounded-xl border-2 border-[#E5E7EB] bg-white shadow-sm overflow-hidden transition-all duration-300 ease-in-out hover:border-navy hover:shadow-xl hover:ring-4 hover:ring-navy/15 hover:-translate-y-1">
+                {/* Top Accent Blue Border Indicator on Hover */}
+                <div className="h-1 w-full bg-transparent group-hover:bg-navy transition-colors duration-300" />
+
+                {/* Header Band - Clean White Background Theme with smooth hover transition */}
+                <div className="bg-white p-5 pt-4 text-navy-950 border-b border-[#E5E7EB] transition-colors duration-300 group-hover:border-navy/30">
                   <div className="flex items-center justify-between">
-                    <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-gold-900 bg-gold-50 px-2.5 py-0.5 rounded border border-gold-200">
-                      <Receipt size={14} className="text-gold-900" /> Live Assessment
+                    <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-gold-900 bg-gold-50 px-2.5 py-0.5 rounded border border-gold-200 transition-all duration-300 group-hover:border-navy/40 group-hover:bg-navy-50 group-hover:text-navy">
+                      <Receipt size={14} className="text-gold-900 group-hover:text-navy transition-colors duration-300" /> Live Assessment
                     </span>
-                    <span className="rounded bg-gray-100 px-2 py-0.5 text-[10px] font-mono font-bold text-gray-700 border border-gray-200">
+                    <span className="rounded bg-gray-100 px-2 py-0.5 text-[10px] font-mono font-bold text-gray-700 border border-gray-200 transition-colors group-hover:border-navy/30 group-hover:text-navy-950">
                       MCC-2026-REG
                     </span>
                   </div>
-                  <h3 className="mt-2 text-xl font-bold text-navy-950 tracking-tight">
+                  <h3 className="mt-2 text-xl font-bold text-navy-950 tracking-tight transition-colors duration-300 group-hover:text-navy">
                     Registration Summary
                   </h3>
                   <p className="mt-0.5 text-xs text-gray-500">
@@ -695,7 +698,7 @@ export default function RegistrationPage() {
                 {/* Body with Dynamic Calculations */}
                 <div className="p-6 space-y-5 bg-white">
                   {/* Selected Tier Banner (Clean White Background) */}
-                  <div className="rounded-lg bg-white p-4 border border-[#E5E7EB] flex items-start justify-between">
+                  <div className="rounded-lg bg-white p-4 border border-[#E5E7EB] flex items-start justify-between transition-all duration-300 hover:border-navy hover:shadow-xs hover:ring-1 hover:ring-navy/15">
                     <div>
                       <span className="text-[10px] font-bold uppercase tracking-wider text-gray-500 block mb-0.5">
                         Selected Participant Tier
@@ -767,7 +770,7 @@ export default function RegistrationPage() {
                   </div>
 
                   {/* Grand Total Amount Sum (Clean Card) */}
-                  <div className="rounded-lg bg-white p-4 text-navy-950 flex items-center justify-between border-2 border-navy shadow-xs">
+                  <div className="rounded-lg bg-white p-4 text-navy-950 flex items-center justify-between border-2 border-navy shadow-xs transition-all duration-300 hover:border-navy-600 hover:shadow-md hover:ring-2 hover:ring-navy/20">
                     <div>
                       <span className="text-[10px] font-bold uppercase tracking-widest text-navy-900 block">
                         Total Sum Payable
@@ -802,7 +805,7 @@ export default function RegistrationPage() {
             </Reveal>
 
             {/* Support box */}
-            <div className="institutional-card p-4 bg-gray-50/70 text-xs text-gray-600 flex items-center gap-3">
+            <div className="rounded-xl border border-[#E5E7EB] p-4 bg-gray-50/70 text-xs text-gray-600 flex items-center gap-3 transition-all duration-300 hover:border-navy hover:ring-1 hover:ring-navy/20 hover:shadow-md hover:bg-white">
               <HelpCircle size={20} className="text-navy shrink-0" />
               <div>
                 <span className="font-bold text-navy-950 block">Need assistance or group registration?</span>

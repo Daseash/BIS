@@ -1,25 +1,49 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
   <defs>
-    <linearGradient id="bisBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#002F6C"/>
+    <linearGradient id="mccBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#001B3D"/>
+      <stop offset="50%" stop-color="#002F6C"/>
       <stop offset="100%" stop-color="#004AAD"/>
     </linearGradient>
-    <linearGradient id="goldAccent" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#F59E0B"/>
-      <stop offset="100%" stop-color="#D97706"/>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE047"/>
+      <stop offset="40%" stop-color="#C59B27"/>
+      <stop offset="100%" stop-color="#93741D"/>
     </linearGradient>
   </defs>
-  <rect width="64" height="64" rx="14" fill="url(#bisBg)"/>
-  <circle cx="32" cy="32" r="27" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-opacity="0.3"/>
-  <circle cx="32" cy="32" r="23" fill="none" stroke="url(#goldAccent)" stroke-width="2"/>
-  <text x="32" y="38" 
-        font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif" 
-        font-size="20" 
+
+  <!-- Background rounded badge -->
+  <rect width="64" height="64" rx="14" fill="url(#mccBg)"/>
+  
+  <!-- Subtle border highlight -->
+  <rect x="1" y="1" width="62" height="62" rx="13" fill="none" stroke="#FFFFFF" stroke-width="1.2" stroke-opacity="0.18"/>
+  
+  <!-- Outer Gold Decorative Accent Ring -->
+  <circle cx="32" cy="32" r="26" fill="none" stroke="url(#goldGrad)" stroke-width="1.8"/>
+  
+  <!-- Top Conclave Node Accent -->
+  <circle cx="32" cy="10.5" r="2.5" fill="url(#goldGrad)"/>
+
+  <!-- MCC Primary Monogram -->
+  <text x="32" y="34" 
+        font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Outfit', sans-serif" 
+        font-size="18.5" 
         font-weight="900" 
         fill="#FFFFFF" 
         text-anchor="middle" 
-        letter-spacing="1.5">
-    BIS
+        letter-spacing="0.5">
+    MCC
   </text>
-  <circle cx="32" cy="46.5" r="2.5" fill="url(#goldAccent)"/>
+  
+  <!-- 2026 Year Pill Badge -->
+  <rect x="16.5" y="41" width="31" height="11" rx="5.5" fill="url(#goldGrad)"/>
+  <text x="32" y="49" 
+        font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Outfit', sans-serif" 
+        font-size="7.5" 
+        font-weight="900" 
+        fill="#001B3D" 
+        text-anchor="middle" 
+        letter-spacing="0.8">
+    2026
+  </text>
 </svg>

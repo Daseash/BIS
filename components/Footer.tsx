@@ -94,9 +94,10 @@ export function Footer() {
             <Image
               src="/logos/chemical-engineering-logo.png"
               alt="IIT Indore Chemical Engineering logo"
-              width={40}
-              height={40}
-              className="h-9 w-9 object-contain"
+              width={48}
+              height={48}
+              unoptimized
+              className="h-10 w-auto object-contain"
             />
           </div>
           <p className="mt-4 text-sm font-semibold text-gold">
