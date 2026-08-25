@@ -259,7 +259,7 @@ export default function RegistrationPage() {
               Official Conference Registration Portal
             </h2>
             <p className="mt-1 text-sm text-gray-600">
-              Department of Chemical Engineering in association with the Bureau of Indian Standards
+              Department of Chemical Engineering, Indian Institute of Technology Indore
             </p>
           </div>
 
@@ -770,7 +770,7 @@ export default function RegistrationPage() {
                       </span>
                       <div className="flex items-center gap-1.5 text-[11px] text-gray-600">
                         <Check size={12} className="text-green-600 shrink-0" />
-                        Keynotes, Oral Talks &amp; BIS Policy Panel Access
+                        Keynotes, Oral Talks &amp; Panel Discussions Access
                       </div>
                       <div className="flex items-center gap-1.5 text-[11px] text-gray-600">
                         <Check size={12} className="text-green-600 shrink-0" />
@@ -782,7 +782,7 @@ export default function RegistrationPage() {
                       </div>
                       <div className="flex items-center gap-1.5 text-[11px] text-gray-600">
                         <Check size={12} className="text-green-600 shrink-0" />
-                        Official IIT Indore &amp; BIS Certificate
+                        Official IIT Indore Certificate
                       </div>
                     </div>
                   </div>
@@ -815,7 +815,7 @@ export default function RegistrationPage() {
 
                     <div className="flex items-center justify-between text-[11px] text-gray-400 pt-1">
                       <span>• Safe &amp; Direct Bank Transfer</span>
-                      <span>• Official BIS Chapter Portal</span>
+                      <span>• Official Conference Portal</span>
                     </div>
                   </div>
                 </div>

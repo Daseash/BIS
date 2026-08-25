@@ -3,7 +3,7 @@ import Image from "next/image";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { MemberCard } from "@/components/MemberCard";
-import { Building2, Sparkles, Award } from "lucide-react";
+import { Sparkles, Award } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Invited Speakers",
@@ -24,21 +24,9 @@ const FEATURED_SPEAKERS_2026 = [
 const UPCOMING_SPEAKER_SLOTS = [
   { role: "Plenary Keynote", name: "Speaker Invitation in Progress", note: "Leading Global Chemical Enterprise" },
   { role: "Technical Keynote", name: "Speaker Invitation in Progress", note: "Process Simulation & Safety Expert" },
-  { role: "BIS Policy Address", name: "Senior BIS Regulatory Official", note: "Bureau of Indian Standards" },
+  { role: "Regulatory Policy Address", name: "Senior Regulatory Official", note: "National Standards & Policy Body" },
   { role: "Industry Talk", name: "Speaker Invitation in Progress", note: "Sustainable Refining & Petrochemicals" },
   { role: "Special Lecture", name: "Eminent Academic Scholar", note: "IIT / Global Research Institution" },
-];
-
-const ANTICIPATED_PARTNERS = [
-  "DCM Nouvelle",
-  "BASF",
-  "Shell",
-  "Chevron",
-  "Procter & Gamble",
-  "Unilever",
-  "Reliance Industries",
-  "Indian Oil Corporation",
-  "GAIL India",
 ];
 
 const PREVIOUS_SPEAKERS = [
@@ -77,31 +65,9 @@ export default function SpeakersPage() {
       />
 
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
-        {/* Institutional Partner Banner */}
-        <Reveal>
-          <div className="institutional-card p-6 sm:p-8 border-l-4 border-l-navy mb-12 bg-white">
-            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-navy-900 mb-2">
-              <Building2 size={16} /> Anticipated &amp; Partner Organizations
-            </div>
-            <p className="text-sm sm:text-base leading-relaxed text-gray-700">
-              The organizing committee is actively confirming distinguished speakers and technical leads from top chemical corporations and regulatory bodies including:
-            </p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {ANTICIPATED_PARTNERS.map((org) => (
-                <span
-                  key={org}
-                  className="rounded-md border border-[#E5E7EB] bg-gray-50 px-3 py-1 text-xs font-semibold text-navy-950"
-                >
-                  {org}
-                </span>
-              ))}
-            </div>
-          </div>
-        </Reveal>
-
         {/* ── 2026 Featured Keynote Speakers ─────────────────────── */}
         <div className="mb-8">
-          <span className="inline-block rounded bg-gold-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-gold-900 border border-gold-200">
+          <span className="text-xs font-bold uppercase tracking-wider text-navy">
             Conclave 2026 Line-Up
           </span>
           <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-navy-950">
