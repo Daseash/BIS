@@ -171,16 +171,16 @@ export function PlacesToVisit() {
                 key={category}
                 type="button"
                 onClick={() => setActiveCategory(category)}
-                className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all duration-200 cursor-pointer flex items-center gap-2 ${
+                className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all duration-200 cursor-pointer flex items-center gap-2 border ${
                   isActive
-                    ? "bg-navy-900 text-white shadow-sm"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-navy-950"
+                    ? "bg-navy-900 text-white border-navy-900 shadow-sm"
+                    : "bg-white text-gray-700 border-gray-200 hover:border-navy hover:text-navy hover:shadow-xs"
                 }`}
               >
                 <span>{category}</span>
                 <span
-                  className={`text-[11px] px-1.5 py-0.2 rounded-full font-bold ${
-                    isActive ? "bg-gold text-navy-950" : "bg-gray-200 text-gray-600"
+                  className={`text-[11px] px-1.5 py-0.5 rounded-full font-bold ${
+                    isActive ? "bg-gold text-navy-950" : "bg-gray-100 text-gray-600"
                   }`}
                 >
                   {count}
@@ -206,11 +206,6 @@ export function PlacesToVisit() {
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
-                  
-                  {/* Category Tag */}
-                  <span className="absolute top-2.5 left-2.5 rounded bg-navy-950/85 backdrop-blur-xs px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-gold border border-gold/30">
-                    {attraction.category}
-                  </span>
 
                   {/* Distance Tag */}
                   <span className="absolute bottom-2.5 left-2.5 flex items-center gap-1 rounded bg-black/70 backdrop-blur-xs px-2 py-0.5 text-[11px] font-medium text-white">
