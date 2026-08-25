@@ -2,27 +2,13 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { CampusMap } from "@/components/CampusMap";
-import { Building, MapPin, Plane, Train, Car, Hotel, Compass, Landmark, Trees, Sparkles } from "lucide-react";
+import { PlacesToVisit } from "@/components/PlacesToVisit";
+import { Plane, Train, Car, Hotel, Compass, ArrowDown } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Accommodation & Venue",
   description: "Campus location, transport directions, accommodation guidance, and local attractions for IIT Indore.",
 };
-
-const ATTRACTION_CATEGORIES = [
-  {
-    name: "Spiritual & Pilgrimage",
-    places: ["Mahakaleshwar Temple (Ujjain)", "Omkareshwar Jyotirlinga", "Kanch Mandir"],
-  },
-  {
-    name: "Heritage & Architecture",
-    places: ["Mandu (Jahaz Mahal)", "Rajwada Palace", "Lalbagh Palace", "Gandhi Hall", "White Church"],
-  },
-  {
-    name: "Nature & Adventure",
-    places: ["Pataalpani Waterfalls", "Tincha Fall", "Choral Dam", "Ralamandal Wildlife Sanctuary"],
-  },
-];
 
 export default function AccommodationVenuePage() {
   return (
@@ -70,7 +56,7 @@ export default function AccommodationVenuePage() {
             </Reveal>
           </div>
 
-          {/* ── Right Column: Transit Info & Places to Visit ── */}
+          {/* ── Right Column: Transit Info ── */}
           <div className="space-y-8">
             {/* How to Reach IIT Indore */}
             <Reveal delay={0.05}>
@@ -118,48 +104,40 @@ export default function AccommodationVenuePage() {
               </div>
             </Reveal>
 
-            {/* ── Places to Visit Near Indore (Directly below How to reach) ── */}
+            {/* Quick Sightseeing Overview Card */}
             <Reveal delay={0.1}>
-              <div className="institutional-card p-6 sm:p-8 border-l-4 border-l-navy bg-white shadow-sm">
+              <div className="institutional-card p-6 sm:p-8 border-l-4 border-l-gold bg-gradient-to-br from-white to-amber-50/20 shadow-xs">
                 <div className="flex items-center justify-between mb-3 border-b border-gray-100 pb-3">
                   <span className="rounded bg-navy-50 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-navy-900 flex items-center gap-1.5">
-                    <Compass size={13} className="text-navy" /> Regional Tourism
+                    <Compass size={13} className="text-navy" /> Tourism & Heritage
                   </span>
-                  <span className="text-xs text-gold-900 font-semibold">Malwa Region</span>
+                  <span className="text-xs text-gold-900 font-semibold">12 Key Attractions</span>
                 </div>
 
-                <h3 className="text-xl font-bold text-navy-950 flex items-center gap-2 mb-3">
-                  <Landmark size={20} className="text-navy" /> Places to visit near Indore
+                <h3 className="text-lg font-bold text-navy-950 mb-2">
+                  Explore Indore & Malwa Heritage
                 </h3>
 
-                <p className="text-sm text-gray-700 leading-relaxed">
-                  Explore Ujjain and nearby destinations such as the Mahakaleshwar Temple, Omkareshwar Temple, and the historic town of Mandu, home to the magnificent Jahaz Mahal. Closer to Indore, discover the city’s heritage and architectural landmarks, including Lalbagh Palace, Rajwada, Kanch Mandir, Gandhi Hall, and the White Church. For nature and adventure, visit Pataalpani, Tincha Fall, Choral Dam, and Ralamandal Wildlife Sanctuary. These destinations offer a blend of spiritual, historical, architectural, and natural experiences, making them ideal for exploring the rich cultural heritage and scenic surroundings of Indore.
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                  Delegates visiting IIT Indore can explore famous pilgrimage destinations like Ujjain and Omkareshwar, architectural wonders like Mandu Jahaz Mahal, Rajwada, and Lalbagh Palace, or scenic nature spots like Pataalpani, Tincha Falls, and Choral Dam.
                 </p>
 
-                {/* Highlighted Attraction Badges */}
-                <div className="mt-5 space-y-3 pt-4 border-t border-gray-100">
-                  {ATTRACTION_CATEGORIES.map((cat) => (
-                    <div key={cat.name} className="space-y-1.5">
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-navy-900 block">
-                        {cat.name}
-                      </span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {cat.places.map((place) => (
-                          <span
-                            key={place}
-                            className="rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-700"
-                          >
-                            {place}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
+                <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between">
+                  <a
+                    href="#places-to-visit"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-navy hover:text-navy-900 hover:underline"
+                  >
+                    <span>View all attractions & Google Maps links</span>
+                    <ArrowDown size={14} />
+                  </a>
                 </div>
               </div>
             </Reveal>
           </div>
         </div>
+
+        {/* ── Dedicated Places to Visit Near Indore Section ── */}
+        <PlacesToVisit />
       </div>
     </>
   );
