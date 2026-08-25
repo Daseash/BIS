@@ -171,17 +171,15 @@ export function PlacesToVisit() {
                 key={category}
                 type="button"
                 onClick={() => setActiveCategory(category)}
-                className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all duration-200 cursor-pointer flex items-center gap-2 border ${
+                className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all duration-200 cursor-pointer flex items-center gap-2 bg-white ${
                   isActive
-                    ? "bg-navy-900 text-white border-navy-900 shadow-sm"
-                    : "bg-white text-gray-700 border-gray-200 hover:border-navy hover:text-navy hover:shadow-xs"
+                    ? "text-navy border-2 border-navy shadow-xs font-bold"
+                    : "text-navy-950 border border-gray-200 hover:border-navy hover:text-navy hover:shadow-xs"
                 }`}
               >
                 <span>{category}</span>
                 <span
-                  className={`text-[11px] px-1.5 py-0.5 rounded-full font-bold ${
-                    isActive ? "bg-gold text-navy-950" : "bg-gray-100 text-gray-600"
-                  }`}
+                  className="text-[11px] px-1.5 py-0.5 rounded-full font-bold bg-gray-100 text-navy"
                 >
                   {count}
                 </span>
