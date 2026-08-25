@@ -760,28 +760,7 @@ export default function RegistrationPage() {
                       </span>
                     </div>
 
-                    {/* Inclusions */}
-                    <div className="pt-2 border-t border-dashed border-gray-200 space-y-1.5">
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 block">
-                        Included Entitlements
-                      </span>
-                      <div className="flex items-center gap-1.5 text-[11px] text-gray-600">
-                        <Check size={12} className="text-green-600 shrink-0" />
-                        Keynotes, Oral Talks &amp; Panel Discussions Access
-                      </div>
-                      <div className="flex items-center gap-1.5 text-[11px] text-gray-600">
-                        <Check size={12} className="text-green-600 shrink-0" />
-                        Delegate Kit, Badge &amp; Conference Bag
-                      </div>
-                      <div className="flex items-center gap-1.5 text-[11px] text-gray-600">
-                        <Check size={12} className="text-green-600 shrink-0" />
-                        Hosted Luncheon &amp; High-Tea Refreshments
-                      </div>
-                      <div className="flex items-center gap-1.5 text-[11px] text-gray-600">
-                        <Check size={12} className="text-green-600 shrink-0" />
-                        Official IIT Indore Certificate
-                      </div>
-                    </div>
+
                   </div>
 
                   {/* Grand Total Amount Sum (Clean Card) */}

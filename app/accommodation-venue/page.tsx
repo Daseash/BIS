@@ -25,7 +25,7 @@ export default function AccommodationVenuePage() {
             <Reveal>
               <div className="institutional-card p-6 sm:p-8 flex flex-col justify-between bg-white border border-[#E5E7EB]">
                 <div>
-                  <span className="inline-block rounded bg-navy-50 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-navy-900 mb-2">
+                  <span className="inline-block text-xs font-bold uppercase tracking-wider text-navy mb-2">
                     Conference Location
                   </span>
                   <h2 className="text-2xl font-bold text-navy-950">IIT Indore Campus</h2>
@@ -66,7 +66,7 @@ export default function AccommodationVenuePage() {
                 </h3>
                 <div className="space-y-4 text-sm text-gray-700">
                   <div className="flex items-start gap-3">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-navy-50 text-navy shrink-0 mt-0.5">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-navy shrink-0 mt-0.5">
                       <Plane size={16} />
                     </div>
                     <div>
@@ -78,7 +78,7 @@ export default function AccommodationVenuePage() {
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-navy-50 text-navy shrink-0 mt-0.5">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-navy shrink-0 mt-0.5">
                       <Train size={16} />
                     </div>
                     <div>
@@ -90,7 +90,7 @@ export default function AccommodationVenuePage() {
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-navy-50 text-navy shrink-0 mt-0.5">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-navy shrink-0 mt-0.5">
                       <Car size={16} />
                     </div>
                     <div>
@@ -106,9 +106,9 @@ export default function AccommodationVenuePage() {
 
             {/* Quick Sightseeing Overview Card */}
             <Reveal delay={0.1}>
-              <div className="institutional-card p-6 sm:p-8 border-l-4 border-l-gold bg-gradient-to-br from-white to-amber-50/20 shadow-xs">
+              <div className="institutional-card p-6 sm:p-8 border-l-4 border-l-gold bg-white shadow-xs">
                 <div className="flex items-center justify-between mb-3 border-b border-gray-100 pb-3">
-                  <span className="rounded bg-navy-50 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-navy-900 flex items-center gap-1.5">
+                  <span className="text-xs font-bold uppercase tracking-wider text-navy flex items-center gap-1.5">
                     <Compass size={13} className="text-navy" /> Tourism & Heritage
                   </span>
                   <span className="text-xs text-gold-900 font-semibold">12 Key Attractions</span>
