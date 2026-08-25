@@ -691,12 +691,9 @@ export default function RegistrationPage() {
           {/* ── RIGHT COLUMN: Live Invoice Breakdown & Calculated Sum (5 cols) ── */}
           <div className="lg:col-span-5 sticky top-28 space-y-6">
             <Reveal delay={0.1}>
-              <div className="group rounded-xl border-2 border-[#E5E7EB] bg-white shadow-sm overflow-hidden transition-all duration-300 ease-in-out hover:border-navy hover:shadow-xl hover:ring-4 hover:ring-navy/15 hover:-translate-y-1">
-                {/* Top Accent Blue Border Indicator on Hover */}
-                <div className="h-1 w-full bg-transparent group-hover:bg-navy transition-colors duration-300" />
-
+              <div className="group rounded-xl border border-[#E5E7EB] bg-white shadow-sm overflow-hidden transition-all duration-300 ease-in-out hover:border-navy hover:shadow-lg hover:ring-2 hover:ring-navy/20">
                 {/* Header Band - Clean White Background Theme with smooth hover transition */}
-                <div className="bg-white p-5 pt-4 text-navy-950 border-b border-[#E5E7EB] transition-colors duration-300 group-hover:border-navy/30">
+                <div className="bg-white p-5 text-navy-950 border-b border-[#E5E7EB] transition-colors duration-300 group-hover:border-navy/30">
                   <div className="flex items-center justify-between">
                     <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-gold-900 bg-gold-50 px-2.5 py-0.5 rounded border border-gold-200 transition-all duration-300 group-hover:border-navy/40 group-hover:bg-navy-50 group-hover:text-navy">
                       <Receipt size={14} className="text-gold-900 group-hover:text-navy transition-colors duration-300" /> Live Assessment
