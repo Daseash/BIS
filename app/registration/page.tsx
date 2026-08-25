@@ -209,6 +209,7 @@ export default function RegistrationPage() {
       designation: data.get("designation"),
       message: data.get("message"),
       totalAmount: totalAmount,
+      website: data.get("website"),
     };
 
     try {
@@ -281,6 +282,17 @@ export default function RegistrationPage() {
             <Reveal>
               <div className="rounded-xl border border-[#E5E7EB] p-6 sm:p-8 bg-white shadow-sm transition-all duration-300 hover:border-navy hover:shadow-lg hover:ring-2 hover:ring-navy/20">
                 <form onSubmit={handleSubmit} className="space-y-8">
+                  {/* Invisible Honeypot Field for Anti-Bot Protection */}
+                  <input
+                    type="text"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    className="hidden"
+                    style={{ display: "none", opacity: 0, position: "absolute", left: "-9999px" }}
+                  />
+
                   {/* Step 1: 4 Categories Selection */}
                   <div>
                     <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
@@ -532,6 +544,7 @@ export default function RegistrationPage() {
                             name="name"
                             type="text"
                             required
+                            maxLength={100}
                             className={cn(inputClass, "pl-10")}
                             placeholder="Prof. / Dr. / Mr. / Ms. First & Last Name"
                           />
@@ -547,6 +560,7 @@ export default function RegistrationPage() {
                               name="email"
                               type="email"
                               required
+                              maxLength={100}
                               className={cn(inputClass, "pl-10")}
                               placeholder="official.email@organization.edu"
                             />
@@ -561,6 +575,7 @@ export default function RegistrationPage() {
                               name="phone"
                               type="tel"
                               required
+                              maxLength={25}
                               className={cn(inputClass, "pl-10")}
                               placeholder="+91 98765 43210"
                             />
@@ -594,6 +609,7 @@ export default function RegistrationPage() {
                               name="organization"
                               type="text"
                               required
+                              maxLength={150}
                               className={cn(inputClass, "pl-10")}
                               placeholder="e.g. IIT Indore, RIL, IOCL, CSIR"
                             />
@@ -605,6 +621,7 @@ export default function RegistrationPage() {
                             id="designation"
                             name="designation"
                             type="text"
+                            maxLength={100}
                             className={inputClass}
                             placeholder="e.g. Associate Professor, M.Tech Scholar"
                           />
@@ -616,6 +633,7 @@ export default function RegistrationPage() {
                           id="message"
                           name="message"
                           rows={2}
+                          maxLength={1000}
                           className={inputClass}
                           placeholder="Provide paper title, poster presentation topic, or accommodation queries."
                         />
