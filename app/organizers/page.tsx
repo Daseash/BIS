@@ -23,6 +23,21 @@ const PATRON_AND_CHAIR = [
   },
 ];
 
+const ADVISORS = [
+  {
+    role: "Advisor",
+    name: "Dr. Partha Pratim Chattaraj",
+    note: "Senior Vice President, ACR, IIT Indore",
+    image: "/organizers/partha-pratim-chattaraj.jpeg",
+  },
+  {
+    role: "Advisor",
+    name: "Prof. Manish Kumar Goyal",
+    note: "BIS Chair Professor, IIT Indore",
+    image: "/organizers/manish-kumar-goyal.jpeg",
+  },
+];
+
 const COORDINATORS_AND_LEADERS = [
   {
     role: "Faculty Coordinator",
@@ -134,7 +149,34 @@ export default function OrganizersPage() {
           ))}
         </div>
 
-        {/* ── 2. Coordinators & Student Leader (3 Columns) ──── */}
+        {/* ── 2. Advisors (2 Columns) ───────────────────────────── */}
+        <div className="mt-16">
+          <span className="inline-block rounded bg-gold-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-gold-900">
+            Strategic Guidance
+          </span>
+          <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-navy-950">
+            Advisors
+          </h2>
+          <p className="mt-1 text-sm text-gray-600">
+            Eminent academic and institutional advisory council guiding the conclave vision.
+          </p>
+        </div>
+
+        <div className="mt-8 mx-auto grid max-w-2xl gap-8 sm:grid-cols-2">
+          {ADVISORS.map((person, i) => (
+            <Reveal key={person.name} delay={i * 0.05}>
+              <MemberCard
+                name={person.name}
+                role={person.role}
+                note={person.note}
+                image={person.image}
+                className="shadow-md hover:shadow-xl border-navy/20"
+              />
+            </Reveal>
+          ))}
+        </div>
+
+        {/* ── 3. Coordinators & Student Leader (3 Columns) ──── */}
         <div className="mt-16">
           <span className="inline-block rounded bg-navy-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-navy-900">
             Committee Oversight
@@ -160,7 +202,7 @@ export default function OrganizersPage() {
           ))}
         </div>
 
-        {/* ── 3. Department Staff Coordinators (3 Columns) ────────── */}
+        {/* ── 4. Department Staff Coordinators (3 Columns) ────────── */}
         <div className="mt-16">
           <span className="inline-block rounded bg-navy-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-navy-900">
             Operational Support
@@ -186,7 +228,7 @@ export default function OrganizersPage() {
           ))}
         </div>
 
-        {/* ── 4. BIS Student Chapter Core Group ─────────────────── */}
+        {/* ── 5. BIS Student Chapter Core Group ─────────────────── */}
         <div className="mt-20">
           <span className="inline-block rounded bg-gold-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-gold-900">
             Student Leadership
