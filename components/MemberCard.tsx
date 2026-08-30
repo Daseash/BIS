@@ -39,15 +39,15 @@ export function MemberCard({
       )}
 
       {/* ── Slide-in Details Overlay (Revealed on Hover) ──────────── */}
-      <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end bg-transparent p-3 sm:p-4 transition-all duration-400 ease-out transform translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 group-focus:translate-y-0 group-focus:opacity-100">
-        <span className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider text-navy drop-shadow-xs mb-0.5">
+      <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end bg-gradient-to-t from-white via-white/95 to-transparent pt-10 pb-3 px-3 sm:pb-4 sm:px-4 transition-all duration-400 ease-out transform translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 group-focus:translate-y-0 group-focus:opacity-100">
+        <span className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider text-navy mb-0.5">
           {role}
         </span>
-        <h3 className="text-xs sm:text-sm font-bold tracking-tight text-navy-950 leading-snug drop-shadow-xs">
+        <h3 className="text-xs sm:text-sm font-bold tracking-tight text-navy-950 leading-snug">
           {name}
         </h3>
         {note && (
-          <p className="mt-0.5 text-[10px] sm:text-[11px] font-medium text-navy-900 leading-snug drop-shadow-xs">
+          <p className="mt-0.5 text-[10px] sm:text-[11px] text-gray-600 leading-snug">
             {note}
           </p>
         )}
