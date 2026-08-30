@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { FileText, ExternalLink } from "lucide-react";
+import { FileText, ArrowRight } from "lucide-react";
 import { BrochureModal } from "@/components/BrochureModal";
 
 export function AboutHeroVideo() {
@@ -22,7 +22,7 @@ export function AboutHeroVideo() {
 
   return (
     <>
-      <section className="relative w-full h-[65vh] sm:h-[80vh] lg:h-[90vh] min-h-[420px] overflow-hidden bg-navy-950 border-b border-[#002F6C] shadow-xl">
+      <section className="relative w-full h-[60vh] sm:h-[75vh] lg:h-[85vh] min-h-[380px] overflow-hidden bg-navy-950 border-b border-[#002F6C] shadow-md">
         {/* ── Smooth Horizontal Slide-in / Reveal Animation (Right to Left) ── */}
         <motion.div
           initial={{ opacity: 0, x: 80 }}
@@ -51,31 +51,24 @@ export function AboutHeroVideo() {
           />
 
           {/* Cinematic gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-navy-950/70 via-transparent to-navy-950/30 pointer-events-none" />
-
-          {/* ── Down-Right Corner Link / Button for MCC 2026 Brochure ── */}
-          <div className="absolute bottom-5 right-5 sm:bottom-8 sm:right-8 z-20 pointer-events-auto">
-            <button
-              type="button"
-              onClick={() => setIsBrochureOpen(true)}
-              className="group flex items-center gap-3 rounded-xl bg-white/95 hover:bg-white text-navy-950 px-4 py-2.5 sm:px-5 sm:py-3 shadow-xl hover:shadow-2xl backdrop-blur-md border border-white/80 transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer"
-            >
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-navy-900 text-gold transition-colors group-hover:bg-navy">
-                <FileText size={18} />
-              </div>
-              <div className="text-left">
-                <span className="block text-xs sm:text-sm font-bold tracking-tight text-navy-950 group-hover:text-navy">
-                  MCC 2026 Brochure
-                </span>
-                <span className="block text-[11px] text-gray-500 font-medium">
-                  Click to view brochure
-                </span>
-              </div>
-              <ExternalLink size={14} className="text-gray-400 group-hover:text-navy ml-1 transition-colors" />
-            </button>
-          </div>
+          <div className="absolute inset-0 bg-gradient-to-t from-navy-950/60 via-transparent to-navy-950/20 pointer-events-none" />
         </motion.div>
       </section>
+
+      {/* ── Text Link Below Video (Right Aligned, Responsive) ── */}
+      <div className="w-full bg-[#F8F9FA] border-b border-[#E5E7EB] py-2.5 px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-5xl flex items-center justify-end">
+          <button
+            type="button"
+            onClick={() => setIsBrochureOpen(true)}
+            className="hover-underline inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-navy hover:text-navy-900 transition-colors cursor-pointer"
+          >
+            <FileText size={15} className="text-gold-900" />
+            <span>MCC 2026 Brochure</span>
+            <ArrowRight size={14} className="text-navy" />
+          </button>
+        </div>
+      </div>
 
       {/* Lightbox Pop-up Modal */}
       <BrochureModal
