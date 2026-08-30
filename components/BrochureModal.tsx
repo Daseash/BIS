@@ -32,14 +32,16 @@ export function BrochureModal({ isOpen, onClose }: BrochureModalProps) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/75 backdrop-blur-xs p-3 sm:p-6 md:p-8 flex justify-center">
-          {/* Transparent Backdrop (Clicking outside closes modal) */}
-          <div
-            className="fixed inset-0 cursor-pointer"
-            onClick={onClose}
-            aria-label="Close brochure overlay"
-          />
-
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-xs overscroll-contain"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) onClose();
+          }}
+        >
           {/* Floating Top-Right Controls */}
           <div className="fixed top-4 right-4 sm:top-6 sm:right-6 z-50 flex items-center gap-2">
             <a
@@ -60,30 +62,37 @@ export function BrochureModal({ isOpen, onClose }: BrochureModalProps) {
             </button>
           </div>
 
-          {/* Scrollable Transparent Brochure Canvas */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.97, y: 15 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.97, y: 15 }}
-            transition={{ duration: 0.25 }}
-            className="relative z-10 w-full max-w-3xl flex flex-col gap-6 sm:gap-8 my-auto py-6 sm:py-10"
-            onClick={(e) => e.stopPropagation()}
+          {/* Scrollable Container (Outside clicks close, outside scrolling scrolls brochure) */}
+          <div
+            className="min-h-full w-full flex flex-col items-center py-10 sm:py-16 px-3 sm:px-6 cursor-pointer"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) onClose();
+            }}
           >
-            {BROCHURE_PAGES.map((page) => (
-              <div
-                key={page.page}
-                className="rounded-xl overflow-hidden shadow-2xl bg-white border border-white/20"
-              >
-                <img
-                  src={page.src}
-                  alt={`MCC 2026 Brochure Page ${page.page}`}
-                  className="w-full h-auto object-contain block"
-                  loading="eager"
-                />
-              </div>
-            ))}
-          </motion.div>
-        </div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.98, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.98, y: 15 }}
+              transition={{ duration: 0.25 }}
+              className="w-full max-w-3xl flex flex-col gap-6 sm:gap-8 cursor-default"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {BROCHURE_PAGES.map((page) => (
+                <div
+                  key={page.page}
+                  className="rounded-xl overflow-hidden shadow-2xl bg-white border border-white/20"
+                >
+                  <img
+                    src={page.src}
+                    alt={`MCC 2026 Brochure Page ${page.page}`}
+                    className="w-full h-auto object-contain block select-none"
+                    loading="eager"
+                  />
+                </div>
+              ))}
+            </motion.div>
+          </div>
+        </motion.div>
       )}
     </AnimatePresence>
   );
