@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { ExternalLink, MapPin, Compass, Landmark, Sparkles, Trees } from "lucide-react";
 import { Reveal } from "./Reveal";
 
@@ -197,10 +198,12 @@ export function PlacesToVisit() {
               <div>
                 {/* Image Box */}
                 <div className="relative aspect-video w-full overflow-hidden bg-gray-100">
-                  <img
+                  <Image
                     src={attraction.image}
                     alt={attraction.name}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
