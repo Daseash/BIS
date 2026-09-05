@@ -3,10 +3,8 @@
 import { useState, type FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
+  Sparkles,
   CheckCircle2,
-  AlertCircle,
-  Loader2,
-  ShieldCheck,
   Receipt,
   Check,
   Building,
@@ -18,10 +16,20 @@ import {
   Calendar,
   Hotel,
   Info,
+  Clock,
+  Download,
+  BookOpen,
+  Award,
+  Coffee,
+  ShieldCheck,
+  Send,
+  ArrowRight,
 } from "lucide-react";
+import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/Button";
+import { BrochureModal } from "@/components/BrochureModal";
 import { cn } from "@/lib/cn";
 
 type CategoryId = "iiti" | "external_student" | "academia" | "industry";
@@ -136,24 +144,40 @@ const CATEGORIES: CategoryTier[] = [
   },
 ];
 
-type Status = "idle" | "submitting" | "success" | "error";
+const PASS_PERKS = [
+  {
+    icon: Award,
+    title: "Official Certification",
+    desc: "Certificate of Participation jointly issued by IIT Indore & BIS Student Chapter.",
+  },
+  {
+    icon: BookOpen,
+    title: "Hands-on Masterclasses",
+    desc: "Interactive workshops on chemical safety, standards, and advanced modeling.",
+  },
+  {
+    icon: FileCheck,
+    title: "Delegate Kit & Collaterals",
+    desc: "Conference bag, stationery, published abstracts, and standardisation guidelines.",
+  },
+  {
+    icon: Coffee,
+    title: "Networking & Hospitality",
+    desc: "Networking lunches, high-tea sessions, and direct interactions with domain experts.",
+  },
+];
 
 export default function RegistrationPage() {
   const [selectedCategory, setSelectedCategory] = useState<CategoryTier>(CATEGORIES[0]);
   const [selectedDurationId, setSelectedDurationId] = useState<DurationId>("2days");
   const [selectedAccommodationId, setSelectedAccommodationId] = useState<string>("none");
   const [isAccommodationChecked, setIsAccommodationChecked] = useState<boolean>(false);
+  const [isBrochureOpen, setIsBrochureOpen] = useState<boolean>(false);
 
-  const [status, setStatus] = useState<Status>("idle");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [submittedData, setSubmittedData] = useState<{
-    name: string;
-    email: string;
-    category: string;
-    duration: string;
-    accommodation: string;
-    totalAmount: number;
-  } | null>(null);
+  // Notify Me State
+  const [notifyEmail, setNotifyEmail] = useState("");
+  const [notifyName, setNotifyName] = useState("");
+  const [notified, setNotified] = useState(false);
 
   // Handle Category Change
   const handleCategorySelect = (category: CategoryTier) => {
@@ -193,51 +217,10 @@ export default function RegistrationPage() {
   const basePassFee = activeDuration.amount;
   const totalAmount = basePassFee + accommodationFee;
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setStatus("submitting");
-    setErrorMessage("");
-
-    const form = event.currentTarget;
-    const data = new FormData(form);
-    const payload = {
-      name: data.get("name"),
-      email: data.get("email"),
-      phone: data.get("phone"),
-      category: `${selectedCategory.name} — ${activeDuration.label}`,
-      organization: data.get("organization"),
-      designation: data.get("designation"),
-      message: data.get("message"),
-      totalAmount: totalAmount,
-      website: data.get("website"),
-    };
-
-    try {
-      const res = await fetch("/api/registration", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      const result = await res.json();
-
-      if (!res.ok) {
-        throw new Error(result.error ?? "Something went wrong.");
-      }
-
-      setSubmittedData({
-        name: String(payload.name || ""),
-        email: String(payload.email || ""),
-        category: selectedCategory.name,
-        duration: activeDuration.label,
-        accommodation: accommodationLabel,
-        totalAmount: totalAmount,
-      });
-      setStatus("success");
-      form.reset();
-    } catch (err) {
-      setStatus("error");
-      setErrorMessage(err instanceof Error ? err.message : "Something went wrong.");
+  function handleNotifySubmit(e: FormEvent) {
+    e.preventDefault();
+    if (notifyEmail.trim()) {
+      setNotified(true);
     }
   }
 
@@ -245,466 +228,445 @@ export default function RegistrationPage() {
     <>
       <PageHero
         title="Delegate Registration"
-        subtitle="Reserve your delegate pass for the Malwa Chemical Conclave 2026 at IIT Indore. Select category, participation duration, and accommodation."
+        subtitle="Registrations for the Malwa Chemical Conclave 2026 will start soon! Explore delegate tiers, workshop passes, and accommodation options below."
       />
 
       <div className="mx-auto max-w-7xl px-4 py-12 sm:py-16 sm:px-6 lg:px-8">
-        {/* Top summary strip */}
+        
+        {/* ── ATTRACTIVE "REGISTRATIONS STARTING SOON" HERO BANNER ── */}
+        <Reveal>
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#001B3D] via-[#002B66] to-[#0A192F] p-8 sm:p-10 text-white shadow-xl border border-white/15 mb-12">
+            {/* Background glowing ambient elements */}
+            <div className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 rounded-full bg-gold/20 blur-3xl" />
+            <div className="pointer-events-none absolute -left-16 -bottom-16 h-72 w-72 rounded-full bg-blue-500/20 blur-3xl" />
+
+            <div className="relative z-10 grid gap-8 lg:grid-cols-12 lg:items-center">
+              <div className="lg:col-span-8 space-y-4">
+                <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/15 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-gold-300 shadow-xs backdrop-blur-md">
+                  <Sparkles size={14} className="text-gold animate-spin-slow" />
+                  <span>Registrations Starting Soon!</span>
+                </div>
+
+                <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight">
+                  Delegate Registration Portal Will Open Shortly
+                </h2>
+
+                <p className="text-sm sm:text-base text-white/85 max-w-2xl leading-relaxed">
+                  We are preparing the official delegate onboarding portal for <strong className="text-gold-200">Malwa Chemical Conclave 2026</strong>. Review the official category rates and accommodation options below to plan your attendance.
+                </p>
+
+                {/* Event Highlights Quick Strip */}
+                <div className="pt-2 flex flex-wrap gap-4 sm:gap-6 text-xs sm:text-sm font-medium text-white/90">
+                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/15">
+                    <Calendar size={16} className="text-gold" />
+                    <span>October 11–12, 2026</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/15">
+                    <Building size={16} className="text-gold" />
+                    <span>IIT Indore, Simrol Campus</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/15">
+                    <Clock size={16} className="text-gold" />
+                    <span>Portal Launching Soon</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="lg:col-span-4 flex flex-col gap-3 justify-center">
+                <button
+                  type="button"
+                  onClick={() => setIsBrochureOpen(true)}
+                  className="w-full flex items-center justify-center gap-2 rounded-xl bg-gold py-3.5 px-5 text-sm font-bold text-navy-950 shadow-xl hover:bg-gold-400 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+                >
+                  <BookOpen size={17} />
+                  <span>View Conclave Brochure</span>
+                </button>
+
+                <a
+                  href="/MCC 2026 Broucher.pdf"
+                  download="MCC 2026 Brochure.pdf"
+                  className="w-full flex items-center justify-center gap-2 rounded-xl bg-white/10 hover:bg-white/20 py-3.5 px-5 text-sm font-semibold text-white border border-white/20 backdrop-blur-md hover:scale-[1.02] active:scale-[0.98] transition-all"
+                >
+                  <Download size={16} />
+                  <span>Download Brochure PDF</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </Reveal>
+
+        {/* ── Top Section Header ── */}
         <div className="mb-10 flex flex-wrap items-center justify-between gap-4 border-b border-[#E5E7EB] pb-6">
           <div>
-            <span className="inline-block rounded bg-gray-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-gray-800">
-              IIT Indore &bull; October 11&ndash;12, 2026
+            <span className="inline-block rounded bg-gold/20 px-3 py-1 text-xs font-bold uppercase tracking-wider text-navy-900 border border-gold/40">
+              Interactive Fee &amp; Category Explorer
             </span>
-            <h2 className="mt-2 text-2xl font-bold tracking-tight text-navy-950 sm:text-3xl">
-              Official Conference Registration Portal
-            </h2>
+            <h3 className="mt-2 text-2xl font-bold tracking-tight text-navy-950 sm:text-3xl">
+              Preview Delegate Categories &amp; Pricing
+            </h3>
             <p className="mt-1 text-sm text-gray-600">
-              Department of Chemical Engineering, Indian Institute of Technology Indore
+              Select your category below to calculate your estimated delegate pass fee and view accommodation options.
             </p>
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5 rounded-full border border-green-200 bg-green-50 px-3.5 py-1.5 text-xs font-semibold text-green-800 shadow-xs">
-              <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-              <span>Registrations Active</span>
+            <div className="flex items-center gap-1.5 rounded-full border border-amber-300 bg-amber-50 px-3.5 py-1.5 text-xs font-bold text-amber-900 shadow-xs">
+              <span className="h-2 w-2 rounded-full bg-amber-500 animate-pulse" />
+              <span>Registrations Starting Soon</span>
             </div>
             <div className="flex items-center gap-1 text-xs font-medium text-gray-500">
               <ShieldCheck size={16} className="text-navy" />
-              <span>Verified Portal</span>
+              <span>Official IIT Indore Portal</span>
             </div>
           </div>
         </div>
 
-        {/* ── Two-Column Layout: Form on Left, Live Receipt on Right ── */}
+        {/* ── Two-Column Layout: Interactive Tier Explorer & Calculated Sum ── */}
         <div className="grid gap-10 lg:grid-cols-12 lg:items-start">
-          {/* ── LEFT COLUMN: Registration Form (7 cols) ── */}
+          
+          {/* ── LEFT COLUMN: Category & Option Selection ── */}
           <div className="lg:col-span-7 space-y-8">
             <Reveal>
-              <div className="rounded-xl border border-[#E5E7EB] p-6 sm:p-8 bg-white shadow-sm transition-all duration-300 hover:border-navy hover:shadow-lg hover:ring-2 hover:ring-navy/20">
-                <form onSubmit={handleSubmit} className="space-y-8">
-                  {/* Invisible Honeypot Field for Anti-Bot Protection */}
-                  <input
-                    type="text"
-                    name="website"
-                    tabIndex={-1}
-                    autoComplete="off"
-                    aria-hidden="true"
-                    className="hidden"
-                    style={{ display: "none", opacity: 0, position: "absolute", left: "-9999px" }}
-                  />
+              <div className="rounded-2xl border border-[#E5E7EB] p-6 sm:p-8 bg-white shadow-sm transition-all duration-300 hover:border-navy/40 hover:shadow-lg">
+                
+                {/* Step 1: 4 Categories Selection */}
+                <div>
+                  <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-navy-900 text-xs font-bold text-white">
+                        1
+                      </span>
+                      <h4 className="text-base font-bold text-navy-950">
+                        Choose Participant Category
+                      </h4>
+                    </div>
+                    <span className="text-xs text-navy font-semibold">Click to preview tier</span>
+                  </div>
 
-                  {/* Step 1: 4 Categories Selection */}
-                  <div>
-                    <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
-                      <div className="flex items-center gap-2">
-                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-navy-900 text-xs font-bold text-white">
-                          1
-                        </span>
-                        <h3 className="text-base font-bold text-navy-950">
-                          Select Participant Category
-                        </h3>
-                      </div>
-                      <span className="text-xs text-gray-500 font-medium">Step 1 of 3</span>
+                  {/* 4 Category Cards */}
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {CATEGORIES.map((cat) => {
+                      const isSelected = selectedCategory.id === cat.id;
+                      return (
+                        <div
+                          key={cat.id}
+                          onClick={() => handleCategorySelect(cat)}
+                          className={cn(
+                            "cursor-pointer rounded-xl border p-4 transition-all duration-300 text-left flex flex-col justify-between bg-white",
+                            isSelected
+                              ? "border-navy shadow-md ring-2 ring-navy/20 bg-blue-50/20"
+                              : "border-gray-200 hover:border-navy hover:shadow-xs"
+                          )}
+                        >
+                          <div>
+                            <div className="flex items-center justify-between mb-2">
+                              <span
+                                className={cn(
+                                  "rounded px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider",
+                                  isSelected
+                                    ? "bg-navy-900 text-white"
+                                    : "bg-gray-100 text-gray-700"
+                                )}
+                              >
+                                {cat.badge}
+                              </span>
+                              <span className="text-xs font-semibold text-navy">
+                                {isSelected ? "Active Preview" : "Select"}
+                              </span>
+                            </div>
+                            <h5 className="text-sm font-bold text-navy-950 leading-snug">
+                              {cat.name}
+                            </h5>
+                            <p className="mt-1.5 text-xs text-gray-500 leading-relaxed">
+                              {cat.description}
+                            </p>
+                          </div>
+
+                          <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-semibold">
+                            <span className="text-gray-500 font-normal">
+                              {isSelected ? "Tier Selected" : "Click to view options"}
+                            </span>
+                            <div
+                              className={cn(
+                                "flex h-4 w-4 items-center justify-center rounded-full border",
+                                isSelected
+                                  ? "border-navy bg-navy text-white"
+                                  : "border-gray-300 bg-white"
+                              )}
+                            >
+                              {isSelected && <Check size={10} strokeWidth={3} />}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* ── Sub-options Box ── */}
+                  <div className="mt-6 rounded-xl border border-[#E5E7EB] bg-gray-50/60 p-5 space-y-5 shadow-2xs">
+                    <div className="flex items-center justify-between border-b border-gray-200 pb-2.5">
+                      <span className="text-xs font-bold uppercase tracking-wider text-navy-950 flex items-center gap-1.5">
+                        <Calendar size={14} className="text-navy" />
+                        Participation Duration: <span className="text-navy font-extrabold">{selectedCategory.name}</span>
+                      </span>
                     </div>
 
-                    {/* 4 Category Cards (Pure White Background) */}
+                    {/* Duration Radio Options */}
                     <div className="grid gap-3 sm:grid-cols-2">
-                      {CATEGORIES.map((cat) => {
-                        const isSelected = selectedCategory.id === cat.id;
+                      {selectedCategory.durations.map((duration) => {
+                        const isDurationSelected = selectedDurationId === duration.id;
                         return (
                           <div
-                            key={cat.id}
-                            onClick={() => handleCategorySelect(cat)}
+                            key={duration.id}
+                            onClick={() => setSelectedDurationId(duration.id)}
                             className={cn(
-                              "cursor-pointer rounded-xl border p-4 transition-all duration-300 text-left flex flex-col justify-between bg-white",
-                              isSelected
+                              "cursor-pointer rounded-lg border p-4 transition-all duration-200 text-left flex flex-col justify-between bg-white",
+                              isDurationSelected
                                 ? "border-navy shadow-sm ring-1 ring-navy"
                                 : "border-gray-200 hover:border-navy hover:shadow-xs"
                             )}
                           >
-                            <div>
-                              <div className="flex items-center justify-between mb-2">
-                                <span
-                                  className={cn(
-                                    "rounded px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider",
-                                    isSelected
-                                      ? "bg-navy-900 text-white"
-                                      : "bg-gray-100 text-gray-700"
-                                  )}
-                                >
-                                  {cat.badge}
-                                </span>
-                                <span className="text-xs font-semibold text-navy">
-                                  {isSelected ? "Selected" : "Select"}
-                                </span>
-                              </div>
-                              <h4 className="text-sm font-bold text-navy-950 leading-snug">
-                                {cat.name}
-                              </h4>
-                              <p className="mt-1.5 text-xs text-gray-500 leading-relaxed">
-                                {cat.description}
-                              </p>
-                            </div>
-
-                            <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-semibold">
-                              <span className="text-gray-500 font-normal">
-                                {isSelected ? "Category Selected" : "Click to select"}
+                            <div className="flex items-center justify-between mb-1.5">
+                              <h6 className="text-sm font-bold text-navy-950">
+                                {duration.label}
+                              </h6>
+                              <span className="font-mono text-base font-extrabold text-navy-950">
+                                ₹{duration.amount}
                               </span>
+                            </div>
+                            <p className="text-xs text-gray-500 leading-relaxed">
+                              {duration.sublabel}
+                            </p>
+                            <div className="mt-3 flex items-center gap-1.5 text-xs font-semibold text-navy">
                               <div
                                 className={cn(
-                                  "flex h-4 w-4 items-center justify-center rounded-full border",
-                                  isSelected
+                                  "flex h-3.5 w-3.5 items-center justify-center rounded-full border",
+                                  isDurationSelected
                                     ? "border-navy bg-navy text-white"
                                     : "border-gray-300 bg-white"
                                 )}
                               >
-                                {isSelected && <Check size={10} strokeWidth={3} />}
+                                {isDurationSelected && <Check size={8} strokeWidth={3} />}
                               </div>
+                              <span className={isDurationSelected ? "text-navy font-bold" : "text-gray-400"}>
+                                {isDurationSelected ? "Selected Option" : "Choose this option"}
+                              </span>
                             </div>
                           </div>
                         );
                       })}
                     </div>
 
-                    {/* ── Dynamic Sub-options Box (Pure White Background) ── */}
-                    <div className="mt-6 rounded-xl border border-[#E5E7EB] bg-white p-5 space-y-5 shadow-2xs">
-                      <div className="flex items-center justify-between border-b border-gray-100 pb-2.5">
-                        <span className="text-xs font-bold uppercase tracking-wider text-navy-950 flex items-center gap-1.5">
-                          <Calendar size={14} className="text-navy" />
-                          Participation Duration: <span className="text-navy font-extrabold">{selectedCategory.name}</span>
-                        </span>
-                      </div>
-
-                      {/* Duration Radio Options with Respective Amount */}
-                      <div className="grid gap-3 sm:grid-cols-2">
-                        {selectedCategory.durations.map((duration) => {
-                          const isDurationSelected = selectedDurationId === duration.id;
-                          return (
-                            <div
-                              key={duration.id}
-                              onClick={() => setSelectedDurationId(duration.id)}
-                              className={cn(
-                                "cursor-pointer rounded-lg border p-4 transition-all duration-200 text-left flex flex-col justify-between bg-white",
-                                isDurationSelected
-                                  ? "border-navy shadow-sm ring-1 ring-navy"
-                                  : "border-gray-200 hover:border-navy hover:shadow-xs"
-                              )}
-                            >
-                              <div className="flex items-center justify-between mb-1.5">
-                                <h5 className="text-sm font-bold text-navy-950">
-                                  {duration.label}
-                                </h5>
-                                <span className="font-mono text-base font-extrabold text-navy-950">
-                                  ₹{duration.amount}
-                                </span>
-                              </div>
-                              <p className="text-xs text-gray-500 leading-relaxed">
-                                {duration.sublabel}
+                    {/* ── Accommodation Section ── */}
+                    {selectedCategory.accommodationType === "checkbox" && selectedCategory.accommodationOptions?.[0] && (
+                      <div className="pt-4 border-t border-gray-200">
+                        <label
+                          onClick={() => setIsAccommodationChecked(!isAccommodationChecked)}
+                          className={cn(
+                            "cursor-pointer rounded-lg border p-4 transition-all duration-200 flex items-start justify-between gap-4 bg-white",
+                            isAccommodationChecked
+                                ? "border-navy shadow-sm ring-1 ring-navy"
+                                : "border-gray-200 hover:border-navy hover:shadow-xs"
+                          )}
+                        >
+                          <div className="flex items-start gap-3">
+                            <input
+                              type="checkbox"
+                              checked={isAccommodationChecked}
+                              onChange={(e) => setIsAccommodationChecked(e.target.checked)}
+                              className="mt-1 h-4 w-4 rounded border-gray-300 text-navy focus:ring-navy cursor-pointer"
+                            />
+                            <div>
+                              <span className="text-sm font-bold text-navy-950 flex items-center gap-1.5">
+                                <Hotel size={15} className="text-navy" />
+                                {selectedCategory.accommodationOptions[0].label}
+                              </span>
+                              <p className="mt-0.5 text-xs text-gray-500 leading-relaxed">
+                                {selectedCategory.accommodationOptions[0].sublabel}
                               </p>
-                              <div className="mt-3 flex items-center gap-1.5 text-xs font-semibold text-navy">
-                                <div
-                                  className={cn(
-                                    "flex h-3.5 w-3.5 items-center justify-center rounded-full border",
-                                    isDurationSelected
-                                      ? "border-navy bg-navy text-white"
-                                      : "border-gray-300 bg-white"
-                                  )}
-                                >
-                                  {isDurationSelected && <Check size={8} strokeWidth={3} />}
-                                </div>
-                                <span className={isDurationSelected ? "text-navy" : "text-gray-400"}>
-                                  {isDurationSelected ? "Selected Option" : "Choose this option"}
-                                </span>
-                              </div>
                             </div>
-                          );
-                        })}
-                      </div>
-
-                      {/* ── Dynamic Accommodation Section for Selected Category ── */}
-                      {selectedCategory.accommodationType === "checkbox" && selectedCategory.accommodationOptions?.[0] && (
-                        <div className="pt-4 border-t border-gray-100">
-                          <label
-                            onClick={() => setIsAccommodationChecked(!isAccommodationChecked)}
-                            className={cn(
-                              "cursor-pointer rounded-lg border p-4 transition-all duration-200 flex items-start justify-between gap-4 bg-white",
-                              isAccommodationChecked
-                                  ? "border-navy shadow-sm ring-1 ring-navy"
-                                  : "border-gray-200 hover:border-navy hover:shadow-xs"
-                            )}
-                          >
-                            <div className="flex items-start gap-3">
-                              <input
-                                type="checkbox"
-                                checked={isAccommodationChecked}
-                                onChange={(e) => setIsAccommodationChecked(e.target.checked)}
-                                className="mt-1 h-4 w-4 rounded border-gray-300 text-navy focus:ring-navy cursor-pointer"
-                              />
-                              <div>
-                                <span className="text-sm font-bold text-navy-950 flex items-center gap-1.5">
-                                  <Hotel size={15} className="text-navy" />
-                                  {selectedCategory.accommodationOptions[0].label}
-                                </span>
-                                <p className="mt-0.5 text-xs text-gray-500 leading-relaxed">
-                                  {selectedCategory.accommodationOptions[0].sublabel}
-                                </p>
-                              </div>
-                            </div>
-                            <span className="font-mono text-sm font-extrabold text-navy-950 shrink-0">
-                              +₹{selectedCategory.accommodationOptions[0].amount}
-                            </span>
-                          </label>
-                        </div>
-                      )}
-
-                      {/* Industry Accommodation Options */}
-                      {selectedCategory.accommodationType === "options" && selectedCategory.accommodationOptions && (
-                        <div className="pt-4 border-t border-gray-100 space-y-3">
-                          <span className="text-xs font-bold uppercase tracking-wider text-navy-950 flex items-center gap-1.5">
-                            <Hotel size={14} className="text-navy" />
-                            Accommodation Preference
-                          </span>
-                          <div className="space-y-2">
-                            {selectedCategory.accommodationOptions.map((opt) => {
-                              const isOptSelected = selectedAccommodationId === opt.id;
-                              return (
-                                <div
-                                  key={opt.id}
-                                  onClick={() => setSelectedAccommodationId(opt.id)}
-                                  className={cn(
-                                    "cursor-pointer rounded-lg border p-3.5 transition-all duration-200 flex items-start justify-between gap-3 bg-white",
-                                    isOptSelected
-                                      ? "border-navy shadow-sm ring-1 ring-navy"
-                                      : "border-gray-200 hover:border-navy hover:shadow-xs"
-                                  )}
-                                >
-                                  <div className="flex items-start gap-2.5">
-                                    <div
-                                      className={cn(
-                                        "mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border",
-                                        isOptSelected ? "border-navy bg-navy text-white" : "border-gray-300 bg-white"
-                                      )}
-                                    >
-                                      {isOptSelected && <Check size={10} strokeWidth={3} />}
-                                    </div>
-                                    <div>
-                                      <span className="text-xs sm:text-sm font-bold text-navy-950">
-                                        {opt.label}
-                                      </span>
-                                      <p className="text-[11px] sm:text-xs text-gray-500 leading-relaxed">
-                                        {opt.sublabel}
-                                      </p>
-                                      {opt.note && (
-                                        <p className="mt-1 text-[11px] text-gray-600 italic">
-                                          {opt.note}
-                                        </p>
-                                      )}
-                                    </div>
-                                  </div>
-                                  <span className="font-mono text-xs sm:text-sm font-extrabold text-navy-950 shrink-0">
-                                    {opt.amount > 0 ? `+₹${opt.amount}` : "₹0"}
-                                  </span>
-                                </div>
-                              );
-                            })}
                           </div>
-                        </div>
-                      )}
-
-                      {/* IIT Indore note */}
-                      {selectedCategory.accommodationType === "none" && (
-                        <div className="pt-2 text-xs text-gray-500 flex items-center gap-2 bg-gray-50 p-2.5 rounded-lg border border-gray-200">
-                          <Info size={14} className="text-navy shrink-0" />
-                          <span>Campus resident pass — on-campus housing not applicable.</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Step 2: Personal & Contact Information */}
-                  <div className="pt-4 border-t border-gray-100">
-                    <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
-                      <div className="flex items-center gap-2">
-                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-navy-900 text-xs font-bold text-white">
-                          2
-                        </span>
-                        <h3 className="text-base font-bold text-navy-950">
-                          Delegate Personal &amp; Contact Details
-                        </h3>
+                          <span className="font-mono text-sm font-extrabold text-navy-950 shrink-0">
+                            +₹{selectedCategory.accommodationOptions[0].amount}
+                          </span>
+                        </label>
                       </div>
-                      <span className="text-xs text-gray-500 font-medium">Step 2 of 3</span>
-                    </div>
+                    )}
 
-                    <div className="space-y-4">
-                      <Field label="Full Name (with Title)" htmlFor="name" required>
-                        <div className="relative">
-                          <User size={16} className="absolute left-3.5 top-3 text-gray-400" />
+                    {/* Industry Accommodation Options */}
+                    {selectedCategory.accommodationType === "options" && selectedCategory.accommodationOptions && (
+                      <div className="pt-4 border-t border-gray-200 space-y-3">
+                        <span className="text-xs font-bold uppercase tracking-wider text-navy-950 flex items-center gap-1.5">
+                          <Hotel size={14} className="text-navy" />
+                          Accommodation Preference
+                        </span>
+                        <div className="space-y-2">
+                          {selectedCategory.accommodationOptions.map((opt) => {
+                            const isOptSelected = selectedAccommodationId === opt.id;
+                            return (
+                              <div
+                                key={opt.id}
+                                onClick={() => setSelectedAccommodationId(opt.id)}
+                                className={cn(
+                                  "cursor-pointer rounded-lg border p-3.5 transition-all duration-200 flex items-start justify-between gap-3 bg-white",
+                                  isOptSelected
+                                    ? "border-navy shadow-sm ring-1 ring-navy"
+                                    : "border-gray-200 hover:border-navy hover:shadow-xs"
+                                )}
+                              >
+                                <div className="flex items-start gap-2.5">
+                                  <div
+                                    className={cn(
+                                      "mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border",
+                                      isOptSelected ? "border-navy bg-navy text-white" : "border-gray-300 bg-white"
+                                    )}
+                                  >
+                                    {isOptSelected && <Check size={10} strokeWidth={3} />}
+                                  </div>
+                                  <div>
+                                    <span className="text-xs sm:text-sm font-bold text-navy-950">
+                                      {opt.label}
+                                    </span>
+                                    <p className="text-[11px] sm:text-xs text-gray-500 leading-relaxed">
+                                      {opt.sublabel}
+                                    </p>
+                                    {opt.note && (
+                                      <p className="mt-1 text-[11px] text-gray-600 italic">
+                                        {opt.note}
+                                      </p>
+                                    )}
+                                  </div>
+                                </div>
+                                <span className="font-mono text-xs sm:text-sm font-extrabold text-navy-950 shrink-0">
+                                  {opt.amount > 0 ? `+₹${opt.amount}` : "₹0"}
+                                </span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* IIT Indore note */}
+                    {selectedCategory.accommodationType === "none" && (
+                      <div className="pt-2 text-xs text-gray-600 flex items-center gap-2 bg-white p-3 rounded-lg border border-gray-200">
+                        <Info size={14} className="text-navy shrink-0" />
+                        <span>Campus resident pass — on-campus housing not applicable.</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* ── PRE-REGISTER / GET NOTIFIED FORM ── */}
+                <div className="mt-8 pt-6 border-t border-gray-200">
+                  <div className="rounded-xl border border-gold/40 bg-gradient-to-br from-gold-50/50 to-white p-5 sm:p-6 shadow-xs">
+                    <div className="flex items-center gap-2 text-gold-900 font-bold text-sm uppercase tracking-wider mb-2">
+                      <Mail size={16} />
+                      <span>Get Notified on Launch</span>
+                    </div>
+                    <h4 className="text-base sm:text-lg font-bold text-navy-950">
+                      Want priority access when registrations open?
+                    </h4>
+                    <p className="mt-1 text-xs text-gray-600 leading-relaxed">
+                      Leave your details below. We will send you an official alert as soon as the registration &amp; payment gateway goes live.
+                    </p>
+
+                    {notified ? (
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="mt-4 rounded-lg bg-green-50 border border-green-200 p-4 text-sm text-green-900 flex items-center gap-3"
+                      >
+                        <CheckCircle2 size={24} className="text-green-600 shrink-0" />
+                        <div>
+                          <p className="font-bold text-green-950">You&apos;re on the priority list!</p>
+                          <p className="text-xs text-green-700 mt-0.5">
+                            We will email <strong>{notifyEmail}</strong> immediately when registrations open.
+                          </p>
+                        </div>
+                      </motion.div>
+                    ) : (
+                      <form onSubmit={handleNotifySubmit} className="mt-4 space-y-3">
+                        <div className="grid gap-3 sm:grid-cols-2">
                           <input
-                            id="name"
-                            name="name"
                             type="text"
                             required
-                            maxLength={100}
-                            className={cn(inputClass, "pl-10")}
-                            placeholder="Prof. / Dr. / Mr. / Ms. First & Last Name"
+                            value={notifyName}
+                            onChange={(e) => setNotifyName(e.target.value)}
+                            placeholder="Your Full Name"
+                            className="w-full rounded-lg border border-gray-300 bg-white px-3.5 py-2.5 text-xs sm:text-sm text-gray-900 placeholder:text-gray-400 focus:border-navy focus:ring-2 focus:ring-navy/20 outline-none"
                           />
-                        </div>
-                      </Field>
-
-                      <div className="grid gap-4 sm:grid-cols-2">
-                        <Field label="Email Address" htmlFor="email" required>
-                          <div className="relative">
-                            <Mail size={16} className="absolute left-3.5 top-3 text-gray-400" />
-                            <input
-                              id="email"
-                              name="email"
-                              type="email"
-                              required
-                              maxLength={100}
-                              className={cn(inputClass, "pl-10")}
-                              placeholder="official.email@organization.edu"
-                            />
-                          </div>
-                        </Field>
-
-                        <Field label="Phone / WhatsApp Number" htmlFor="phone" required>
-                          <div className="relative">
-                            <Phone size={16} className="absolute left-3.5 top-3 text-gray-400" />
-                            <input
-                              id="phone"
-                              name="phone"
-                              type="tel"
-                              required
-                              maxLength={25}
-                              className={cn(inputClass, "pl-10")}
-                              placeholder="+91 98765 43210"
-                            />
-                          </div>
-                        </Field>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Step 3: Affiliation & Notes */}
-                  <div className="pt-4 border-t border-gray-100">
-                    <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
-                      <div className="flex items-center gap-2">
-                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-navy-900 text-xs font-bold text-white">
-                          3
-                        </span>
-                        <h3 className="text-base font-bold text-navy-950">
-                          Institutional Affiliation &amp; Notes
-                        </h3>
-                      </div>
-                      <span className="text-xs text-gray-500 font-medium">Step 3 of 3</span>
-                    </div>
-
-                    <div className="space-y-4">
-                      <div className="grid gap-4 sm:grid-cols-2">
-                        <Field label="Organization / University" htmlFor="organization" required>
-                          <div className="relative">
-                            <Building size={16} className="absolute left-3.5 top-3 text-gray-400" />
-                            <input
-                              id="organization"
-                              name="organization"
-                              type="text"
-                              required
-                              maxLength={150}
-                              className={cn(inputClass, "pl-10")}
-                              placeholder="e.g. IIT Indore, RIL, IOCL, CSIR"
-                            />
-                          </div>
-                        </Field>
-
-                        <Field label="Designation / Department" htmlFor="designation">
                           <input
-                            id="designation"
-                            name="designation"
-                            type="text"
-                            maxLength={100}
-                            className={inputClass}
-                            placeholder="e.g. Associate Professor, M.Tech Scholar"
+                            type="email"
+                            required
+                            value={notifyEmail}
+                            onChange={(e) => setNotifyEmail(e.target.value)}
+                            placeholder="Your Official Email Address"
+                            className="w-full rounded-lg border border-gray-300 bg-white px-3.5 py-2.5 text-xs sm:text-sm text-gray-900 placeholder:text-gray-400 focus:border-navy focus:ring-2 focus:ring-navy/20 outline-none"
                           />
-                        </Field>
-                      </div>
-
-                      <Field label="Special Requests / Paper Submission Title (Optional)" htmlFor="message">
-                        <textarea
-                          id="message"
-                          name="message"
-                          rows={2}
-                          maxLength={1000}
-                          className={inputClass}
-                          placeholder="Provide paper title, poster presentation topic, or accommodation queries."
-                        />
-                      </Field>
-                    </div>
-                  </div>
-
-                  {/* Move to Payment Button with Enhanced Hover Effect */}
-                  <div className="pt-4 border-t border-gray-100">
-                    <Button
-                      type="submit"
-                      disabled={status === "submitting"}
-                      showArrow={true}
-                      className="w-full text-base py-4 shadow-lg hover:shadow-2xl hover:shadow-navy/25 hover:scale-[1.015] active:scale-[0.99] font-extrabold transition-all duration-300 rounded-lg cursor-pointer bg-gradient-to-r from-navy-950 via-navy-900 to-navy-950 hover:from-navy hover:via-navy-800 hover:to-navy-900 tracking-wide text-white border border-navy/30"
-                    >
-                      {status === "submitting" && <Loader2 size={18} className="animate-spin mr-2" />}
-                      {status === "submitting" ? "Processing Registration..." : "Move to Payment"}
-                    </Button>
-                  </div>
-
-                  <AnimatePresence mode="wait">
-                    {status === "success" && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0 }}
-                        className="rounded-lg border border-green-200 bg-green-50 p-4 text-sm text-green-900 space-y-2"
-                      >
-                        <div className="flex items-center gap-2 font-bold text-green-800">
-                          <CheckCircle2 size={20} className="shrink-0 text-green-600" />
-                          <span>Registration Successfully Received!</span>
                         </div>
-                        <p className="text-xs text-green-700 leading-relaxed">
-                          Thank you, <strong>{submittedData?.name}</strong>. Your registration for <strong>{submittedData?.category}</strong> ({submittedData?.duration}) has been logged in the conference database. An official confirmation email with payment instructions has been sent to <strong>{submittedData?.email}</strong>.
-                        </p>
-                      </motion.div>
+                        <button
+                          type="submit"
+                          className="w-full flex items-center justify-center gap-2 rounded-lg bg-navy-950 hover:bg-navy py-3 px-4 text-xs sm:text-sm font-bold text-white shadow-md transition-all cursor-pointer hover:scale-[1.01]"
+                        >
+                          <Send size={15} />
+                          <span>Notify Me When Registrations Start</span>
+                        </button>
+                      </form>
                     )}
-                    {status === "error" && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0 }}
-                        className="flex items-center gap-2.5 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800"
-                      >
-                        <AlertCircle size={20} className="shrink-0 text-red-600" />
-                        <span>{errorMessage}</span>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </form>
+                  </div>
+                </div>
+
               </div>
             </Reveal>
+
+            {/* ── WHAT'S INCLUDED IN THE PASS ── */}
+            <Reveal delay={0.1}>
+              <div className="rounded-2xl border border-[#E5E7EB] p-6 bg-white shadow-sm space-y-4">
+                <h4 className="text-base font-bold text-navy-950 flex items-center gap-2">
+                  <Award size={18} className="text-gold-700" />
+                  What Every Delegate Pass Includes
+                </h4>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {PASS_PERKS.map((perk) => {
+                    const Icon = perk.icon;
+                    return (
+                      <div key={perk.title} className="flex items-start gap-3 p-3 rounded-lg bg-gray-50 border border-gray-100">
+                        <div className="p-2 rounded-md bg-white border border-gray-200 text-navy shrink-0 shadow-2xs">
+                          <Icon size={16} />
+                        </div>
+                        <div>
+                          <h5 className="text-xs font-bold text-navy-950">{perk.title}</h5>
+                          <p className="mt-0.5 text-[11px] text-gray-600 leading-relaxed">{perk.desc}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </Reveal>
+
           </div>
 
-          {/* ── RIGHT COLUMN: Live Invoice Breakdown & Calculated Sum (5 cols) ── */}
+          {/* ── RIGHT COLUMN: Calculated Summary Assessment (5 cols) ── */}
           <div className="lg:col-span-5 sticky top-28 space-y-6">
             <Reveal delay={0.1}>
-              <div className="group rounded-xl border border-[#E5E7EB] bg-white shadow-sm overflow-hidden transition-all duration-300 ease-in-out hover:border-navy hover:shadow-lg hover:ring-2 hover:ring-navy/20">
-                {/* Header Band - Clean White Background Theme with smooth hover transition */}
-                <div className="bg-white p-5 text-navy-950 border-b border-[#E5E7EB] transition-colors duration-300 group-hover:border-navy/30">
+              <div className="group rounded-2xl border border-[#E5E7EB] bg-white shadow-sm overflow-hidden transition-all duration-300 hover:border-navy hover:shadow-lg">
+                
+                {/* Header Band */}
+                <div className="bg-white p-5 text-navy-950 border-b border-[#E5E7EB]">
                   <div className="flex items-center justify-between">
-                    <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-gold-900 bg-gold-50 px-2.5 py-0.5 rounded border border-gold-200 transition-all duration-300 group-hover:border-navy/40 group-hover:bg-navy-50 group-hover:text-navy">
-                      <Receipt size={14} className="text-gold-900 group-hover:text-navy transition-colors duration-300" /> Live Assessment
+                    <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-gold-900 bg-gold-50 px-2.5 py-0.5 rounded border border-gold-200">
+                      <Receipt size={14} className="text-gold-900" /> Pass Estimation
                     </span>
-                    <span className="rounded bg-gray-100 px-2 py-0.5 text-[10px] font-mono font-bold text-gray-700 border border-gray-200 transition-colors group-hover:border-navy/30 group-hover:text-navy-950">
-                      MCC-2026-REG
+                    <span className="rounded bg-gray-100 px-2 py-0.5 text-[10px] font-mono font-bold text-gray-700 border border-gray-200">
+                      MCC-2026-FEE
                     </span>
                   </div>
-                  <h3 className="mt-2 text-xl font-bold text-navy-950 tracking-tight transition-colors duration-300 group-hover:text-navy">
-                    Registration Summary
-                  </h3>
+                  <h4 className="mt-2 text-xl font-bold text-navy-950 tracking-tight">
+                    Estimated Registration Fee
+                  </h4>
                   <p className="mt-0.5 text-xs text-gray-500">
                     Indian Institute of Technology Indore
                   </p>
@@ -712,15 +674,15 @@ export default function RegistrationPage() {
 
                 {/* Body with Dynamic Calculations */}
                 <div className="p-6 space-y-5 bg-white">
-                  {/* Selected Tier Banner (Clean White Background) */}
-                  <div className="rounded-lg bg-white p-4 border border-[#E5E7EB] flex items-start justify-between transition-all duration-300 hover:border-navy hover:shadow-xs hover:ring-1 hover:ring-navy/15">
+                  {/* Selected Tier Banner */}
+                  <div className="rounded-xl bg-gray-50 p-4 border border-[#E5E7EB] flex items-start justify-between">
                     <div>
                       <span className="text-[10px] font-bold uppercase tracking-wider text-gray-500 block mb-0.5">
                         Selected Participant Tier
                       </span>
-                      <h4 className="text-sm font-bold text-navy-950">
+                      <h5 className="text-sm font-bold text-navy-950">
                         {selectedCategory.name}
-                      </h4>
+                      </h5>
                       <p className="mt-0.5 text-xs text-gray-500">
                         {activeDuration.label}
                       </p>
@@ -733,7 +695,7 @@ export default function RegistrationPage() {
                   {/* Itemized Line Items */}
                   <div className="space-y-3 pt-2 border-t border-gray-100">
                     <span className="text-xs font-bold uppercase tracking-wider text-gray-500 block">
-                      Fee Breakdown &amp; Options
+                      Fee Breakdown &amp; Inclusions
                     </span>
 
                     {/* Participation Pass */}
@@ -759,15 +721,13 @@ export default function RegistrationPage() {
                         ₹{accommodationFee.toLocaleString("en-IN")}
                       </span>
                     </div>
-
-
                   </div>
 
-                  {/* Grand Total Amount Sum (Clean Card) */}
-                  <div className="rounded-lg bg-white p-4 text-navy-950 flex items-center justify-between border-2 border-navy shadow-xs transition-all duration-300 hover:border-navy-600 hover:shadow-md hover:ring-2 hover:ring-navy/20">
+                  {/* Grand Total Amount Sum */}
+                  <div className="rounded-xl bg-white p-4 text-navy-950 flex items-center justify-between border-2 border-navy shadow-xs">
                     <div>
                       <span className="text-[10px] font-bold uppercase tracking-widest text-navy-900 block">
-                        Total Sum Payable
+                        Estimated Total Amount
                       </span>
                       <span className="text-xs text-gray-500">
                         Pass Fee + Accommodation
@@ -780,18 +740,29 @@ export default function RegistrationPage() {
                     </div>
                   </div>
 
-                  {/* Payment Verification & Note */}
+                  {/* Status Banner */}
+                  <div className="rounded-xl border border-amber-200 bg-amber-50/80 p-4 text-xs text-amber-900 space-y-1.5">
+                    <div className="flex items-center gap-2 font-bold text-amber-950">
+                      <Clock size={16} className="text-amber-700 shrink-0" />
+                      <span>Registration Portal Opening Soon</span>
+                    </div>
+                    <p className="text-[11px] text-amber-800 leading-relaxed">
+                      Payment links and official registration forms will be enabled here shortly.
+                    </p>
+                  </div>
+
+                  {/* Tax Invoice Note */}
                   <div className="space-y-3 pt-2 text-xs text-gray-500">
-                    <div className="flex items-start gap-2 bg-gray-50 p-3 rounded border border-gray-100">
+                    <div className="flex items-start gap-2 bg-gray-50 p-3 rounded-lg border border-gray-100">
                       <FileCheck size={16} className="text-navy shrink-0 mt-0.5" />
                       <span>
-                        Official receipts and tax invoices will be issued under the Department of Chemical Engineering, IIT Indore.
+                        Official receipts and GST invoices will be issued under the Department of Chemical Engineering, IIT Indore.
                       </span>
                     </div>
 
                     <div className="flex items-center justify-between text-[11px] text-gray-400 pt-1">
-                      <span>• Safe &amp; Direct Bank Transfer</span>
-                      <span>• Official Conference Portal</span>
+                      <span>• Safe &amp; Direct Bank Gateway</span>
+                      <span>• Official IIT Indore Portal</span>
                     </div>
                   </div>
                 </div>
@@ -799,8 +770,8 @@ export default function RegistrationPage() {
             </Reveal>
 
             {/* Support box */}
-            <div className="rounded-xl border border-[#E5E7EB] p-4 bg-gray-50/70 text-xs text-gray-600 flex items-center gap-3 transition-all duration-300 hover:border-navy hover:ring-1 hover:ring-navy/20 hover:shadow-md hover:bg-white">
-              <HelpCircle size={20} className="text-navy shrink-0" />
+            <div className="rounded-2xl border border-[#E5E7EB] p-4 bg-gray-50/70 text-xs text-gray-600 flex items-center gap-3 transition-all duration-300 hover:border-navy hover:shadow-md hover:bg-white">
+              <HelpCircle size={22} className="text-navy shrink-0" />
               <div>
                 <span className="font-bold text-navy-950 block">Need assistance or group registration?</span>
                 <p className="mt-0.5">
@@ -811,33 +782,34 @@ export default function RegistrationPage() {
                 </p>
               </div>
             </div>
+
+            {/* Quick Links */}
+            <div className="grid grid-cols-2 gap-3">
+              <Link
+                href="/schedule"
+                className="flex items-center justify-center gap-1.5 p-3 rounded-xl border border-gray-200 bg-white hover:border-navy text-xs font-semibold text-navy hover:shadow-xs transition-all text-center"
+              >
+                <span>View Schedule</span>
+                <ArrowRight size={13} />
+              </Link>
+              <Link
+                href="/contact"
+                className="flex items-center justify-center gap-1.5 p-3 rounded-xl border border-gray-200 bg-white hover:border-navy text-xs font-semibold text-navy hover:shadow-xs transition-all text-center"
+              >
+                <span>Contact Us</span>
+                <ArrowRight size={13} />
+              </Link>
+            </div>
           </div>
         </div>
+
       </div>
+
+      {/* Brochure Modal Viewer */}
+      <BrochureModal
+        isOpen={isBrochureOpen}
+        onClose={() => setIsBrochureOpen(false)}
+      />
     </>
-  );
-}
-
-const inputClass =
-  "w-full rounded-md border border-[#D1D5DB] bg-white px-3.5 py-2.5 text-sm text-gray-900 shadow-2xs outline-none transition-all placeholder:text-gray-400 focus:border-navy focus:ring-2 focus:ring-navy/20";
-
-function Field({
-  label,
-  htmlFor,
-  required,
-  children,
-}: {
-  label: string;
-  htmlFor: string;
-  required?: boolean;
-  children: React.ReactNode;
-}) {
-  return (
-    <div>
-      <label htmlFor={htmlFor} className={cn("mb-1.5 block text-xs sm:text-sm font-semibold text-navy-950")}>
-        {label} {required && <span className="text-red-600">*</span>}
-      </label>
-      {children}
-    </div>
   );
 }
