@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, useEffect, type FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles,
@@ -217,6 +217,47 @@ export default function RegistrationPage() {
   const basePassFee = activeDuration.amount;
   const totalAmount = basePassFee + accommodationFee;
 
+  // Countdown Timer & Launch Date (October 9, 2026 at 10:00 AM IST)
+  const [isOpen, setIsOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
+  useEffect(() => {
+    setIsMounted(true);
+    const target = new Date("2026-10-09T10:00:00+05:30").getTime();
+
+    const updateTimer = () => {
+      // Support ?preview=true query parameter for developer/organizer preview
+      const isPreview =
+        typeof window !== "undefined" &&
+        new URLSearchParams(window.location.search).get("preview") === "true";
+
+      const now = Date.now();
+      const diff = target - now;
+
+      if (diff <= 0 || isPreview) {
+        setIsOpen(true);
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      } else {
+        setIsOpen(false);
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+        setTimeLeft({ days, hours, minutes, seconds });
+      }
+    };
+
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   function handleNotifySubmit(e: FormEvent) {
     e.preventDefault();
     if (notifyEmail.trim()) {
@@ -227,81 +268,150 @@ export default function RegistrationPage() {
   return (
     <>
       <PageHero
-        title="Delegate Registration"
-        subtitle="Registrations for the Malwa Chemical Conclave 2026 will start soon! Explore delegate tiers, workshop passes, and accommodation options below."
+        title="Registration"
+        subtitle={
+          isOpen
+            ? "Explore delegate tiers, workshop passes, and accommodation options to complete your registration."
+            : "Registrations for Malwa Chemical Conclave 2026 will start soon! Portal opens on October 9 at 10:00 AM."
+        }
       />
 
       <div className="mx-auto max-w-7xl px-4 py-12 sm:py-16 sm:px-6 lg:px-8">
         
-        {/* ── ATTRACTIVE "REGISTRATIONS STARTING SOON" HERO BANNER ── */}
-        <Reveal>
-          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#001B3D] via-[#002B66] to-[#0A192F] p-8 sm:p-10 text-white shadow-xl border border-white/15 mb-12">
-            {/* Background glowing ambient elements */}
-            <div className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 rounded-full bg-gold/20 blur-3xl" />
-            <div className="pointer-events-none absolute -left-16 -bottom-16 h-72 w-72 rounded-full bg-blue-500/20 blur-3xl" />
+        {/* ── PLAIN WHITE COUNTDOWN SECTION: "REGISTRATION WILL START SOON!" ── */}
+        {!isOpen && (
+          <Reveal>
+            <div className="mx-auto max-w-3xl rounded-3xl border border-[#E5E7EB] bg-white p-8 sm:p-14 text-center shadow-xs mb-10">
+              {/* Big plain text in navy */}
+              <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-navy-950 tracking-tight">
+                Registration Will Start Soon!
+              </h2>
 
-            <div className="relative z-10 grid gap-8 lg:grid-cols-12 lg:items-center">
-              <div className="lg:col-span-8 space-y-4">
-                <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/15 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-gold-300 shadow-xs backdrop-blur-md">
-                  <Sparkles size={14} className="text-gold animate-spin-slow" />
-                  <span>Registrations Starting Soon!</span>
+              <p className="mt-4 text-sm sm:text-base text-gray-600 max-w-lg mx-auto leading-relaxed">
+                Official registrations for <strong className="text-navy font-bold">Malwa Chemical Conclave 2026</strong> will open on <strong className="text-navy font-bold">October 9 at 10:00 AM</strong>. Enter your email below to receive an instant notification when the portal goes live.
+              </p>
+
+              {/* Email Notify Pill Bar (styled after user reference image) */}
+              <div className="mt-8 max-w-md mx-auto">
+                {notified ? (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="rounded-full bg-green-50 border border-green-200 py-3.5 px-6 text-xs sm:text-sm text-green-900 font-semibold flex items-center justify-center gap-2"
+                  >
+                    <CheckCircle2 size={18} className="text-green-600 shrink-0" />
+                    <span>You will be notified at <strong>{notifyEmail}</strong> when registrations open!</span>
+                  </motion.div>
+                ) : (
+                  <form
+                    onSubmit={handleNotifySubmit}
+                    className="flex flex-col sm:flex-row items-center gap-2 p-1.5 rounded-2xl sm:rounded-full bg-gray-50 border border-gray-300 focus-within:border-navy focus-within:ring-2 focus-within:ring-navy/15 transition-all shadow-inner"
+                  >
+                    <input
+                      type="email"
+                      required
+                      value={notifyEmail}
+                      onChange={(e) => setNotifyEmail(e.target.value)}
+                      placeholder="Enter Your Email"
+                      className="w-full sm:flex-1 bg-transparent px-5 py-2.5 text-xs sm:text-sm text-navy-950 placeholder:text-gray-400 outline-none text-center sm:text-left"
+                    />
+                    <button
+                      type="submit"
+                      className="w-full sm:w-auto rounded-xl sm:rounded-full bg-navy hover:bg-navy-900 text-white font-bold text-xs sm:text-sm px-7 py-3 transition-all shadow-md cursor-pointer shrink-0"
+                    >
+                      Notify Me
+                    </button>
+                  </form>
+                )}
+                <p className="mt-2.5 text-[11px] text-gray-400">
+                  Official IIT Indore Registration Portal &bull; Privacy Protected
+                </p>
+              </div>
+
+              {/* Countdown Timer Circles (Directly matching user image layout) */}
+              <div className="mt-10 pt-8 border-t border-gray-100 flex items-center justify-center gap-4 sm:gap-7">
+                {/* Days */}
+                <div className="flex flex-col items-center">
+                  <div className="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-navy text-white shadow-md transition-transform hover:scale-105">
+                    <span className="font-mono text-2xl sm:text-3xl font-bold">
+                      {isMounted ? String(timeLeft.days).padStart(2, "0") : "00"}
+                    </span>
+                  </div>
+                  <span className="mt-2.5 text-[10px] sm:text-xs font-bold uppercase tracking-widest text-navy">
+                    Days
+                  </span>
                 </div>
 
-                <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight">
-                  Delegate Registration Portal Will Open Shortly
-                </h2>
+                {/* Hours */}
+                <div className="flex flex-col items-center">
+                  <div className="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-navy text-white shadow-md transition-transform hover:scale-105">
+                    <span className="font-mono text-2xl sm:text-3xl font-bold">
+                      {isMounted ? String(timeLeft.hours).padStart(2, "0") : "00"}
+                    </span>
+                  </div>
+                  <span className="mt-2.5 text-[10px] sm:text-xs font-bold uppercase tracking-widest text-navy">
+                    Hours
+                  </span>
+                </div>
 
-                <p className="text-sm sm:text-base text-white/85 max-w-2xl leading-relaxed">
-                  We are preparing the official delegate onboarding portal for <strong className="text-gold-200">Malwa Chemical Conclave 2026</strong>. Review the official category rates and accommodation options below to plan your attendance.
-                </p>
+                {/* Minutes */}
+                <div className="flex flex-col items-center">
+                  <div className="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-navy text-white shadow-md transition-transform hover:scale-105">
+                    <span className="font-mono text-2xl sm:text-3xl font-bold">
+                      {isMounted ? String(timeLeft.minutes).padStart(2, "0") : "00"}
+                    </span>
+                  </div>
+                  <span className="mt-2.5 text-[10px] sm:text-xs font-bold uppercase tracking-widest text-navy">
+                    Minutes
+                  </span>
+                </div>
 
-                {/* Event Highlights Quick Strip */}
-                <div className="pt-2 flex flex-wrap gap-4 sm:gap-6 text-xs sm:text-sm font-medium text-white/90">
-                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/15">
-                    <Calendar size={16} className="text-gold" />
-                    <span>October 11–12, 2026</span>
+                {/* Seconds */}
+                <div className="flex flex-col items-center">
+                  <div className="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-navy text-white shadow-md transition-transform hover:scale-105">
+                    <span className="font-mono text-2xl sm:text-3xl font-bold">
+                      {isMounted ? String(timeLeft.seconds).padStart(2, "0") : "00"}
+                    </span>
                   </div>
-                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/15">
-                    <Building size={16} className="text-gold" />
-                    <span>IIT Indore, Simrol Campus</span>
-                  </div>
-                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/15">
-                    <Clock size={16} className="text-gold" />
-                    <span>Portal Launching Soon</span>
-                  </div>
+                  <span className="mt-2.5 text-[10px] sm:text-xs font-bold uppercase tracking-widest text-navy">
+                    Seconds
+                  </span>
                 </div>
               </div>
 
-              {/* Action Buttons */}
-              <div className="lg:col-span-4 flex flex-col gap-3 justify-center">
+              {/* Action Buttons below matching image design */}
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-3 pt-4 border-t border-gray-100">
                 <button
                   type="button"
                   onClick={() => setIsBrochureOpen(true)}
-                  className="w-full flex items-center justify-center gap-2 rounded-xl bg-gold py-3.5 px-5 text-sm font-bold text-navy-950 shadow-xl hover:bg-gold-400 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+                  className="inline-flex items-center gap-2 rounded-lg border border-navy/20 bg-white hover:bg-navy hover:text-white px-4 py-2 text-xs font-bold text-navy transition-all cursor-pointer shadow-2xs"
                 >
-                  <BookOpen size={17} />
+                  <BookOpen size={15} />
                   <span>View Conclave Brochure</span>
                 </button>
 
                 <a
                   href="/MCC 2026 Broucher.pdf"
                   download="MCC 2026 Brochure.pdf"
-                  className="w-full flex items-center justify-center gap-2 rounded-xl bg-white/10 hover:bg-white/20 py-3.5 px-5 text-sm font-semibold text-white border border-white/20 backdrop-blur-md hover:scale-[1.02] active:scale-[0.98] transition-all"
+                  className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white hover:border-navy px-4 py-2 text-xs font-semibold text-gray-700 hover:text-navy transition-all"
                 >
-                  <Download size={16} />
+                  <Download size={14} />
                   <span>Download Brochure PDF</span>
                 </a>
               </div>
             </div>
-          </div>
-        </Reveal>
+          </Reveal>
+        )}
 
-        {/* ── Top Section Header ── */}
-        <div className="mb-10 flex flex-wrap items-center justify-between gap-4 border-b border-[#E5E7EB] pb-6">
-          <div>
-            <span className="inline-block rounded bg-gold/20 px-3 py-1 text-xs font-bold uppercase tracking-wider text-navy-900 border border-gold/40">
-              Interactive Fee &amp; Category Explorer
-            </span>
+        {/* ── REGISTRATION DETAILS & TIER EXPLORER (Shown after October 9, 2026 at 10:00 AM) ── */}
+        {isOpen && (
+          <>
+            {/* ── Top Section Header ── */}
+            <div className="mb-10 flex flex-wrap items-center justify-between gap-4 border-b border-[#E5E7EB] pb-6">
+              <div>
+                <span className="inline-block rounded bg-gold/20 px-3 py-1 text-xs font-bold uppercase tracking-wider text-navy-900 border border-gold/40">
+                  Interactive Fee &amp; Category Explorer
+                </span>
             <h3 className="mt-2 text-2xl font-bold tracking-tight text-navy-950 sm:text-3xl">
               Preview Delegate Categories &amp; Pricing
             </h3>
@@ -802,6 +912,8 @@ export default function RegistrationPage() {
             </div>
           </div>
         </div>
+        </>
+      )}
 
       </div>
 
